@@ -77,8 +77,8 @@ document.addEventListener("DOMContentLoaded", function () {
       "detect_on": "window",
       "events": {
         "onhover": {
-          "enable": false,
-          "mode": "grab"
+          "enable": true,
+          "mode": "repulse"
         },
         "onclick": {
           "enable": true,
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
           "speed": 3
         },
         "repulse": {
-          "distance": 200,
+          "distance": 100,
           "duration": 0.4
         },
         "push": {
