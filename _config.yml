@@ -1,17 +1,13 @@
 # Site settings
 title: ideaapps
 description: ideaapps mobile native software development
-# baseurl: "/particle" # the subpath of your site, e.g. /blog
-# url: "localhost:3000" # the base hostname & protocol for your site e.g. http://willianjusten.com.br
 
 # User settings
 username: ideaapps
 user_description: TODO
 user_title: Mobile native development
-email: marcin.polak.b2b2@gmail.com
-twitter_username:
-github_username:
-gplus_username:
+email: marcin.polak.b2b@gmail.com
+github_username: polok
 
 # Google-analytics
 google-analytics:
