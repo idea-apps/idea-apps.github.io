@@ -1,12 +1,12 @@
 # Site settings
 title: ideaapps
-description: ideaapps mobile native software development
+description: ideaapps|mobile|android|ios|swift|native|software development
 
 # User settings
 username: ideaapps
 user_description: TODO
 user_title: Mobile native development
-email: marcin.polak.b2b@gmail.com
+email: marcin.polak@ideaapps.io
 github_username: polok
 
 # Google-analytics
