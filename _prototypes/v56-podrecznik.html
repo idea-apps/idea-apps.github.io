@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Podręcznik (wariant 56)</title>
+<style>
+:root{--paper:#faf7f0;--ink:#1c1a16;--soft:#6f6a5d;--rule:#ddd5c3;--acc:#b8431f}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font:19px/1.65 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.prog{position:fixed;top:0;left:0;height:4px;background:var(--acc);z-index:50;width:0;transition:background .5s}
+.layout{display:grid;grid-template-columns:360px minmax(0,1fr)}
+.toc{position:sticky;top:0;height:100vh;overflow:auto;padding:36px 28px 30px 40px;border-right:1px solid var(--rule);background:#f4efe3;font-family:-apple-system,"SF Pro Text",Helvetica,sans-serif}
+.toc .t{font:700 12px -apple-system,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--soft)}
+.toc h1{font:800 26px/1.05 Georgia,serif;letter-spacing:-.02em;margin:8px 0 22px}
+.toc ol{list-style:none}
+.toc li a{display:flex;gap:8px;align-items:baseline;text-decoration:none;font-size:14.5px;padding:4px 0;color:#4a463c}
+.toc li a span.d{flex:1;border-bottom:1.5px dotted #b9b19c;transform:translateY(-3px);min-width:10px}
+.toc li a span.n{font-variant-numeric:tabular-nums;color:var(--soft);font-size:13px}
+.toc li.h>a{font-weight:800;color:var(--ink);font-size:15.5px;padding-top:12px}
+.toc li.s>a{padding-left:20px}
+.toc li a:hover{color:var(--acc)}
+.toc li a.on{color:var(--acc);font-weight:700}
+.toc li a i{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--c);margin-right:2px;flex:none}
+.toc .mail{display:block;margin-top:26px;font-size:14px;font-weight:700;text-decoration:none;border:2px solid var(--ink);padding:10px 14px;text-align:center;border-radius:8px}
+.toc .mail:hover{background:var(--ink);color:#fff}
+main{padding:70px clamp(24px,6vw,90px) 120px;max-width:980px}
+.cover{padding:30px 0 80px;border-bottom:3px double var(--ink);margin-bottom:60px}
+.cover small{font:700 13px -apple-system,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--acc)}
+.cover h1{font:800 clamp(46px,7vw,92px)/.95 Georgia,serif;letter-spacing:-.04em;margin:14px 0 20px}
+.cover p{font-size:22px;max-width:30em;color:#3e3a30}
+.cover .b{margin-top:22px;font:600 14px -apple-system,sans-serif;color:var(--soft)}
+section.ch{margin-bottom:80px;scroll-margin-top:30px}
+section.ch>.num{font:800 15px -apple-system,sans-serif;color:var(--acc);letter-spacing:.1em;text-transform:uppercase}
+section.ch>h2{font:800 clamp(34px,4.6vw,56px)/1 Georgia,serif;letter-spacing:-.035em;margin:6px 0 20px}
+.lead{font-size:22px;max-width:32em;margin-bottom:30px;color:#3e3a30}
+article.sub{margin:44px 0;padding-top:26px;border-top:1px solid var(--rule);scroll-margin-top:30px}
+article.sub .k{font:700 12.5px -apple-system,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--c,var(--soft))}
+article.sub h3{font:800 clamp(30px,3.6vw,44px)/1.05 Georgia,serif;letter-spacing:-.03em;margin:4px 0 10px}
+.r-tag{font:700 22px/1.3 Georgia,serif;margin-bottom:8px}
+.r-ds{margin-bottom:14px;color:#3a362c}
+.r-who{font-size:17px;margin-bottom:12px;font-family:-apple-system,sans-serif}
+.r-ft{margin:0 0 20px 0;padding-left:0;list-style:none;font-family:-apple-system,"SF Pro Text",sans-serif;font-size:17px}
+.r-ft li{position:relative;padding:7px 0 7px 28px;border-bottom:1px solid var(--rule)}
+.r-ft li::before{content:"✓";position:absolute;left:0;top:7px;width:19px;height:19px;border-radius:50%;background:var(--c,var(--acc));color:#fff;font-size:11px;font-weight:800;display:grid;place-items:center}
+.r-shots{display:flex;gap:14px;overflow-x:auto;margin:6px 0 20px;padding-bottom:8px}
+.r-shot{height:380px;width:auto;border-radius:22px;box-shadow:0 0 0 1px rgba(0,0,0,.12),0 14px 30px -12px rgba(0,0,0,.35);flex:none}
+.r-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.r-chip{font:600 13.5px -apple-system,sans-serif;padding:4px 12px;border-radius:99px;border:1.5px solid var(--c,var(--ink))}
+.r-cta{display:inline-block;font:700 15px -apple-system,sans-serif;text-decoration:none;background:var(--c,var(--ink));color:#fff;padding:12px 22px;border-radius:99px}
+.r-cta:hover{filter:brightness(1.12)}
+.step{display:grid;grid-template-columns:70px 1fr;gap:6px 18px;margin:30px 0;padding-top:20px;border-top:1px solid var(--rule)}
+.step .n{font:800 56px/.9 Georgia,serif;color:var(--acc);grid-row:span 3}
+.step h3{font:800 28px/1.1 Georgia,serif;letter-spacing:-.02em}
+.step p{color:#3a362c}
+.step .o{font:600 14.5px -apple-system,sans-serif;color:var(--soft)}
+.step .o b{color:var(--ink)}
+.callout{margin:30px 0;padding:24px 28px;background:#1c1a16;color:#f1ecde;border-radius:6px;font-family:-apple-system,sans-serif}
+.callout h4{font:800 22px Georgia,serif;margin-bottom:6px}
+.callout p{opacity:.9;font-size:17px}
+.sv{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--rule)}
+.sv div{padding:22px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);font-family:-apple-system,sans-serif}
+.sv b{display:block;font:800 22px Georgia,serif;margin-bottom:6px}.sv span{font-size:16px;color:#4a463c}
+.big{display:inline-block;font:800 clamp(22px,3.4vw,40px) Georgia,serif;letter-spacing:-.03em;border-bottom:3px solid var(--acc);text-decoration:none;overflow-wrap:anywhere;margin:6px 0 18px}
+footer{border-top:3px double var(--ink);padding-top:16px;font:14px -apple-system,sans-serif;color:var(--soft);display:flex;justify-content:space-between}
+@media(max-width:940px){.layout{grid-template-columns:1fr}.toc{position:relative;height:auto;border:0;border-bottom:1px solid var(--rule)}.sv{grid-template-columns:1fr}.step{grid-template-columns:50px 1fr}.step .n{font-size:40px}}
+</style>
+</head>
+<body>
+<div class="prog" id="pg"></div>
+<div class="layout">
+<nav class="toc" id="toc"></nav>
+<main id="main">
+<header class="cover"><small>Instrukcja obsługi · wydanie 2026</small><h1>ideaapps</h1><p>Podręcznik pracy z Marcinem Polakiem: niezależnym developerem aplikacji na iOS i tvOS. Wszystko, co trzeba wiedzieć, zanim zdecydujesz się napisać.</p><div class="b">Spis treści po lewej. Kolory w spisie odpowiadają aplikacjom.</div></header>
+</main>
+</div>
+<script src="data.js"></script><script src="render.js"></script>
+<script>
+const {projects,services,email,process,R}=IDEA;
+const $=s=>document.querySelector(s);
+const deep=c=>`color-mix(in srgb,${c} 78%,#1c1a16)`;
+let h='';
+h+=`<section class="ch" id="c1"><div class="num">Rozdział 1</div><h2>Wstęp</h2><p class="lead">${IDEA.about}</p>
+<div class="sv"><div><b>10+ lat</b><span>iOS i tvOS, wcześniej kilka lat Androida</span></div><div><b>8 aplikacji</b><span>własnych, wszystkie w App Store</span></div><div><b>Swift i SwiftUI</b><span>UIKit, tvOS, Core ML, Claude API</span></div><div><b>1 osoba</b><span>od pomysłu po publikację i wsparcie</span></div></div></section>`;
+h+=`<section class="ch" id="c2"><div class="num">Rozdział 2</div><h2>Jak pracuję</h2><p class="lead">Jedna osoba, od pierwszej rozmowy do publikacji w App Store. Rozmawiasz z tym, kto pisze kod, więc nic nie ginie po drodze.</p>`
+ +process.map((s,i)=>`<article class="step" id="p${i+1}"><div class="n">${i+1}</div><h3>${s.t}</h3><p>${s.d}</p><div class="o"><b>Co dostajesz:</b> ${R.out[i]}</div></article>`).join('')
+ +`<div class="callout"><h4>${IDEA.ai.t}</h4><p>${IDEA.ai.d}</p></div></section>`;
+h+=`<section class="ch" id="c3"><div class="num">Rozdział 3</div><h2>Aplikacje</h2><p class="lead">Osiem aplikacji, które zaprojektowałem, napisałem i wydałem sam. Każda opisana według tego samego schematu.</p>`
+ +projects.map((p,i)=>`<article class="sub" id="a-${p.id}" data-c="${deep(p.color)}" style="--c:${deep(p.color)}"><div class="k">3.${i+1} · ${p.cat}</div><h3>${p.name}</h3>${R.appBody(p)}</article>`).join('')+`</section>`;
+h+=`<section class="ch" id="c4"><div class="num">Rozdział 4</div><h2>Usługi</h2><p class="lead">Cztery rodzaje zleceń. Jeśli Twój pomysł leży pomiędzy, dopasujemy zakres.</p><div class="sv">${services.map(s=>`<div><b>${s.t}</b><span>${s.d}</span></div>`).join('')}</div></section>`;
+h+=`<section class="ch" id="c5"><div class="num">Rozdział 5</div><h2>Kontakt</h2><p class="lead">Opisz w kilku zdaniach, co chcesz zbudować, dla kogo i na jakie urządzenia. Odpowiem i powiem szczerze, jak to widzę.</p><a class="big" href="mailto:${email}">${email}</a></section>
+<footer><span>© 2026 ideaapps</span><span>Koniec podręcznika</span></footer>`;
+$('#main').insertAdjacentHTML('beforeend',h);
+// TOC
+const entries=[['c1','1. Wstęp','h'],['c2','2. Jak pracuję','h'],...process.map((s,i)=>['p'+(i+1),`2.${i+1} ${s.t}`,'s']),['c3','3. Aplikacje','h'],...projects.map((p,i)=>['a-'+p.id,`3.${i+1} ${p.name}`,'s',deep(p.color)]),['c4','4. Usługi','h'],['c5','5. Kontakt','h']];
+$('#toc').innerHTML=`<div class="t">Spis treści</div><h1>Podręcznik<br>ideaapps</h1><ol>${entries.map(([id,t,k,c])=>`<li class="${k}"><a href="#${id}" data-id="${id}" style="--c:${c||'#b8431f'}">${c?'<i></i>':''}${t}<span class="d"></span><span class="n" data-p="${id}"></span></a></li>`).join('')}</ol><a class="mail" href="mailto:${email}">Napisz do Marcina →</a>`;
+function pages(){entries.forEach(([id])=>{const e=document.getElementById(id);const n=document.querySelector(`[data-p="${id}"]`);if(e&&n)n.textContent=Math.floor(e.getBoundingClientRect().top+scrollY)/1000>=0?Math.floor((e.getBoundingClientRect().top+scrollY)/1100)+1:1})}
+addEventListener('load',pages);setTimeout(pages,600);
+const links=[...document.querySelectorAll('.toc li a')];
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const id=e.target.id;links.forEach(l=>l.classList.toggle('on',l.dataset.id===id));
+ const c=e.target.dataset.c||'#b8431f';document.documentElement.style.setProperty('--acc',c);
+ const on=document.querySelector('.toc a.on');if(on&&innerWidth>940)on.scrollIntoView({block:'nearest'})}),{rootMargin:'-20% 0px -70% 0px'});
+entries.forEach(([id])=>{const e=document.getElementById(id);if(e)io.observe(e)});
+addEventListener('scroll',()=>{const m=document.documentElement;$('#pg').style.width=(scrollY/(m.scrollHeight-innerHeight)*100)+'%'},{passive:true});
+</script>
+</body>
+</html>

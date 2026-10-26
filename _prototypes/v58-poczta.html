@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Poczta (wariant 58)</title>
+<style>
+:root{--bg:#fff;--side:#f1f1f4;--ln:#e2e2e8;--ink:#17171c;--soft:#7a7a88;--blue:#0a7aff;--sel:#0a7aff}
+@media(prefers-color-scheme:dark){:root{--bg:#1c1c20;--side:#26262b;--ln:#38383e;--ink:#f1f1f5;--soft:#9a9aa6}}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden}
+body{background:#d8d6cf;font:15px/1.45 -apple-system,"SF Pro Text",Helvetica,sans-serif;color:var(--ink);display:grid;place-items:center;padding:20px;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.win{width:min(1320px,100%);height:min(900px,100%);background:var(--bg);border-radius:14px;box-shadow:0 40px 100px -20px rgba(0,0,0,.5),0 0 0 1px rgba(0,0,0,.2);display:grid;grid-template-columns:230px 360px minmax(0,1fr);overflow:hidden}
+.sb{background:var(--side);padding:14px 10px;overflow:auto;border-right:1px solid var(--ln)}
+.tl{display:flex;gap:8px;padding:2px 8px 16px}.tl i{width:12px;height:12px;border-radius:50%;background:#ff5f57}.tl i:nth-child(2){background:#febc2e}.tl i:nth-child(3){background:#28c840}
+.sb h6{font-size:11.5px;color:var(--soft);font-weight:700;padding:10px 10px 4px}
+.mb{display:flex;align-items:center;gap:9px;padding:6px 10px;border-radius:7px;cursor:pointer;font-size:14.5px}
+.mb:hover{background:rgba(128,128,140,.15)}.mb.on{background:var(--blue);color:#fff}
+.mb .ic{width:18px;text-align:center;color:var(--blue)}.mb.on .ic{color:#fff}
+.mb .c{margin-left:auto;font-size:12.5px;opacity:.65}
+.ls{border-right:1px solid var(--ln);display:flex;flex-direction:column;min-width:0}
+.ls .t{padding:16px 18px 10px;border-bottom:1px solid var(--ln)}
+.ls .t b{font-size:19px;letter-spacing:-.02em;display:block}.ls .t span{font-size:12.5px;color:var(--soft)}
+.ls .items{flex:1;overflow:auto}
+.it{padding:10px 18px 12px 28px;border-bottom:1px solid var(--ln);cursor:pointer;position:relative}
+.it:hover{background:rgba(128,128,140,.08)}
+.it.on{background:var(--blue);color:#fff}
+.it.on .pv,.it.on .dt{color:rgba(255,255,255,.8)}
+.it .dot{position:absolute;left:10px;top:17px;width:9px;height:9px;border-radius:50%;background:var(--blue)}
+.it.on .dot{background:#fff}.it.rd .dot{display:none}
+.it .fr{display:flex;align-items:baseline;gap:8px}.it .fr b{font-size:14.5px}.it .dt{margin-left:auto;font-size:12px;color:var(--soft)}
+.it .sj{font-size:14px;font-weight:600;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.it .pv{font-size:13px;color:var(--soft);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.rd2{overflow:auto;padding:0}
+.rd2 .hd{padding:22px 34px 16px;border-bottom:1px solid var(--ln);display:flex;gap:14px;align-items:flex-start}
+.rd2 .av{width:46px;height:46px;border-radius:50%;background:var(--c,#555);color:#fff;display:grid;place-items:center;font-weight:800;font-size:18px;flex:none;overflow:hidden}
+.rd2 .av img{width:100%;height:100%;object-fit:cover}
+.rd2 .hd h2{font-size:24px;letter-spacing:-.03em;line-height:1.15}
+.rd2 .hd .m{font-size:13.5px;color:var(--soft);margin-top:3px}
+.rd2 .hd .m b{color:var(--ink)}
+.rd2 .bd{padding:24px 34px 40px;max-width:760px;font-size:16.5px}
+.rd2 .rp{margin-left:auto;all:unset;cursor:pointer;background:var(--blue);color:#fff;font-weight:700;padding:8px 18px;border-radius:99px;font-size:14px;white-space:nowrap}
+.r-tag{font-size:21px;font-weight:800;letter-spacing:-.02em;margin-bottom:8px;line-height:1.25}
+.r-ds{margin-bottom:12px}
+.r-who{margin-bottom:10px;color:var(--soft)}.r-who b{color:var(--ink)}
+.r-ft{margin:0 0 16px;padding-left:20px}.r-ft li{margin-bottom:5px}
+.r-shots{display:flex;gap:12px;overflow-x:auto;margin:8px 0 16px}
+.r-shot{height:340px;border-radius:18px;box-shadow:0 0 0 1px rgba(0,0,0,.12);flex:none}
+.r-meta{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}.r-chip{font-size:13px;padding:3px 12px;border-radius:99px;background:var(--side)}
+.r-cta{display:inline-block;background:var(--c,var(--blue));color:#fff;font-weight:700;padding:11px 22px;border-radius:99px;text-decoration:none}
+.att{margin-top:22px;padding-top:14px;border-top:1px solid var(--ln);font-size:13px;color:var(--soft)}
+.att span{display:inline-flex;gap:8px;align-items:center;padding:6px 12px;border:1px solid var(--ln);border-radius:9px;margin:6px 8px 0 0;color:var(--ink)}
+.stp{margin:14px 0;padding:14px 16px;background:var(--side);border-radius:12px}.stp b{display:block;margin-bottom:2px}
+.bigm{display:inline-block;font-size:22px;font-weight:800;letter-spacing:-.02em;margin:8px 0}
+@media(max-width:1000px){.win{grid-template-columns:200px 300px minmax(0,1fr)}}
+@media(max-width:760px){body{padding:0;display:block}.win{display:block;height:100%;border-radius:0;overflow:auto}.sb{display:flex;overflow-x:auto;padding:8px;gap:4px;border:0}.sb h6,.tl{display:none}.mb{white-space:nowrap}.ls{height:42vh;border:0}.rd2 .bd{padding:20px}}
+</style>
+</head>
+<body>
+<div class="win">
+<aside class="sb"><div class="tl"><i></i><i></i><i></i></div>
+<h6>SKRZYNKI</h6><div id="boxes"></div></aside>
+<section class="ls"><div class="t"><b id="lt">Aplikacje</b><span id="lc"></span></div><div class="items" id="items"></div></section>
+<section class="rd2" id="rd"></section>
+</div>
+<script src="data.js"></script><script src="render.js"></script>
+<script>
+const {projects,services,process,email,R}=IDEA;
+const $=s=>document.querySelector(s);
+const deep=c=>`color-mix(in srgb,${c} 85%,#15171c)`;
+const msgs=[
+ ...projects.map(p=>({box:'app',id:p.id,from:p.name,subj:p.tag,prev:p.desc,c:deep(p.color),p,att:[`${p.name}.app (App Store)`]})),
+ ...process.map((s,i)=>({box:'pro',id:'p'+i,from:`Etap ${i+1}`,subj:s.t,prev:s.d,c:'#d9822b',pro:s,i})),
+ ...services.map((s,i)=>({box:'svc',id:'s'+i,from:'Oferta',subj:s.t,prev:s.d,c:'#0f9b6c',svc:s})),
+ {box:'me',id:'me',from:'Marcin Polak',subj:'Cześć, jestem Marcin',prev:IDEA.about,c:'#15171c',about:true},
+ {box:'me',id:'ct',from:'Marcin Polak',subj:'Napisz do mnie',prev:'Opisz w kilku zdaniach, co chcesz zbudować.',c:'#0a7aff',contact:true}];
+const boxes=[['all','✉','Wszystkie'],['app','▣','Aplikacje'],['pro','⚙','Jak pracuję'],['svc','★','Usługi'],['me','☺','O mnie i kontakt']];
+const read=new Set();let box='app',cur=null;
+function drawBoxes(){$('#boxes').innerHTML=boxes.map(([k,i,n])=>{const c=msgs.filter(m=>k==='all'||m.box===k&&!read.has(m.id)).length;return `<div class="mb ${k===box?'on':''}" data-k="${k}"><span class="ic">${i}</span>${n}<span class="c">${c||''}</span></div>`}).join('')}
+function drawList(){const l=msgs.filter(m=>box==='all'||m.box===box);$('#lt').textContent=boxes.find(b=>b[0]===box)[2];$('#lc').textContent=l.length+' wiadomości';
+ $('#items').innerHTML=l.map((m,i)=>`<div class="it ${read.has(m.id)?'rd':''} ${cur&&cur.id===m.id?'on':''}" data-id="${m.id}"><span class="dot"></span><div class="fr"><b>${m.from}</b><span class="dt">${m.p?m.p.cat:m.box==='pro'?'proces':'dziś'}</span></div><div class="sj">${m.subj}</div><div class="pv">${m.prev}</div></div>`).join('')}
+function body(m){
+ if(m.p)return R.appBody(m.p)+`<div class="att">Załączniki:<br>${m.att.map(a=>`<span>📎 ${a}</span>`).join('')}</div>`;
+ if(m.pro)return `<p>${m.pro.d}</p><div class="stp"><b>Co dostajesz</b>${R.out[m.i]}</div>${m.i===3?`<div class="stp"><b>${IDEA.ai.t}</b>${IDEA.ai.d}</div>`:''}`;
+ if(m.svc)return `<p>${m.svc.d}</p><div class="stp"><b>Jak zaczynamy</b>Krótka rozmowa, jednostronicowy zakres prac, potem prototyp i regularne wersje do testów.</div>`;
+ if(m.about)return `<p>${IDEA.about}</p><div class="stp"><b>W liczbach</b>10+ lat iOS i tvOS · 8 własnych aplikacji · 1 osoba odpowiedzialna za całość</div>`;
+ return `<p>Opisz w kilku zdaniach, co chcesz zbudować, dla kogo i na jakie urządzenia. Odpowiem i powiem szczerze, jak to widzę, także wtedy, gdy uznam, że projekt nie jest dla mnie.</p><a class="bigm" href="mailto:${email}">${email}</a>`}
+function open(id){const m=msgs.find(x=>x.id===id);cur=m;read.add(id);
+ $('#rd').innerHTML=`<div class="hd"><div class="av" style="--c:${m.c}">${m.p&&m.p.icon?`<img src="${m.p.icon}" alt="">`:m.from[0]}</div><div><h2>${m.subj}</h2><div class="m"><b>${m.from}</b> · ideaapps &lt;${email}&gt;<br>Do: Ciebie · dziś</div></div><a class="rp" href="mailto:${email}?subject=${encodeURIComponent('Re: '+m.subj)}">↩ Odpowiedz</a></div><div class="bd" style="--c:${m.c}">${body(m)}</div>`;
+ drawBoxes();drawList()}
+$('#boxes').addEventListener('click',e=>{const b=e.target.closest('.mb');if(!b)return;box=b.dataset.k;drawBoxes();drawList();const f=msgs.find(m=>box==='all'||m.box===box);if(f)open(f.id)});
+$('#items').addEventListener('click',e=>{const i=e.target.closest('.it');if(i)open(i.dataset.id)});
+addEventListener('keydown',e=>{if(e.key!=='ArrowDown'&&e.key!=='ArrowUp')return;const l=msgs.filter(m=>box==='all'||m.box===box);let i=l.findIndex(m=>cur&&m.id===cur.id);i=Math.max(0,Math.min(l.length-1,i+(e.key==='ArrowDown'?1:-1)));e.preventDefault();open(l[i].id);document.querySelector('.it.on')?.scrollIntoView({block:'nearest'})});
+drawBoxes();drawList();open(projects[0].id);
+</script>
+</body>
+</html>

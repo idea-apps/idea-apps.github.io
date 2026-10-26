@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Pipeline (wariant 28)</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#16181d;--soft:#6a7080;--line:#e1e4ea;--ok:#1a9d55;--run:#2f6bff;--wait:#b5bac6}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 -apple-system,"SF Pro Text",Inter,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.mono{font-family:"SF Mono",ui-monospace,Menlo,monospace}
+.top{background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+.top .w{display:flex;align-items:center;justify-content:space-between;height:58px}
+.w{max-width:1180px;margin:0 auto;padding:0 24px}
+.top b{display:flex;gap:10px;align-items:center}.top b i{width:20px;height:20px;border-radius:6px;background:var(--ink)}
+.top nav{display:flex;gap:22px;font-size:14.5px;color:var(--soft)}.top nav a:hover{color:var(--ink)}
+.hero{padding:70px 0 30px}
+.hero .crumb{font-size:13.5px;color:var(--soft);margin-bottom:14px}
+.hero h1{font-size:clamp(36px,5.6vw,76px);line-height:1;letter-spacing:-.05em;font-weight:700;max-width:13em}
+.hero p{margin:18px 0 26px;max-width:36em;color:#434857;font-size:19px}
+.run{display:inline-flex;align-items:center;gap:10px;border:0;background:var(--ink);color:#fff;font:600 16px inherit;padding:14px 24px;border-radius:12px;cursor:pointer;transition:.15s}
+.run:hover{transform:translateY(-2px);box-shadow:0 10px 24px -8px rgba(0,0,0,.4)}.run:disabled{opacity:.5;cursor:default;transform:none;box-shadow:none}
+.panel{display:grid;grid-template-columns:1.1fr 1fr;gap:20px;margin:30px 0 70px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px}
+.card h3{font-size:13px;text-transform:uppercase;letter-spacing:.09em;color:var(--soft);margin-bottom:18px;display:flex;justify-content:space-between}
+.stg{display:grid;grid-template-columns:34px 1fr;gap:14px;position:relative;padding-bottom:22px}
+.stg:last-child{padding-bottom:0}
+.stg::before{content:"";position:absolute;left:16px;top:34px;bottom:-2px;width:2px;background:var(--line)}
+.stg:last-child::before{display:none}
+.stg.done::before{background:var(--ok)}
+.dot{width:34px;height:34px;border-radius:50%;border:2px solid var(--wait);display:grid;place-items:center;font-size:14px;font-weight:700;color:var(--wait);background:#fff;transition:.3s;z-index:1}
+.stg.run .dot{border-color:var(--run);color:var(--run);box-shadow:0 0 0 6px rgba(47,107,255,.14);animation:pl 1.2s infinite}
+.stg.done .dot{background:var(--ok);border-color:var(--ok);color:#fff}
+@keyframes pl{50%{box-shadow:0 0 0 10px rgba(47,107,255,0)}}
+.stg b{display:block;font-size:18px;letter-spacing:-.02em;color:var(--wait);transition:.3s}
+.stg.run b,.stg.done b{color:var(--ink)}
+.stg span{display:block;font-size:14.5px;color:var(--soft);max-height:0;overflow:hidden;opacity:0;transition:.4s}
+.stg.run span,.stg.done span,.stg.open span{max-height:80px;opacity:1}
+.stg{cursor:pointer}
+.bar{height:3px;background:var(--line);border-radius:3px;margin-top:8px;overflow:hidden;opacity:0}
+.stg.run .bar{opacity:1}.bar i{display:block;height:100%;width:0;background:var(--run)}
+.log{background:#0f1218;color:#c9d1e0;border-radius:18px;padding:22px;font:13px/1.75 "SF Mono",ui-monospace,Menlo,monospace;height:100%;min-height:380px;overflow:auto;max-height:440px}
+.log .ok{color:#4ade80}.log .cy{color:#7cc4ff}.log .dm{color:#6b7385}.log .yl{color:#ffd166}
+.log .ln{animation:ln .2s}@keyframes ln{from{opacity:0;transform:translateX(-6px)}}
+.sec{margin-bottom:70px}
+.sec h2{font-size:clamp(28px,3.4vw,42px);letter-spacing:-.04em;font-weight:700;margin-bottom:6px}
+.sec .sub{color:var(--soft);margin-bottom:24px}
+.tbl{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.tr{display:grid;grid-template-columns:34px 1.4fr 1.4fr 1.2fr 120px;gap:14px;align-items:center;padding:14px 22px;border-top:1px solid var(--line);transition:.15s}
+.tr:first-child{border:0}.tr.h{font-size:12.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--soft);padding-top:12px;padding-bottom:12px;background:#fafbfc}
+.tr:not(.h):hover{background:#f4f7ff}
+.st{width:22px;height:22px;border-radius:50%;background:var(--ok);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:800}
+.tr .nm{display:flex;gap:12px;align-items:center;font-weight:600}
+.tr .nm .ico,.tr .nm .ico-fallback{width:34px;height:34px;border-radius:9px;object-fit:cover;display:grid;place-items:center;font:700 16px sans-serif;color:#fff}
+.tr .t{color:#434857;font-size:14.5px}.tr .pl{color:var(--soft);font-size:14px}
+.tr a.l{font-weight:600;color:var(--run);font-size:14px;text-align:right}.tr a.l:hover{text-decoration:underline}
+.svc{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.svc div{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px}
+.svc b{display:block;font-size:18px;letter-spacing:-.02em;margin-bottom:6px}.svc span{color:var(--soft);font-size:15px}
+.fin{background:var(--ink);color:#fff;border-radius:24px;padding:60px 40px;text-align:center;margin-bottom:50px}
+.fin h2{font-size:clamp(34px,5vw,64px);letter-spacing:-.05em;font-weight:700;margin-bottom:10px}
+.fin p{color:#aab0bf;margin-bottom:24px}
+.fin a{display:inline-block;background:#fff;color:var(--ink);font-weight:700;padding:14px 26px;border-radius:12px}
+footer{text-align:center;color:var(--soft);font-size:14px;padding-bottom:40px}
+@media(max-width:900px){.panel{grid-template-columns:1fr}.svc{grid-template-columns:1fr 1fr}.tr{grid-template-columns:26px 1fr 90px}.tr .t,.tr .pl{display:none}.top nav{display:none}}
+</style>
+</head>
+<body>
+<div class="top"><div class="w"><b><i></i>ideaapps</b><nav><a href="#proces">Proces</a><a href="#builds">Historia buildów</a><a href="#uslugi">Usługi</a><a href="#kontakt">Kontakt</a></nav></div></div>
+<div class="w">
+<header class="hero"><div class="crumb mono">ideaapps / Twoja-aplikacja / pipeline</div>
+<h1>Od pomysłu do App Store. Zobacz, jak to buduję.</h1>
+<p>Jestem Marcin, niezależny developer iOS i tvOS. Wszystko, co widzisz poniżej, robię sam: od rozmowy o pomyśle po publikację i wsparcie. Uruchom pipeline i zobacz kolejne etapy.</p>
+<button class="run" id="run">▶ Uruchom pipeline</button></header>
+
+<div class="panel" id="proces">
+<div class="card"><h3><span>Etapy</span><span class="mono" id="stt">oczekuje</span></h3><div id="stages"></div></div>
+<div class="log" id="log"><span class="dm">$ ideaapps build --target "Twoja aplikacja"</span><br><span class="dm"># naciśnij „Uruchom pipeline”</span></div>
+</div>
+
+<section class="sec" id="builds"><h2>Historia buildów</h2><p class="sub">Osiem udanych wydań w App Store. Wszystkie od A do Z przeze mnie.</p>
+<div class="tbl" id="tbl"></div></section>
+
+<section class="sec" id="uslugi"><h2>Co mogę zbudować</h2><p class="sub">Cztery typy zleceń.</p><div class="svc" id="svc"></div></section>
+
+<section class="fin" id="kontakt"><h2>Zacznij nowy build.</h2><p>Opisz w kilku zdaniach pomysł. Odpowiem i powiem szczerze, jak to widzę.</p><a id="mail" href="#"></a></section>
+<footer>© 2026 ideaapps · 10+ lat iOS i tvOS</footer>
+</div>
+<script src="data.js"></script>
+<script>
+const {projects,services,email}=IDEA;
+const $=s=>document.querySelector(s);
+$('#mail').href='mailto:'+email;$('#mail').textContent=email;
+const stages=[
+ {t:'Pomysł i zakres',d:'Rozmowa, cele, użytkownicy. Ustalamy, co naprawdę trzeba zbudować w pierwszej wersji.',log:['Reading brief.md','Defining MVP scope','Mapping user flows']},
+ {t:'Projekt interfejsu',d:'Ekrany i interakcje zgodne z wytycznymi Apple, gotowe do implementacji.',log:['Designing screens (iPhone, iPad)','Applying Human Interface Guidelines','Exporting assets']},
+ {t:'Kod',d:'Natywny Swift i SwiftUI. Architektura, dane, AI tam, gdzie ma to sens.',log:['Compiling '+projects[0].name+'.swift','Compiling '+projects[3].name+'.swift','Linking frameworks','Build succeeded']},
+ {t:'Testy i TestFlight',d:'Testy, poprawki i wersje beta do sprawdzenia na prawdziwych urządzeniach.',log:['Running unit tests','Archiving for TestFlight','Uploading build to App Store Connect']},
+ {t:'Publikacja',d:'Opis, zrzuty ekranu, zgodność z wymogami sklepu i wysyłka do recenzji.',log:['Preparing metadata','Submitting for review','Ready for Sale']},
+ {t:'Wsparcie',d:'Poprawki, aktualizacje, nowe wersje systemu. Aplikacja żyje po premierze.',log:['Monitoring crashes','Planning next release']}];
+$('#stages').innerHTML=stages.map((s,i)=>`<div class="stg" data-i="${i}"><div class="dot">${i+1}</div><div><b>${s.t}</b><span>${s.d}</span><div class="bar"><i></i></div></div></div>`).join('');
+document.querySelectorAll('.stg').forEach(e=>e.onclick=()=>e.classList.toggle('open'));
+$('#tbl').innerHTML=`<div class="tr h"><span></span><span>Aplikacja</span><span>Opis</span><span>Platformy</span><span></span></div>`+projects.map(p=>`<div class="tr"><span class="st">✓</span><span class="nm">${IDEA.iconHTML(p,'')}${p.name}</span><span class="t">${p.tag}</span><span class="pl">${p.platforms}</span><a class="l" href="${p.url}" target="_blank" rel="noopener">App Store ↗</a></div>`).join('');
+$('#svc').innerHTML=services.map(s=>`<div><b>${s.t}</b><span>${s.d}</span></div>`).join('');
+const log=$('#log');let busy=false;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const add=(h)=>{const d=document.createElement('div');d.className='ln';d.innerHTML=h;log.appendChild(d);log.scrollTop=log.scrollHeight};
+$('#run').onclick=async()=>{if(busy)return;busy=true;$('#run').disabled=true;log.innerHTML='';
+ document.querySelectorAll('.stg').forEach(e=>e.classList.remove('done','run'));$('#stt').textContent='w toku';
+ add('<span class="dm">$ ideaapps build --target "Twoja aplikacja"</span>');
+ for(let i=0;i<stages.length;i++){const el=document.querySelectorAll('.stg')[i];el.classList.add('run');add(`<span class="cy">▸ [${i+1}/${stages.length}] ${stages[i].t}</span>`);
+  const bar=el.querySelector('.bar i');bar.style.transition='none';bar.style.width='0';bar.getBoundingClientRect();bar.style.transition='width '+(stages[i].log.length*.55)+'s linear';bar.style.width='100%';
+  for(const l of stages[i].log){await sleep(520);add(`  <span class="dm">${l}</span>`)}
+  await sleep(250);el.classList.remove('run');el.classList.add('done');add('  <span class="ok">✓ ok</span>')}
+ add('<br><span class="ok">** PIPELINE SUCCEEDED **</span>');add(`<span class="yl">→ Twoja aplikacja jest w App Store. Napisz: ${email}</span>`);
+ $('#stt').textContent='zakończono';$('#run').disabled=false;$('#run').textContent='↻ Uruchom ponownie';busy=false};
+</script>
+</body>
+</html>

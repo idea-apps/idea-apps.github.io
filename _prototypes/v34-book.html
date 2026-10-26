@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Książka (wariant 34)</title>
+<style>
+:root{--paper:#f7f2e6;--ink:#231f1a;--cover:#1e3a34;--gold:#d8b25a}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{background:radial-gradient(70% 70% at 50% 40%,#3a3029,#17120f);color:var(--ink);font:16px/1.5 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;-webkit-font-smoothing:antialiased;user-select:none}
+.desk{perspective:2400px;height:min(80vh,640px);display:flex;align-items:center}
+#fit{transform-origin:center}
+.book{position:relative;width:440px;height:600px;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.6,0,.2,1);transform:translateX(var(--sx,0px)) rotateX(8deg)}
+.leaf{position:absolute;left:0;top:0;width:440px;height:600px;transform-origin:left center;transform-style:preserve-3d;transition:transform 1s cubic-bezier(.5,0,.2,1)}
+.leaf.f{transform:rotateY(-180deg)}
+.pg{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--paper);overflow:hidden;padding:36px 34px}
+.pg.fr{border-radius:2px 8px 8px 2px;box-shadow:inset 6px 0 14px -6px rgba(0,0,0,.28),0 12px 30px rgba(0,0,0,.35)}
+.pg.bk{transform:rotateY(180deg);border-radius:8px 2px 2px 8px;box-shadow:inset -6px 0 14px -6px rgba(0,0,0,.28)}
+.pg::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 5px,rgba(120,90,40,.025) 5px 6px);pointer-events:none}
+.cover{background:var(--cover);color:var(--gold);display:flex;flex-direction:column;justify-content:space-between;align-items:center;text-align:center;padding:50px 36px;border:0}
+.cover::before{content:"";position:absolute;inset:16px;border:2px solid var(--gold);border-radius:4px;opacity:.7}
+.cover h1{font:700 54px/.95 Georgia,serif;letter-spacing:-.02em;color:#f1dfae}
+.cover .s{font-style:italic;letter-spacing:.06em;font-size:15px}
+.cover .o{font-size:44px}
+.back{background:var(--cover)}
+.pg h2{font:700 38px/1 Georgia,serif;letter-spacing:-.025em;margin:6px 0 10px}
+.pg .k{font:italic 14px Georgia,serif;color:#8b7a5a;letter-spacing:.04em}
+.pg p{font-size:16.5px;margin-bottom:10px;hyphens:auto;text-align:justify}
+.pg .pn{position:absolute;bottom:16px;left:0;right:0;text-align:center;font:italic 13px Georgia;color:#8b7a5a}
+.pg .drop::first-letter{float:left;font:700 56px/.8 Georgia;padding:6px 8px 0 0}
+.shotp{display:grid;place-items:center;background:var(--c);padding:0}
+.shotp img.s{width:62%;border-radius:26px;box-shadow:0 20px 40px rgba(0,0,0,.45);transform:rotate(-3deg)}
+.shotp .ico,.shotp .ico-fallback{width:170px;height:170px;border-radius:23%;object-fit:cover;display:grid;place-items:center;font:800 84px sans-serif;color:#fff;box-shadow:0 20px 40px rgba(0,0,0,.4);transform:rotate(-4deg)}
+.shotp .cap{position:absolute;left:20px;bottom:18px;color:rgba(255,255,255,.85);font:italic 14px Georgia;z-index:2}
+.shotp::after{display:none}
+.lk{display:inline-block;margin-top:8px;border:2px solid var(--ink);padding:7px 18px;font:700 14px Georgia;text-decoration:none;color:var(--ink);letter-spacing:.04em}
+.lk:hover{background:var(--ink);color:var(--paper)}
+.svp div{padding:9px 0;border-bottom:1px solid #d9cfb7}.svp b{display:block;font-size:17px}.svp span{font-size:14.5px;color:#5a5140}
+.nav{display:flex;gap:16px;align-items:center;margin-top:22px;color:#d8c9a8;font:italic 15px Georgia}
+.nav button{all:unset;cursor:pointer;width:42px;height:42px;border:1px solid rgba(216,201,168,.5);border-radius:50%;display:grid;place-items:center;font-size:20px}
+.nav button:hover{background:rgba(216,201,168,.15)}
+.hl{position:fixed;top:18px;left:0;right:0;text-align:center;color:#d8c9a8;font:italic 14px Georgia;letter-spacing:.08em}
+.ch{display:flex;gap:6px;margin-top:8px}.ch button{all:unset;cursor:pointer;width:9px;height:9px;border-radius:50%;background:rgba(216,201,168,.3)}.ch button.on{background:var(--gold)}
+</style>
+</head>
+<body>
+<div class="hl">ideaapps — Marcin Polak — portfolio w formie książki</div>
+<div class="desk"><div id="fit"><div class="book" id="book"></div></div></div>
+<div class="nav"><button id="pv">‹</button><span id="pn">Okładka</span><button id="nx">›</button></div>
+<div class="ch" id="ch"></div>
+<script src="data.js"></script>
+<script>
+const {projects,services,email}=IDEA;
+const N=projects.length;
+const leaves=[];
+const shotPg=p=>`<div class="pg shotp bk" style="--c:${p.color}"><span class="cap">${p.name}</span>${p.shot&&p.id!=='boxes'?`<img class="s" src="${p.shot}" alt="">`:IDEA.iconHTML(p,'')}</div>`;
+const textPg=(p,i)=>`<div class="pg fr"><div class="k">Rozdział ${i+1} · ${p.cat}</div><h2>${p.name}</h2><p class="drop"><b>${p.tag}.</b> ${p.desc}</p><p style="font-style:italic;color:#6a5e46">${p.platforms}</p><a class="lk" href="${p.url}" target="_blank" rel="noopener">Czytaj w App Store →</a></div>`;
+// leaf0: okładka | o autorze
+leaves.push({f:`<div class="pg cover"><div class="s">Marcin Polak przedstawia</div><div><div class="o">❦</div><h1>Aplikacje<br>na iOS<br>i tvOS</h1></div><div class="s">ideaapps · 2026</div></div>`,
+ b:`<div class="pg bk"><div class="k">O autorze</div><h2>Cześć, jestem Marcin.</h2><p class="drop">Od ponad dziesięciu lat piszę natywne aplikacje na platformy Apple: iPhone, iPad, Mac i Apple TV. Wcześniej przez kilka lat robiłem to samo na Androidzie.</p><p>Prowadzę jednoosobową firmę ideaapps. Sam projektuję, programuję i wydaję aplikacje, a ostatnio dokładam do nich sztuczną inteligencję.</p><p>Przewracaj strony, żeby poznać osiem aplikacji, które już leżą w App Store.</p></div>`});
+// leaf1: spis treści | zrzut app0
+leaves.push({f:`<div class="pg fr"><div class="k">Spis treści</div><h2>Aplikacje</h2><div class="svp">${projects.map((p,i)=>`<div><b><a href="#" data-j="${i}" style="color:inherit;text-decoration:none">${i+1}. ${p.name}</a></b><span>${p.tag}</span></div>`).join('')}</div></div>`,b:shotPg(projects[0])});
+// leaf k (2..N): tekst app k-2 | zrzut app k-1
+for(let k=2;k<=N;k++)leaves.push({f:textPg(projects[k-2],k-2),b:shotPg(projects[k-1])});
+// leaf N+1: tekst ostatniej | usługi
+leaves.push({f:textPg(projects[N-1],N-1),b:`<div class="pg bk"><div class="k">Usługi</div><h2>Co mogę dla Ciebie zbudować</h2><div class="svp">${services.map(s=>`<div><b>${s.t}</b><span>${s.d}</span></div>`).join('')}</div></div>`});
+// leaf N+2: kontakt | tył okładki
+leaves.push({f:`<div class="pg fr"><div class="k">Epilog</div><h2>Masz pomysł na aplikację?</h2><p class="drop">Opisz w kilku zdaniach, co chcesz zbudować. Odpowiem i powiem szczerze, jak to widzę.</p><p>Pierwsza rozmowa nic nie kosztuje.</p><a class="lk" href="mailto:${email}">${email}</a></div>`,b:`<div class="pg bk back"><div style="color:var(--gold);display:grid;place-items:center;height:100%;text-align:center;font-size:20px;font-style:italic">Koniec.<br>Dziękuję za lekturę.<br><span style="font-size:42px">❦</span></div></div>`});
+const T=leaves.length;let p=0;
+const book=document.getElementById('book');
+book.innerHTML=leaves.map((l,i)=>`<div class="leaf" data-i="${i}"><div class="pg-wrap">${l.f}${l.b}</div></div>`).join('');
+document.querySelectorAll('.pg-wrap').forEach(w=>{w.style.cssText='position:absolute;inset:0;transform-style:preserve-3d'});
+const names=['Okładka','O autorze',...projects.map(x=>x.name),'Usługi','Kontakt','Koniec'];
+document.getElementById('ch').innerHTML=Array.from({length:T+1},(_,i)=>`<button data-i="${i}"></button>`).join('');
+function upd(){document.querySelectorAll('.leaf').forEach((el,i)=>{const f=i<p;el.classList.toggle('f',f);el.style.zIndex=f?i+1:T-i});
+ book.style.setProperty('--sx',p===0?'0px':p===T?'440px':'220px');
+ document.getElementById('pn').textContent=p===0?'Okładka':p===T?'Koniec':'Strona '+(p*2)+'–'+(p*2+1)+' z '+(T*2);
+ document.querySelectorAll('#ch button').forEach((b,i)=>b.classList.toggle('on',i===p))}
+const go=n=>{p=Math.max(0,Math.min(T,n));upd()};
+document.getElementById('nx').onclick=()=>go(p+1);document.getElementById('pv').onclick=()=>go(p-1);
+document.getElementById('ch').onclick=e=>{const b=e.target.closest('button');if(b)go(+b.dataset.i)};
+book.addEventListener('click',e=>{const a=e.target.closest('[data-j]');if(a){e.preventDefault();e.stopImmediatePropagation();go(+a.dataset.j+2)}},true);
+addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(p+1);if(e.key==='ArrowLeft')go(p-1)});
+book.addEventListener('click',e=>{if(e.target.closest('a'))return;const r=book.getBoundingClientRect();if(e.clientX>r.left+r.width*(p===0?.5:p===T?1:.5)||p===0)go(p+1);else go(p-1)});
+function fit(){const s=Math.min(1,(innerWidth-30)/900,(innerHeight-170)/640);document.getElementById('fit').style.transform=`scale(${s})`;document.querySelector('.desk').style.height=(640*s)+'px'}
+addEventListener('resize',fit);fit();upd();
+</script>
+</body>
+</html>

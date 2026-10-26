@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Metro (wariant 30)</title>
+<style>
+:root{--bg:#fbfaf6;--ink:#161616;--soft:#6e6c66;--l1:#0a84ff;--l2:#ff8a00;--l3:#1fb35a;--l4:#9a9a9a}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 "Helvetica Neue",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.w{max-width:1240px;margin:0 auto;padding:0 28px}
+.hd{display:flex;justify-content:space-between;align-items:center;padding:24px 0;border-bottom:3px solid var(--ink)}
+.hd b{font-size:26px;letter-spacing:-.04em;display:flex;gap:10px;align-items:center}
+.hd b i{width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font:700 16px Helvetica;font-style:normal}
+.hd span{font-size:14px;color:var(--soft)}
+.title{padding:44px 0 8px;display:grid;grid-template-columns:1fr auto;align-items:end;gap:20px}
+.title h1{font-size:clamp(36px,6vw,84px);line-height:.95;letter-spacing:-.055em;font-weight:800;max-width:11em}
+.title p{max-width:22em;color:#4a4944;font-size:17px}
+.leg{display:flex;gap:22px;flex-wrap:wrap;font-size:14px;font-weight:600;margin:20px 0 10px}
+.leg span{display:flex;gap:8px;align-items:center}.leg i{width:30px;height:9px;border-radius:5px;background:var(--c)}
+.leg i.d{background:repeating-linear-gradient(90deg,var(--c) 0 6px,transparent 6px 10px)}
+.map{overflow-x:auto;border:2px solid var(--ink);border-radius:20px;background:#fff;position:relative}
+.map svg{display:block;min-width:900px;width:100%;height:auto}
+.st{cursor:pointer}
+.st circle{transition:.15s}
+.st:hover circle.o,.st.on circle.o{r:11;fill:var(--ink)}
+.st:hover circle.o+circle,.st.on circle.o+circle{fill:#fff}
+.st text{font:700 13px "Helvetica Neue",Helvetica,sans-serif;fill:var(--ink)}
+.st.on text{font-size:14px}
+.det{display:grid;grid-template-columns:1fr 280px;gap:26px;border:2px solid var(--ink);border-radius:20px;padding:26px;margin:20px 0 70px;align-items:center;background:#fff;min-height:200px}
+.det .tag{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.det .tag span{font-size:12px;font-weight:700;color:#fff;padding:3px 11px;border-radius:99px}
+.det h2{font-size:clamp(30px,4vw,52px);letter-spacing:-.05em;line-height:1;margin-bottom:6px}
+.det p{color:#3b3a36;max-width:34em;margin-bottom:14px}
+.det a.b{display:inline-block;background:var(--ink);color:#fff;font-weight:700;padding:11px 22px;border-radius:99px}
+.det a.b:hover{background:var(--l1)}
+.det .im{height:240px;border-radius:16px;background:var(--c,#eee);display:grid;place-items:center;overflow:hidden}
+.det .im img.s{height:112%;margin-top:28px;border-radius:22px 22px 0 0;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.det .im .ico,.det .im .ico-fallback{width:110px;height:110px;border-radius:24%;object-fit:cover;display:grid;place-items:center;font:800 54px Helvetica;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.sec h2.h{font-size:clamp(28px,3.6vw,46px);letter-spacing:-.05em;margin-bottom:6px;font-weight:800}
+.sec .sub{color:var(--soft);margin-bottom:22px}
+.tix{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:70px}
+.tk{background:#fff;border:2px solid var(--ink);border-radius:16px;padding:20px 20px 22px;position:relative}
+.tk::before,.tk::after{content:"";position:absolute;top:56px;width:18px;height:18px;border-radius:50%;background:var(--bg);border:2px solid var(--ink)}
+.tk::before{left:-11px;clip-path:inset(0 0 0 50%)}.tk::after{right:-11px;clip-path:inset(0 50% 0 0)}
+.tk .n{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--c);color:#fff;font-weight:800;margin-bottom:28px}
+.tk b{display:block;font-size:20px;letter-spacing:-.03em;line-height:1.1;margin-bottom:6px}.tk span{font-size:14.5px;color:#4a4944}
+.end{background:var(--ink);color:#fff;border-radius:24px;padding:50px 40px;display:grid;grid-template-columns:auto 1fr;gap:30px;align-items:center;margin-bottom:40px}
+.end .sym{width:90px;height:90px;border-radius:50%;background:#fff;color:var(--ink);display:grid;place-items:center;font:800 26px Helvetica;border:8px solid var(--l1)}
+.end h2{font-size:clamp(28px,4vw,52px);letter-spacing:-.05em;line-height:1}
+.end p{color:#bdbbb3;margin:8px 0 14px}
+.end a{font-size:clamp(18px,2.6vw,32px);font-weight:700;letter-spacing:-.03em;border-bottom:3px solid var(--l2);overflow-wrap:anywhere}
+footer{padding-bottom:40px;color:var(--soft);font-size:14px;display:flex;justify-content:space-between}
+@media(max-width:860px){.title{grid-template-columns:1fr}.det{grid-template-columns:1fr}.tix{grid-template-columns:1fr 1fr}.end{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="w">
+<div class="hd"><b><i>M</i>ideaapps</b><span>Mapa linii · wydanie 2026</span></div>
+<div class="title"><h1>Aplikacje na każdej linii Apple.</h1><p>Marcin Polak. Ponad 10 lat na liniach iOS i tvOS, a wcześniej Androida. Każda stacja to aplikacja, którą zbudowałem i wypuściłem. Kliknij przystanek.</p></div>
+<div class="leg"><span style="--c:var(--l1)"><i></i>Linia iPhone</span><span style="--c:var(--l2)"><i></i>Linia iPad</span><span style="--c:var(--l3)"><i></i>Linia Mac</span><span style="--c:var(--l4)"><i class="d"></i>Linia tvOS (zlecenia i projekty komercyjne)</span></div>
+<div class="map"><svg id="svg" viewBox="0 0 1200 520"></svg></div>
+<div class="det" id="det"></div>
+
+<section class="sec"><h2 class="h">Bilety, czyli usługi</h2><p class="sub">Dokąd mogę Cię zawieźć.</p><div class="tix" id="tix"></div></section>
+<div class="end"><div class="sym">K</div><div><h2>Stacja końcowa: Twoja aplikacja.</h2><p>Opisz pomysł w kilku zdaniach, a poprowadzę Cię od pierwszego szkicu po App Store.</p><a id="mail" href="#"></a></div></div>
+<footer><span>© 2026 ideaapps</span><span>Następna stacja: Twoja aplikacja</span></footer>
+</div>
+<script src="data.js"></script>
+<script>
+const {projects,services,email}=IDEA;
+const $=s=>document.querySelector(s);
+$('#mail').href='mailto:'+email;$('#mail').textContent=email;
+const lines=[{k:'iPhone',y:120,c:'#0a84ff'},{k:'iPad',y:230,c:'#ff8a00'},{k:'Mac',y:340,c:'#1fb35a'}];
+const tvY=450;
+const X0=90,X1=1110,dx=(X1-X0)/(projects.length-1);
+let s='';
+// lines
+lines.forEach(l=>s+=`<line x1="40" x2="1160" y1="${l.y}" y2="${l.y}" stroke="${l.c}" stroke-width="12" stroke-linecap="round"/><text x="40" y="${l.y-20}" font-family="Helvetica" font-weight="800" font-size="13" fill="${l.c}">${l.k.toUpperCase()}</text>`);
+s+=`<line x1="40" x2="1160" y1="${tvY}" y2="${tvY}" stroke="#9a9a9a" stroke-width="10" stroke-dasharray="14 12" stroke-linecap="round"/><text x="40" y="${tvY-18}" font-family="Helvetica" font-weight="800" font-size="13" fill="#8a8a8a">TVOS</text>`;
+// stations
+projects.forEach((p,i)=>{const x=X0+i*dx;const on=lines.filter(l=>p.platforms.includes(l.k));
+ const ys=on.map(l=>l.y);
+ if(ys.length>1)s+=`<line x1="${x}" x2="${x}" y1="${Math.min(...ys)}" y2="${Math.max(...ys)}" stroke="#161616" stroke-width="6"/>`;
+ s+=`<g class="st" data-i="${i}">`;
+ on.forEach(l=>{s+=`<circle class="o" cx="${x}" cy="${l.y}" r="${ys.length>1?10:9}" fill="#fff" stroke="#161616" stroke-width="4"/><circle cx="${x}" cy="${l.y}" r="3.5" fill="${ys.length>1?'#161616':'#fff'}"/>`});
+ const top=Math.min(...ys);
+ s+=`<text transform="translate(${x+4},${top-26}) rotate(-38)" >${p.name}</text><rect x="${x-24}" y="${top-26}" width="48" height="${Math.max(...ys)-top+52}" fill="transparent"/></g>`});
+// tv station
+s+=`<g><circle cx="600" cy="${tvY}" r="10" fill="#fff" stroke="#9a9a9a" stroke-width="4"/><text x="600" y="${tvY+36}" text-anchor="middle" font-family="Helvetica" font-weight="700" font-size="13" fill="#6e6c66">Apple TV: doświadczenie z projektów komercyjnych</text></g>`;
+$('#svg').innerHTML=s;
+function show(i){const p=projects[i];document.querySelectorAll('.st').forEach(e=>e.classList.toggle('on',+e.dataset.i===i));
+ const tags=p.platforms.split(' · ').map(t=>{const l=lines.find(x=>t.includes(x.k));return `<span style="background:${l?l.c:'#555'}">${t}</span>`}).join('');
+ $('#det').innerHTML=`<div><div class="tag">${tags}<span style="background:#161616">${p.cat}</span></div><h2>${p.name}</h2><p><b>${p.tag}.</b> ${p.desc}</p><a class="b" href="${p.url}" target="_blank" rel="noopener">Wysiądź w App Store →</a></div>
+ <div class="im" style="--c:${p.color}">${p.shot&&p.id!=='boxes'?`<img class="s" src="${p.shot}" alt="">`:IDEA.iconHTML(p,'ico')}</div>`}
+$('#svg').addEventListener('click',e=>{const g=e.target.closest('.st');if(g)show(+g.dataset.i)});
+show(0);
+const cs=['#0a84ff','#ff8a00','#1fb35a','#161616'];
+$('#tix').innerHTML=services.map((t,i)=>`<div class="tk" style="--c:${cs[i]}"><div class="n">${i+1}</div><b>${t.t}</b><span>${t.d}</span></div>`).join('');
+</script>
+</body>
+</html>

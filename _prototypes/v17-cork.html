@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Tablica (wariant 17)</title>
+<style>
+:root{--cork:#b98a57}
+*{box-sizing:border-box;margin:0}
+body{min-height:100vh;color:#2b2118;font:18px/1.4 "Bradley Hand","Marker Felt","Segoe Print",cursive;-webkit-font-smoothing:antialiased;
+ background-color:var(--cork);
+ background-image:radial-gradient(rgba(70,40,10,.28) 1px,transparent 1.6px),radial-gradient(rgba(255,230,180,.22) 1px,transparent 1.8px),radial-gradient(rgba(70,40,10,.18) 2px,transparent 2.6px);
+ background-size:13px 13px,19px 19px,29px 29px;background-position:0 0,7px 5px,3px 11px;
+ box-shadow:inset 0 0 0 18px #6a4423,inset 0 0 40px 20px rgba(0,0,0,.35)}
+a{color:inherit;text-decoration:none}
+.w{max-width:1180px;margin:0 auto;padding:60px 46px 80px}
+.head{display:flex;justify-content:space-between;align-items:flex-start;gap:30px;flex-wrap:wrap;margin-bottom:30px}
+.tag{background:#f6efdc;padding:26px 34px 30px;transform:rotate(-1.6deg);box-shadow:3px 6px 14px rgba(40,20,0,.45);position:relative;max-width:640px}
+.tag h1{font:700 clamp(36px,5.6vw,64px)/1 "Bradley Hand","Marker Felt",cursive;letter-spacing:-.01em}
+.tag p{margin-top:10px;font-size:20px}
+.pin{position:absolute;top:-8px;left:50%;width:22px;height:22px;margin-left:-11px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff9a8a,#d02a1c 55%,#7a0f06);box-shadow:3px 5px 5px rgba(0,0,0,.45);z-index:2}
+.pin.b{background:radial-gradient(circle at 35% 30%,#9ccaff,#1f6fd1 55%,#0a3070)}.pin.g{background:radial-gradient(circle at 35% 30%,#a5f0b8,#26a049 55%,#0d5a25)}.pin.y{background:radial-gradient(circle at 35% 30%,#fff09a,#e6b800 55%,#7a6200)}
+.card{position:relative;box-shadow:3px 6px 14px rgba(40,20,0,.45)}
+.biz{background:#fffdf7;padding:22px 26px;transform:rotate(2.4deg);width:300px;font-family:Georgia,serif;font-size:16px;border-left:6px solid #1c1c1c}
+.biz b{display:block;font-size:22px}.biz span{display:block;color:#666;margin-bottom:10px;font-size:14px}
+.biz a{color:#b8321c;text-decoration:underline}
+.board{columns:3 300px;column-gap:44px;margin-top:20px}
+.pol{break-inside:avoid;display:block;background:#fcfaf4;padding:14px 14px 18px;margin:0 0 50px;transform:rotate(var(--r));transition:.25s;position:relative}
+.pol:hover{transform:rotate(0) scale(1.04) translateY(-6px);z-index:5;box-shadow:6px 16px 30px rgba(40,20,0,.55)}
+.pol .ph{background:var(--c);aspect-ratio:1/1.05;overflow:hidden;display:grid;place-items:center;box-shadow:inset 0 0 12px rgba(0,0,0,.35)}
+.pol .ph img.s{width:100%;height:100%;object-fit:cover;object-position:top}
+.pol .ph .ico,.pol .ph .ico-fallback{width:96px;height:96px;border-radius:23px;object-fit:cover;display:grid;place-items:center;font:800 46px sans-serif;color:#fff;box-shadow:0 8px 18px rgba(0,0,0,.35)}
+.pol h3{font:700 30px/1 "Bradley Hand","Marker Felt",cursive;margin:12px 0 2px}
+.pol p{font-size:17px;line-height:1.25}
+.pol small{display:block;margin-top:6px;font-size:15px;color:#a3351f}
+.note{break-inside:avoid;margin:0 0 50px;padding:26px 24px 22px;transform:rotate(var(--r));font-size:21px;line-height:1.25}
+.note h4{font:700 26px "Bradley Hand","Marker Felt",cursive;margin-bottom:6px;text-decoration:underline wavy rgba(0,0,0,.25);text-underline-offset:5px}
+.y{background:#ffe97a}.pk{background:#ffc3d6}.gr{background:#c5eeb0}.bl{background:#bfe0ff}
+.idx{break-inside:avoid;margin:0 0 50px;background:#fffefa;padding:30px 22px 20px;transform:rotate(var(--r));background-image:linear-gradient(transparent 31px,#a9c8e6 32px);background-size:100% 32px;border-top:30px solid #e8b9b0;line-height:32px;font-size:19px}
+.idx b{display:block;font-size:24px}
+footer{text-align:center;color:#fbe9cd;font-size:16px;margin-top:20px;text-shadow:0 1px 2px #0006}
+@media(max-width:700px){.w{padding:36px 22px}.pol{margin-bottom:40px}}
+</style>
+</head>
+<body>
+<div class="w">
+<div class="head">
+<div class="card tag"><i class="pin"></i><h1>Cześć, jestem Marcin!</h1><p>Robię aplikacje na iPhone’a, iPada, Maca i Apple TV. Ponad 10 lat doświadczenia. Poniżej to, co już przypiąłem do tablicy.</p></div>
+<div class="card biz"><i class="pin b"></i><b>Marcin Polak</b><span>iOS · tvOS · AI developer</span>ideaapps<br><a id="mail" href="#"></a></div>
+</div>
+<div class="board" id="board"></div>
+<footer>© 2026 ideaapps · przypięte pinezkami</footer>
+</div>
+<script src="data.js"></script>
+<script>
+const {projects,services,email}=IDEA;
+const m=document.getElementById('mail');m.href='mailto:'+email;m.textContent=email;
+const r=i=>((i*37)%9-4)*.55;const pins=['','b','g','y'];
+let h='';
+projects.forEach((p,i)=>{
+ h+=`<a class="card pol" style="--r:${r(i)}deg" href="${p.url}" target="_blank" rel="noopener"><i class="pin ${pins[i%4]}"></i>
+ <div class="ph" style="--c:${p.color}">${p.shot&&p.id!=='boxes'?`<img class="s" src="${p.shot}" alt="">`:IDEA.iconHTML(p,'ico')}</div>
+ <h3>${p.name}</h3><p>${p.tag}</p><small>${p.platforms} · App Store →</small></a>`;
+ if(i===1)h+=`<div class="card note y" style="--r:2deg"><i class="pin"></i><h4>Czym się zajmuję</h4>${services.map(s=>`• ${s.t}<br>`).join('')}</div>`;
+ if(i===4)h+=`<div class="card note pk" style="--r:-2.5deg"><i class="pin g"></i><h4>O mnie</h4>10+ lat z iOS i tvOS. Wcześniej Android. Teraz też AI. Wszystko sam, od pomysłu do sklepu.</div>`;
+ if(i===6)h+=`<div class="card idx" style="--r:1.5deg"><i class="pin y"></i><b>Masz pomysł?</b>Napisz, co chcesz zbudować. Odpiszę.<br><a href="mailto:${email}" style="color:#b8321c;text-decoration:underline">${email}</a></div>`});
+document.getElementById('board').innerHTML=h;
+</script>
+</body>
+</html>

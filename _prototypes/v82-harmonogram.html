@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Harmonogram (koncept 82)</title>
+<link rel="stylesheet" href="c.css">
+<style>
+body{min-height:100vh}
+.w{position:relative;z-index:5;max-width:1320px;margin:0 auto;padding:90px 4vw 60px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4vw;align-items:center}
+h1{font-size:clamp(36px,5.6vw,84px);line-height:.92;letter-spacing:-.06em;font-weight:900;margin:8px 0 12px}
+.lead{font-size:18px;opacity:.9;max-width:28em;margin-bottom:18px}
+.gantt{margin:20px 0 6px;position:relative}
+.wk{display:grid;grid-template-columns:150px repeat(9,1fr);gap:4px;font:700 12px "SF Mono",monospace;opacity:.75;margin-bottom:6px}
+.wk span{text-align:center}.wk span:first-child{text-align:left}
+.row{display:grid;grid-template-columns:150px repeat(9,1fr);gap:4px;align-items:center;margin-bottom:5px;font-weight:700;font-size:14.5px}
+.row div.bar{height:24px;border-radius:99px;background:var(--c);opacity:.35;transition:.35s}
+.row div.bar.on{opacity:1;box-shadow:0 0 16px var(--c)}
+.row div.e{height:24px}
+.ph0{position:absolute;top:22px;bottom:0;width:2px;background:#fff;z-index:4;pointer-events:none;box-shadow:0 0 12px #fff}
+.ph0::before{content:"";position:absolute;left:-6px;top:-6px;width:14px;height:14px;border-radius:50%;background:#fff}
+.sl input{-webkit-appearance:none;appearance:none;width:100%;height:10px;border-radius:10px;background:rgba(255,255,255,.28);outline:0;margin-top:12px}
+.sl input::-webkit-slider-thumb{-webkit-appearance:none;width:34px;height:34px;border-radius:50%;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.4);cursor:grab}
+.sl input::-moz-range-thumb{width:34px;height:34px;border-radius:50%;background:#fff;border:0}
+.now{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.26);border-radius:24px;padding:20px 24px;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);margin-top:18px;min-height:150px}
+.now h2{font-size:clamp(26px,3vw,40px);letter-spacing:-.05em;line-height:1;font-weight:900;margin:4px 0 8px}
+.now p{font-size:16px;opacity:.92}.now .tag{color:#ffe08a;opacity:1}
+.now ul{margin:8px 0 0 18px;font-size:15.5px;opacity:.95}
+.note{font-size:13px;opacity:.65;margin-top:8px}
+.ph{position:relative;height:min(70vh,640px);aspect-ratio:9/19.5;border-radius:46px;background:#0a0a0e;box-shadow:0 0 0 9px #0a0a0e,0 0 0 11px rgba(255,255,255,.22),0 60px 100px -20px rgba(0,0,0,.65);overflow:hidden;rotate:2deg}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+.ph .gr{position:absolute;inset:0;background-image:linear-gradient(rgba(60,90,200,.16) 1px,transparent 1px),linear-gradient(90deg,rgba(60,90,200,.16) 1px,transparent 1px);background-size:24px 24px;mix-blend-mode:multiply}
+.ph .badge{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);background:#fff;color:#14141c;font-weight:800;font-size:13px;padding:6px 16px;border-radius:99px;white-space:nowrap;z-index:3}
+@media(max-width:960px){.w{grid-template-columns:1fr}.ph{height:50vh;margin:0 auto}.wk,.row{grid-template-columns:90px repeat(9,1fr);font-size:12px}}
+</style></head><body>
+<div class="brand">ideaapps<small>Marcin Polak · iOS · tvOS · AI</small></div>
+<div class="w"><div><span class="tag" style="color:#ffe08a;opacity:1">Przykładowy harmonogram MVP</span><h1>Tydzień po tygodniu.</h1><p class="lead">Przeciągnij suwak i zobacz, co dzieje się w danym tygodniu. Z pomocą AI pierwszy działający prototyp pojawia się na początku, a nie na końcu.</p>
+<div class="gantt" id="gantt"><div class="ph0" id="ph0"></div></div><div class="sl"><input id="rng" type="range" min="1" max="9" step=".05" value="1"></div>
+<div class="now" id="now"></div><div class="note">Orientacyjnie: czas zależy od zakresu. Dokładny harmonogram ustalamy po rozmowie.</div></div>
+<div class="ph" id="ph"><img id="im" alt=""><div class="gr" id="gr"></div><div class="badge" id="bd"></div></div></div>
+<script src="data.js"></script><script src="flow.js"></script><script src="fx.js"></script><script src="ui.js"></script>
+<script>
+const {flow,projects}=IDEA,$=s=>document.querySelector(s);
+const au=IDEA.fx.aurora();const app=projects.find(p=>p.id==='kierbud');$('#im').src=app.shot;
+const span=[[1,1],[1,2],[2,6],[3,7],[6,7],[8,8],[9,9]]; // tygodnie dla etapów 0..6
+const txt={1:['Rozmowa i zakres','Ustalamy cele i ekrany. Powstaje jednostronicowy zakres.'],2:['Pierwszy prototyp','Klikalny prototyp na Twoim iPhonie. AI przyspiesza warianty ekranów.'],3:['Budowa, tydzień 1','Agenci piszą ekrany, ja kieruję i czytam. Pierwsza wersja w TestFlight.'],4:['Iteracja','Zbieramy Twoje uwagi z TestFlight i wprowadzamy poprawki.'],5:['Iteracja','Nowe funkcje, kolejna wersja do testów, szlifowanie.'],6:['Budowa kończy się','Zamykamy zakres. Zaczynają się testy jakości.'],7:['Testy i jakość','Testy na urządzeniach, prywatność, dostępność.'],8:['Premiera','Materiały sklepowe i recenzja Apple.'],9:['W App Store','Aplikacja opublikowana. Zaczyna się faza rozwoju.']};
+let g=`<div class="wk"><span></span>${[1,2,3,4,5,6,7,8,9].map(n=>`<span>T${n}</span>`).join('')}</div>`;
+flow.forEach((f,i)=>{const [a,b]=span[i];g+=`<div class="row" style="--c:${f.c}"><div>${f.t}</div>${[1,2,3,4,5,6,7,8,9].map(w=>w>=a&&w<=b?`<div class="bar" data-i="${i}" data-w="${w}"></div>`:'<div class="e"></div>').join('')}</div>`});
+$('#gantt').insertAdjacentHTML('beforeend',g);
+function place(v){const gr=$('#gantt'),first=gr.querySelector('.wk span:nth-child(2)').getBoundingClientRect(),last=gr.querySelector('.wk span:nth-child(10)').getBoundingClientRect(),g0=gr.getBoundingClientRect();
+ const x=first.left-g0.left+(v-1)/8*(last.left-first.left);$('#ph0').style.left=(x+first.width/2)+'px'}
+function render(){const v=+$('#rng').value,w=Math.min(9,Math.max(1,Math.round(v)));
+ document.querySelectorAll('.bar').forEach(b=>b.classList.toggle('on',+b.dataset.w===w));place(v);
+ const [t,d]=txt[w];const act=flow.filter((f,i)=>w>=span[i][0]&&w<=span[i][1]);
+ $('#now').innerHTML=`<span class="tag">Tydzień ${w}</span><h2>${t}</h2><p>${d}</p><ul>${act.map(f=>`<li><b>${f.t}:</b> ${f.get}</li>`).join('')}</ul>`;
+ const p=Math.min(1,(v-1)/8);const sk=v<2.2?Math.max(0,1-(v-1)/1.2):0;
+ const im=$('#im');im.style.filter=v<2.4?`grayscale(1) contrast(1.9) brightness(1.5) sepia(.25)`:v<6.5?`grayscale(${Math.max(0,.8-(v-2.4)/4*.8)}) saturate(${.6+(v-2.4)/4*.4}) contrast(1.05)`:'none';
+ $('#gr').style.opacity=v<2.2?1:Math.max(0,1-(v-2.2)/.8);
+ $('#bd').textContent=v<2.4?'Szkic':v<4?'Prototyp':v<8?'Wersja w TestFlight':'W App Store';
+ au.set(w>=8?app.color:flow[Math.min(6,w<=2?w-1:w<=6?2:w===7?4:5)].c,false)}
+$('#rng').oninput=render;addEventListener('resize',render);
+IDEA.ui.bar(null,'top');au.set('#4da3ff');setTimeout(render,50);render();
+</script></body></html>

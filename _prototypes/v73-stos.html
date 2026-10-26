@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Stos kart (wariant 73)</title>
+<style>
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden}
+body{font:18px/1.5 -apple-system,BlinkMacSystemFont,"SF Pro Display",Helvetica,sans-serif;color:#fff;-webkit-font-smoothing:antialiased;background:#0b0b12;user-select:none;touch-action:none}
+.brand{position:fixed;left:4vw;top:24px;z-index:30;font-weight:800;font-size:20px;letter-spacing:-.03em}
+.brand small{display:block;font-weight:500;font-size:13px;opacity:.7}
+.stage{position:fixed;inset:0;z-index:5;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;padding:0 4vw}
+.side{max-width:360px}
+.side.l{justify-self:end;text-align:right;padding-right:2vw}.side.r{padding-left:2vw}
+.side small{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;opacity:.7}
+.side .big{font:900 clamp(80px,12vw,200px)/.8 -apple-system,sans-serif;letter-spacing:-.09em;margin:6px 0 10px}
+.side p{font-size:17px;opacity:.85;line-height:1.4}
+.side .t{font-size:clamp(20px,2vw,28px);font-weight:700;letter-spacing:-.025em;line-height:1.2;margin:8px 0 14px;opacity:1}
+.side ul{list-style:none;padding:0;margin:0 0 18px}.side li{padding:7px 0 7px 26px;border-bottom:1px solid rgba(255,255,255,.2);position:relative;font-size:16px;line-height:1.35}
+.side li::before{content:"✓";position:absolute;left:0;top:7px;font-weight:800}
+.deck{position:relative;width:min(400px,78vw);height:min(600px,68vh)}
+.card{position:absolute;inset:0;border-radius:34px;overflow:hidden;background:var(--c);box-shadow:0 30px 70px -20px rgba(0,0,0,.65),inset 0 0 0 1.5px rgba(255,255,255,.22);transition:transform .6s cubic-bezier(.2,.9,.2,1),opacity .5s,filter .5s;cursor:grab;will-change:transform;touch-action:none}
+.card.drag{transition:none;cursor:grabbing}
+.card .top{position:absolute;left:0;right:0;top:0;padding:22px 24px;display:flex;justify-content:space-between;align-items:flex-start;z-index:3}
+.card .top .ico,.card .top .ico-fallback{width:58px;height:58px;border-radius:23%;object-fit:cover;display:grid;place-items:center;font:800 26px sans-serif;color:#fff;box-shadow:0 8px 20px rgba(0,0,0,.35)}
+.card .top .ct{font-size:12.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;background:rgba(0,0,0,.25);padding:5px 12px;border-radius:99px}
+.card .art{position:absolute;left:50%;top:90px;width:60%;margin-left:-30%;border-radius:28px 28px 0 0;box-shadow:0 20px 50px rgba(0,0,0,.5);z-index:2}
+.card .art img{display:block;width:100%;aspect-ratio:9/16;object-fit:cover;object-position:top;border-radius:28px 28px 0 0}
+.card .let{position:absolute;left:0;right:0;top:80px;text-align:center;font:900 260px/1 sans-serif;letter-spacing:-.08em;color:rgba(255,255,255,.28)}
+.card .bot{position:absolute;left:0;right:0;bottom:0;padding:70px 24px 24px;background:linear-gradient(transparent,rgba(0,0,0,.65) 55%);z-index:4}
+.card .bot h2{font-size:42px;letter-spacing:-.05em;line-height:1;font-weight:900}
+.card .bot p{font-size:15.5px;opacity:.92;margin-top:4px}
+.ctrl{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:20;display:flex;gap:14px;align-items:center}
+.ctrl button{all:unset;cursor:pointer;width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.35);display:grid;place-items:center;font-size:24px;backdrop-filter:blur(12px);transition:.2s}
+.ctrl button:hover{background:#fff;color:#111;transform:scale(1.08)}
+.ctrl .cnt{font:700 14px "SF Mono",monospace;min-width:70px;text-align:center;opacity:.85}
+.btn{all:unset;cursor:pointer;display:inline-flex;gap:10px;background:#fff;color:#14141c;font-weight:800;padding:13px 24px;border-radius:99px;font-size:16px;transition:.25s}
+.btn:hover{transform:translateY(-2px)}
+@media(max-width:1000px){.stage{grid-template-columns:1fr}.side{display:none}.deck{justify-self:center}}
+</style>
+</head>
+<body>
+<div class="brand">ideaapps<small>Marcin Polak · iOS · tvOS · AI</small></div>
+<main class="stage"><div class="side l" id="sl"></div><div class="deck" id="deck"></div><div class="side r" id="sr"></div></main>
+<div class="ctrl"><button id="pv" aria-label="Poprzednia">←</button><span class="cnt" id="cnt"></span><button id="nx" aria-label="Następna">→</button></div>
+<script src="data.js"></script><script src="fx.js"></script><script src="ui.js"></script>
+<script>
+const {projects}=IDEA;
+const $=s=>document.querySelector(s);
+const au=IDEA.fx.aurora();
+const N=projects.length;
+const deck=$('#deck');
+deck.innerHTML=projects.map((p,i)=>`<div class="card" data-i="${i}" style="--c:linear-gradient(160deg,${p.color},color-mix(in srgb,${p.color} 50%,#000))">
+<div class="top">${IDEA.iconHTML(p,'')}<span class="ct">${p.cat}</span></div>
+${p.shot&&p.id!=='boxes'?`<div class="art"><img src="${p.shot}" alt="" draggable="false"></div>`:`<div class="let">${p.name[0]}</div>`}
+<div class="bot"><h2>${p.name}</h2><p>${p.tag}</p></div></div>`).join('');
+const cards=[...deck.querySelectorAll('.card')];
+let ti=0;
+function layout(){cards.forEach((c,i)=>{const d=(i-ti+N)%N;c.classList.remove('drag');
+ if(d>=4){c.style.opacity=0;c.style.transform=`translateY(60px) scale(.8)`;c.style.zIndex=0;c.style.pointerEvents='none';return}
+ c.style.opacity=1;c.style.pointerEvents=d===0?'auto':'none';c.style.zIndex=10-d;
+ c.style.transform=`translateY(${d*-22}px) translateX(${d*(d%2?10:-10)}px) scale(${1-d*.06}) rotate(${d===0?0:(d%2?3:-3)*d*.6}deg)`;c.style.filter=`brightness(${1-d*.16})`})}
+function side(){const p=projects[ti];
+ $('#sl').innerHTML=`<small>${p.cat}</small><div class="big">${String(ti+1).padStart(2,'0')}</div><p>${p.platforms}</p>`;
+ $('#sr').innerHTML=`<small>Dla</small><div class="t">${p.who}</div><ul>${(p.feats||[]).slice(0,3).map(f=>`<li>${f}</li>`).join('')}</ul><button class="btn" id="more">Szczegóły →</button>`;
+ $('#more').onclick=()=>IDEA.ui.app(p);
+ $('#cnt').textContent=`${ti+1} / ${N}`;au.set(p.color)}
+function next(dir){const c=cards[ti];c.style.transition='transform .55s cubic-bezier(.5,0,.8,.4),opacity .5s';c.style.transform=`translateX(${dir*130}vw) rotate(${dir*28}deg)`;c.style.opacity=0;
+ ti=(ti+(dir>0?1:-1)+N)%N;if(dir<0){/* back: bring previous in */}
+ setTimeout(()=>{layout();},180);side()}
+function prev(){ti=(ti-1+N)%N;const c=cards[ti];c.style.transition='none';c.style.transform='translateX(-130vw) rotate(-28deg)';c.style.opacity=1;c.getBoundingClientRect();c.style.transition='';layout();side()}
+$('#nx').onclick=()=>next(1);$('#pv').onclick=prev;
+addEventListener('keydown',e=>{if(e.key==='ArrowRight')next(1);if(e.key==='ArrowLeft')prev()});
+// drag ti card
+let d=null;
+deck.addEventListener('pointerdown',e=>{const c=e.target.closest('.card');if(!c||+c.dataset.i!==ti)return;d={c,x:e.clientX,y:e.clientY,m:0};c.classList.add('drag');c.setPointerCapture(e.pointerId)});
+deck.addEventListener('pointermove',e=>{if(!d)return;const dx=e.clientX-d.x,dy=e.clientY-d.y;d.m=Math.max(d.m,Math.abs(dx)+Math.abs(dy));d.dx=dx;d.c.style.transform=`translate(${dx}px,${dy*.4}px) rotate(${dx*.06}deg)`});
+function end(){if(!d)return;const dx=d.dx||0,m=d.m,c=d.c;c.classList.remove('drag');d=null;
+ if(m<8){IDEA.ui.app(projects[ti]);layout();return}
+ if(Math.abs(dx)>110){c.style.transition='transform .5s cubic-bezier(.5,0,.8,.4),opacity .5s';c.style.transform=`translate(${Math.sign(dx)*130}vw,0) rotate(${Math.sign(dx)*28}deg)`;c.style.opacity=0;ti=(ti+1)%N;setTimeout(layout,160);side()}else layout()}
+deck.addEventListener('pointerup',end);deck.addEventListener('pointercancel',end);
+IDEA.ui.bar(null,'ti');layout();side();
+</script>
+</body>
+</html>

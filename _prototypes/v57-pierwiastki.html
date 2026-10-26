@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Układ okresowy (wariant 57)</title>
+<style>
+:root{--bg:#f2f3f5;--ink:#15171c;--soft:#667085;--ln:#d9dce2;--sel:#15171c}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 -apple-system,"SF Pro Text",Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.hd{display:flex;justify-content:space-between;align-items:flex-end;padding:26px 3vw 12px;gap:20px;flex-wrap:wrap}
+.hd h1{font-size:clamp(30px,4.4vw,56px);line-height:1;letter-spacing:-.045em;font-weight:800}
+.hd p{color:var(--soft);max-width:30em;font-size:15px}
+.leg{display:flex;gap:8px;flex-wrap:wrap;padding:0 3vw 14px}
+.leg button{all:unset;cursor:pointer;font-size:13.5px;font-weight:700;padding:6px 14px;border-radius:99px;border:1.5px solid var(--g);color:var(--g);transition:.2s;display:flex;gap:7px;align-items:center}
+.leg button i{width:9px;height:9px;border-radius:50%;background:var(--g)}
+.leg button.on{background:var(--g);color:#fff}.leg button.on i{background:#fff}
+.main{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(360px,.85fr);gap:2.5vw;padding:0 3vw 40px;align-items:start}
+.pt{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.el{position:relative;aspect-ratio:1/1.05;background:#fff;border:1.5px solid var(--ln);border-top:6px solid var(--c);border-radius:10px;padding:8px 10px;cursor:pointer;display:flex;flex-direction:column;transition:transform .15s,box-shadow .2s,opacity .25s,background .2s;min-width:0}
+.el:hover{transform:translateY(-3px);box-shadow:0 12px 24px -12px rgba(0,0,0,.35)}
+.el .z{font:700 11px "SF Mono",ui-monospace,monospace;color:var(--soft)}
+.el .s{font:800 clamp(26px,3.6vw,50px)/1 -apple-system,sans-serif;letter-spacing:-.05em;margin:auto 0 0;color:var(--c)}
+.el .nm{font-size:clamp(10px,1.1vw,13px);font-weight:700;line-height:1.15;margin-top:4px;overflow:hidden;text-overflow:ellipsis}
+.el .gp{font-size:10px;color:var(--soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.el.on{background:var(--c);color:#fff;box-shadow:0 14px 28px -10px var(--c)}
+.el.on .s,.el.on .z,.el.on .gp{color:#fff}
+.el.dim{opacity:.18}
+.panel{position:sticky;top:16px;background:#fff;border:1.5px solid var(--ln);border-radius:20px;overflow:hidden;box-shadow:0 20px 50px -30px rgba(0,0,0,.4);max-height:calc(100vh - 32px);display:flex;flex-direction:column}
+.panel .ph{background:var(--c,#15171c);color:#fff;padding:22px 24px;display:flex;gap:18px;align-items:center;transition:background .4s;position:relative}
+.panel .sy{width:92px;height:92px;border:2.5px solid rgba(255,255,255,.9);border-radius:12px;display:flex;flex-direction:column;padding:6px 9px;flex:none}
+.panel .sy .z{font:700 12px "SF Mono",monospace}
+.panel .sy .s{font:800 44px/.9 -apple-system,sans-serif;letter-spacing:-.05em;margin-top:auto}
+.panel .ph h2{font-size:34px;letter-spacing:-.04em;line-height:1}
+.panel .ph .g{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.85;margin-bottom:4px}
+.panel .pb{padding:22px 24px 26px;overflow:auto}
+.r-tag{font-size:21px;line-height:1.25;font-weight:800;letter-spacing:-.02em;margin-bottom:8px}
+.r-ds{margin-bottom:14px;color:#323640}
+.r-who{margin-bottom:10px;font-size:15px}
+.r-ft{list-style:none;padding:0;margin:0 0 16px}
+.r-ft li{position:relative;padding:7px 0 7px 28px;border-bottom:1px solid #eceef2}
+.r-ft li::before{content:"✓";position:absolute;left:0;top:7px;width:19px;height:19px;border-radius:50%;background:var(--c);color:#fff;font-size:11px;font-weight:800;display:grid;place-items:center}
+.r-shots{display:flex;gap:10px;overflow-x:auto;margin:6px 0 16px;padding-bottom:6px}
+.r-shot{height:320px;border-radius:18px;box-shadow:0 0 0 1px rgba(0,0,0,.1),0 12px 24px -10px rgba(0,0,0,.35);flex:none}
+.r-meta{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.r-chip{font-size:13px;font-weight:600;padding:4px 12px;border-radius:99px;background:#eef0f4}
+.r-cta{display:inline-block;background:var(--c);color:#fff;font-weight:800;padding:12px 24px;border-radius:99px;text-decoration:none}
+.pb p.t{font-size:18px;color:#323640;margin-bottom:12px}
+.pb .ol{background:#f6f7f9;border-radius:14px;padding:14px 16px;margin-top:12px;font-size:15px}
+.big{display:inline-block;font-size:clamp(20px,2.4vw,30px);font-weight:800;letter-spacing:-.03em;text-decoration:none;border-bottom:3px solid var(--c);overflow-wrap:anywhere;margin:6px 0 14px}
+.hint{color:var(--soft);font-size:13.5px;padding:0 3vw 10px}
+@media(max-width:1000px){.main{grid-template-columns:1fr}.panel{position:relative;top:0;max-height:none}.pt{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:560px){.pt{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<div class="hd"><div><h1>Układ okresowy ideaapps</h1></div><p>Cała oferta w jednej tabeli. Aplikacje, usługi i etapy pracy to pierwiastki. Kliknij kafelek albo użyj strzałek, żeby poznać jego właściwości.</p></div>
+<div class="leg" id="leg"></div>
+<div class="hint">Filtr grup: kliknij nazwę, żeby wyróżnić. Strzałki ← ↑ → ↓ poruszają się po tabeli.</div>
+<div class="main"><div class="pt" id="pt"></div><aside class="panel" id="panel"></aside></div>
+<script src="data.js"></script><script src="render.js"></script>
+<script>
+const {projects,services,process,email,R}=IDEA;
+const $=s=>document.querySelector(s);
+const deep=c=>`color-mix(in srgb,${c} 85%,#15171c)`;
+const groups=[{k:'app',n:'Aplikacje',c:'#2f6bff'},{k:'svc',n:'Usługi',c:'#0f9b6c'},{k:'pro',n:'Jak pracuję',c:'#d9822b'},{k:'inf',n:'Informacje',c:'#15171c'}];
+const gc=Object.fromEntries(groups.map(g=>[g.k,g]));
+const els=[];let z=1;
+projects.forEach(p=>els.push({g:'app',z:z++,s:R.sym(p),nm:p.name,sub:p.cat,c:deep(p.color),p}));
+services.forEach((s,i)=>els.push({g:'svc',z:z++,s:['iO','tv','AI','MV'][i],nm:s.t,sub:'Usługa',c:gc.svc.c,svc:s}));
+process.forEach((s,i)=>els.push({g:'pro',z:z++,s:['Ro','Pr','Bu','AI','Pu','Wp'][i],nm:s.t,sub:'Etap '+(i+1),c:gc.pro.c,pro:s,i}));
+els.push({g:'inf',z:z++,s:'Ja',nm:'O mnie',sub:'Marcin Polak',c:gc.inf.c,about:true});
+els.push({g:'inf',z:z++,s:'Ko',nm:'Kontakt',sub:'Napisz',c:gc.inf.c,contact:true});
+$('#pt').innerHTML=els.map((e,i)=>`<div class="el" data-i="${i}" style="--c:${e.c}"><span class="z">${e.z}</span><span class="s">${e.s}</span><span class="nm">${e.nm}</span><span class="gp">${e.sub}</span></div>`).join('');
+$('#leg').innerHTML=groups.map(g=>`<button data-g="${g.k}" style="--g:${g.c}"><i></i>${g.n}</button>`).join('');
+let cur=0,filt=null;
+function body(e){
+ if(e.p)return R.appBody(e.p);
+ if(e.svc)return `<p class="t">${e.svc.d}</p><div class="ol"><b>Jak to wygląda:</b> zaczynamy od rozmowy i krótkiego zakresu prac. Potem prototyp, regularne wersje do testów i publikacja. Szczegóły w grupie „Jak pracuję”.</div>`;
+ if(e.pro)return `<p class="t">${e.pro.d}</p><div class="ol"><b>Co dostajesz:</b> ${R.out[e.i]}</div>${e.i===3?`<div class="ol"><b>${IDEA.ai.t}.</b> ${IDEA.ai.d}</div>`:''}`;
+ if(e.about)return `<p class="t">${IDEA.about}</p><div class="ol"><b>W liczbach:</b> 10+ lat iOS i tvOS, 8 własnych aplikacji w App Store, 1 osoba odpowiedzialna za całość.</div>`;
+ return `<p class="t">Opisz w kilku zdaniach, co chcesz zbudować, dla kogo i na jakie urządzenia. Odpowiem i powiem szczerze, jak to widzę.</p><a class="big" href="mailto:${email}">${email}</a>`}
+function show(i){cur=i;const e=els[i];
+ document.querySelectorAll('.el').forEach((x,k)=>x.classList.toggle('on',k===i));
+ const p=$('#panel');p.style.setProperty('--c',e.c);
+ p.innerHTML=`<div class="ph"><div class="sy"><span class="z">${e.z}</span><span class="s">${e.s}</span></div><div><div class="g">${gc[e.g].n} · ${e.sub}</div><h2>${e.nm}</h2></div></div><div class="pb">${body(e)}</div>`;
+ p.querySelector('.pb').scrollTop=0}
+$('#pt').addEventListener('click',e=>{const t=e.target.closest('.el');if(t)show(+t.dataset.i)});
+$('#leg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;filt=filt===b.dataset.g?null:b.dataset.g;
+ document.querySelectorAll('#leg button').forEach(x=>x.classList.toggle('on',x.dataset.g===filt));
+ document.querySelectorAll('.el').forEach((x,i)=>x.classList.toggle('dim',!!filt&&els[i].g!==filt))});
+addEventListener('keydown',e=>{const cols=innerWidth<=560?3:innerWidth<=1000?4:5;let n=cur;
+ if(e.key==='ArrowRight')n++;else if(e.key==='ArrowLeft')n--;else if(e.key==='ArrowDown')n+=cols;else if(e.key==='ArrowUp')n-=cols;else return;
+ e.preventDefault();show(Math.max(0,Math.min(els.length-1,n)))});
+show(0);
+</script>
+</body>
+</html>

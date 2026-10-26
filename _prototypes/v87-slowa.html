@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Słowa (koncept 87)</title>
+<link rel="stylesheet" href="l.css">
+<style>
+body{background:var(--bg,#fbfaf7);transition:background .9s}
+.intro{height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 4vw}
+.intro h1{font-size:clamp(60px,11.5vw,200px);line-height:.88;max-width:11em}
+.intro h1 em{color:#ff5a36}
+.intro p{font-size:clamp(18px,1.8vw,24px);max-width:28em;color:#3a3a42;margin-top:3vh}
+.intro .sc{margin-top:5vh;font-size:14px;color:var(--mute);display:flex;gap:12px;align-items:center}
+.intro .sc i{width:1.5px;height:44px;background:var(--ink);animation:sc 1.8s infinite;transform-origin:top}
+@keyframes sc{0%{transform:scaleY(0)}60%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
+#story{position:relative}
+.stick{position:sticky;top:0;height:100vh;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);align-items:center;padding:0 4vw;overflow:hidden}
+.word{position:relative;height:clamp(110px,16vw,260px)}
+.word span{position:absolute;left:0;top:0;white-space:nowrap;font:400 clamp(90px,16vw,270px)/1 var(--serif);letter-spacing:-.045em;color:var(--c);display:flex;overflow:hidden;padding-bottom:.08em}
+.word span b{font-weight:400;display:inline-block;transform:translateY(105%);transition:transform .7s cubic-bezier(.2,.9,.2,1);transition-delay:calc(var(--i)*35ms)}
+.word span.on b{transform:none}.word span.out b{transform:translateY(-105%)}
+.tag{margin-top:2vh;display:flex;gap:10px;align-items:center;font-size:17px;font-weight:600;color:var(--mute)}
+.tag .num{font:400 38px var(--serif);color:var(--ink)}
+.card{background:#fff;border:1.5px solid var(--ink);border-radius:28px;padding:26px 28px;box-shadow:10px 10px 0 var(--c);transition:box-shadow .6s,transform .5s}
+.card .d{font:400 clamp(21px,2vw,29px)/1.2 var(--serif);letter-spacing:-.01em;margin-bottom:18px}
+.card .get{margin-top:14px;font-size:15.5px;background:var(--t);border-radius:14px;padding:12px 16px;font-weight:600}
+.card .get b{font-size:12px;letter-spacing:.1em;text-transform:uppercase;display:block;opacity:.7;margin-bottom:2px}
+.card.sw{transform:translateY(14px);opacity:.3}
+.dots{position:absolute;left:4vw;bottom:5vh;display:flex;gap:8px}
+.dots i{width:30px;height:5px;border-radius:5px;background:var(--line);transition:.4s}.dots i.on{background:var(--c);width:60px}
+.after{padding:14vh 4vw 6vh}
+.after h2{font:400 clamp(44px,8vw,140px)/.9 var(--serif);letter-spacing:-.035em;margin:10px 0 5vh}
+.apps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.apps button{all:unset;cursor:pointer;display:block;border-radius:26px;padding:16px;background:var(--t);transition:.35s}
+.apps button:hover{transform:translateY(-8px) rotate(-1deg)}
+.apps .im{aspect-ratio:4/5;border-radius:18px;overflow:hidden;background:#fff;display:grid;place-items:center;margin-bottom:14px}
+.apps .im img{width:100%;height:100%;object-fit:cover;object-position:top}
+.apps .im .ico,.apps .im .ico-fallback{width:84px;height:84px;border-radius:23%;object-fit:cover;display:grid;place-items:center;font:800 38px sans-serif;color:#fff}
+.apps b{display:block;font:400 30px var(--serif);letter-spacing:-.02em}.apps span{font-size:14.5px;color:#3a3a42;display:block;line-height:1.35}
+.end{padding:12vh 4vw 5vh;border-top:1.5px solid var(--ink);text-align:center}
+.end h2{font:400 clamp(46px,8.6vw,140px)/.9 var(--serif);letter-spacing:-.035em}
+.end a.m{display:inline-block;margin-top:5vh;font:400 clamp(24px,5vw,80px) var(--serif);border-bottom:3px solid var(--ink);overflow-wrap:anywhere}
+footer{display:flex;justify-content:space-between;padding:7vh 4vw 4vh;color:var(--mute);font-size:14px}
+@media(max-width:900px){.stick{grid-template-columns:1fr;align-content:center;gap:3vh}.apps{grid-template-columns:1fr 1fr}.word{height:22vw}.word span{font-size:20vw}}
+</style></head><body>
+<header class="intro"><span class="kick">ideaapps · iOS · iPadOS · macOS · AI</span><h1 class="serif" style="margin-top:14px">Od <em>słowa</em> do aplikacji.</h1><p>Każdy etap pracy to jedno słowo. Przewijanie zmienia je po kolei, a razem z nim kolor strony.</p><div class="sc"><i></i>przewiń</div></header>
+<section id="story"><div class="stick"><div><div class="word" id="word"></div><div class="tag"><span class="num" id="num"></span><span id="sub"></span></div></div><div class="card" id="card"></div><div class="dots" id="dots"></div></div></section>
+<section class="after" id="przyklady"><span class="kick">Przykłady wdrożeń</span><h2>Gotowe <em class="s">aplikacje</em>.</h2><div class="apps" id="apps"></div></section>
+<section class="end"><span class="kick">Kontakt</span><h2>Czas na <em class="s">pierwsze</em> słowo.</h2><a class="m" id="mail" href="#"></a></section>
+<footer><span>© 2026 ideaapps</span><span>Swift · SwiftUI · iOS · iPadOS · macOS · AI</span></footer>
+<script src="data.js"></script><script src="flow.js"></script><script src="ui.js"></script><script src="l.js"></script>
+<script>
+const {flow,projects,email,L}=IDEA,$=s=>document.querySelector(s),N=flow.length;
+$('#mail').href='mailto:'+email;$('#mail').textContent=email;
+document.querySelector('.after h2').classList.add('serif');document.querySelector('.end h2').classList.add('serif');
+$('#story').style.height=(N*90+100)+'vh';
+$('#word').innerHTML=flow.map(f=>`<span style="--c:${f.c}">${[...f.t].map((c,i)=>`<b style="--i:${i}">${c}</b>`).join('')}</span>`).join('');
+$('#dots').innerHTML=flow.map(()=>'<i></i>').join('');
+$('#apps').innerHTML=projects.map((p,i)=>`<button data-i="${i}" style="--t:${L.tint(p.color,24)}"><div class="im">${p.shot?`<img src="${p.shot}" alt="">`:IDEA.iconHTML(p,'')}</div><b>${p.name}</b><span>${p.tag}</span></button>`).join('');
+$('#apps').onclick=e=>{const b=e.target.closest('button');if(b)IDEA.ui.app(projects[+b.dataset.i])};
+const ws=[...document.querySelectorAll('.word span')],ds=[...document.querySelectorAll('.dots i')];
+let cur=-1;
+function show(i){if(i===cur)return;const prev=cur;cur=i;const f=flow[i];
+ ws.forEach((w,k)=>{w.classList.toggle('on',k===i);w.classList.toggle('out',k===prev&&k!==i)});setTimeout(()=>ws[prev]&&ws[prev].classList.remove('out'),800);
+ ds.forEach((d,k)=>{d.classList.toggle('on',k===i);d.style.setProperty('--c',f.c)});
+ document.documentElement.style.setProperty('--bg',L.tint(f.c,13));
+ $('#num').textContent=String(i+1).padStart(2,'0');$('#sub').textContent=f.sub;
+ const c=$('#card');c.classList.add('sw');setTimeout(()=>{c.style.setProperty('--c',f.c);c.style.setProperty('--t',L.tint(f.c,24));c.innerHTML=`<div class="d">${f.d}</div>${L.trio3(f)}<div class="get"><b>Efekt</b>${f.get}</div>`;c.classList.remove('sw')},200)}
+function upd(){const r=$('#story').getBoundingClientRect(),tot=$('#story').offsetHeight-innerHeight;const p=Math.max(0,Math.min(.9999,-r.top/tot));
+ if(r.top>innerHeight*.5||r.bottom<innerHeight*.5){if(r.top>0)document.documentElement.style.setProperty('--bg','#fbfaf7');return}show(Math.floor(p*N))}
+addEventListener('scroll',()=>requestAnimationFrame(upd),{passive:true});
+show(0);upd();
+</script></body></html>

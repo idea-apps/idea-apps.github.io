@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Panele (wariant 72)</title>
+<style>
+:root{--c:#2d3a8c;--bg:#f5f3ee}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden}
+body{font:18px/1.5 -apple-system,BlinkMacSystemFont,"SF Pro Display",Helvetica,sans-serif;color:#14141c;-webkit-font-smoothing:antialiased;background:var(--bg)}
+.brand{position:fixed;left:4vw;top:24px;z-index:30;font-weight:800;font-size:20px;letter-spacing:-.03em}
+.brand small{display:block;font-weight:500;font-size:13px;opacity:.65}
+.split{position:fixed;inset:0;display:grid;grid-template-columns:1fr 1fr}
+.pane{position:relative;overflow:hidden}
+.L{display:flex;align-items:center;padding:0 5vw 0 4vw}
+.slide{position:absolute;inset:0;transition:transform .9s cubic-bezier(.7,0,.2,1),opacity .6s;will-change:transform}
+.slide.above{transform:translateY(-100%);opacity:0}.slide.below{transform:translateY(100%);opacity:0}
+.L .slide{display:flex;flex-direction:column;justify-content:center;padding:0 5vw 0 4vw}
+.L .no{font:800 clamp(120px,16vw,260px)/.8 -apple-system,sans-serif;letter-spacing:-.09em;color:transparent;-webkit-text-stroke:2px rgba(20,20,28,.14);position:absolute;left:3vw;top:10vh}
+.L small{font-size:14px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--k);position:relative}
+.L h1{font-size:clamp(54px,8vw,140px);line-height:.86;letter-spacing:-.075em;font-weight:900;margin:10px 0 18px;position:relative;margin-left:-.04em}
+.L .t{font-size:clamp(20px,2.2vw,30px);font-weight:700;letter-spacing:-.03em;line-height:1.2;max-width:17em;margin-bottom:12px;position:relative}
+.L .w{color:#55555f;margin-bottom:18px;position:relative}
+.L ul{list-style:none;margin:0 0 22px;padding:0;position:relative;max-width:30em}
+.L li{padding:8px 0 8px 28px;border-bottom:1px solid rgba(20,20,28,.12);position:relative;font-size:17px}
+.L li::before{content:"✓";position:absolute;left:0;top:8px;width:19px;height:19px;border-radius:50%;background:var(--k);color:#fff;font-size:11px;font-weight:800;display:grid;place-items:center}
+.btn{all:unset;cursor:pointer;display:inline-flex;gap:10px;background:#14141c;color:#fff;font-weight:800;padding:14px 26px;border-radius:99px;font-size:16px;transition:.25s;position:relative}
+.btn:hover{background:var(--k);transform:translateY(-2px)}
+.btn.g{background:transparent;color:#14141c;border:1.5px solid #14141c;margin-left:8px;text-decoration:none}
+.R .slide{display:grid;place-items:center;background:var(--p);overflow:hidden}
+.R .slide::before{content:"";position:absolute;width:90%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.35),transparent 65%);left:5%;top:5%}
+.R .slide::after{content:attr(data-l);position:absolute;right:-4vw;bottom:-8vw;font:900 40vw/1 sans-serif;letter-spacing:-.1em;color:rgba(255,255,255,.1)}
+.R .ph{position:relative;z-index:2;height:min(76vh,720px);aspect-ratio:9/19.5;border-radius:46px;overflow:hidden;background:#000;box-shadow:0 0 0 8px #0a0a0e,0 0 0 10px rgba(255,255,255,.2),0 60px 100px -20px rgba(0,0,0,.6);transform:rotate(3deg)}
+.R .ph img{width:100%;height:100%;object-fit:cover;object-position:top}
+.R .ph .fb{width:100%;height:100%;display:grid;place-items:center;font:900 min(24vh,200px) sans-serif;color:#fff}
+.R .ic{position:absolute;left:12%;bottom:12%;width:104px;height:104px;border-radius:25%;object-fit:cover;display:grid;place-items:center;font:800 46px sans-serif;color:#fff;box-shadow:0 20px 40px rgba(0,0,0,.4);z-index:3;rotate:-8deg}
+.rail{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:30;display:flex;flex-direction:column;gap:10px}
+.rail button{all:unset;cursor:pointer;width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,.55);box-shadow:0 0 0 1.5px rgba(0,0,0,.25);transition:.4s}
+.rail button.on{background:#fff;height:36px;border-radius:8px}
+.hint{position:fixed;left:4vw;bottom:24px;z-index:30;font-size:14px;color:#55555f;display:flex;gap:10px;align-items:center}
+.hint i{display:inline-block;width:22px;height:34px;border:2px solid #14141c;border-radius:12px;position:relative}
+.hint i::after{content:"";position:absolute;left:50%;top:6px;width:3px;height:7px;margin-left:-1.5px;border-radius:2px;background:#14141c;animation:ws 1.5s infinite}
+@keyframes ws{70%{transform:translateY(10px);opacity:0}}
+@media(max-width:860px){.split{grid-template-columns:1fr;grid-template-rows:42vh 1fr}.R{order:-1}.R .ph{height:36vh}.L .no{display:none}.L ul{display:none}}
+</style>
+</head>
+<body>
+<div class="brand">ideaapps<small>Marcin Polak · iOS · tvOS · AI</small></div>
+<div class="split"><div class="pane L" id="L"></div><div class="pane R" id="R"></div></div>
+<div class="rail" id="rail"></div>
+<div class="hint"><i></i>przewiń kółkiem lub użyj strzałek</div>
+<script src="data.js"></script><script src="ui.js"></script>
+<script>
+const {projects}=IDEA;
+const $=s=>document.querySelector(s);
+const deep=c=>`color-mix(in srgb,${c} 82%,#101018)`;
+$('#L').innerHTML=projects.map((p,i)=>`<div class="slide below" data-i="${i}" style="--k:${deep(p.color)}"><div class="no">${String(i+1).padStart(2,'0')}</div><small>${p.cat} · ${p.platforms.split(' · ')[0]}</small><h1>${p.name}</h1><div class="t">${p.tag}</div><div class="w">Dla: ${p.who}</div><ul>${(p.feats||[]).slice(0,3).map(f=>`<li>${f}</li>`).join('')}</ul><div><button class="btn" data-i="${i}">Szczegóły →</button><a class="btn g" href="${p.url}" target="_blank" rel="noopener">App Store ↗</a></div></div>`).join('');
+$('#R').innerHTML=projects.map((p,i)=>`<div class="slide above" data-i="${i}" data-l="${p.name[0]}" style="--p:linear-gradient(150deg,${p.color},color-mix(in srgb,${p.color} 55%,#000))"><div class="ph">${p.shot&&p.id!=='boxes'?`<img src="${p.shot}" alt="">`:`<div class="fb">${p.name[0]}</div>`}</div><div class="ic" style="background:${p.color}">${p.icon?`<img src="${p.icon}" alt="" style="width:100%;height:100%;object-fit:cover">`:p.name[0]}</div></div>`).join('');
+$('#rail').innerHTML=projects.map((_,i)=>`<button data-i="${i}" aria-label="${i+1}"></button>`).join('');
+const L=[...document.querySelectorAll('#L .slide')],R=[...document.querySelectorAll('#R .slide')],dots=[...document.querySelectorAll('.rail button')];
+let cur=-1,lock=false;
+function go(n){if(n<0||n>=projects.length||n===cur)return;const up=n>cur;
+ L.forEach((s,i)=>{s.classList.remove('above','below');if(i<n)s.classList.add('above');else if(i>n)s.classList.add('below')});
+ R.forEach((s,i)=>{s.classList.remove('above','below');if(i<n)s.classList.add('below');else if(i>n)s.classList.add('above')});
+ cur=n;dots.forEach((d,i)=>d.classList.toggle('on',i===n));
+ const p=projects[n];const pa=IDEA.fx?null:null;
+ document.documentElement.style.setProperty('--bg',`color-mix(in srgb,${p.color} 9%,#f6f4ef)`);document.documentElement.style.setProperty('--c',p.color);
+ lock=true;setTimeout(()=>lock=false,850)}
+addEventListener('wheel',e=>{if(lock||Math.abs(e.deltaY)<12||document.querySelector('.ix-dr.on,.ix-md.on'))return;go(cur+(e.deltaY>0?1:-1))},{passive:true});
+addEventListener('keydown',e=>{if(e.key==='ArrowDown'||e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowUp'||e.key==='ArrowLeft')go(cur-1)});
+$('#rail').addEventListener('click',e=>{const b=e.target.closest('button');if(b)go(+b.dataset.i)});
+$('#L').addEventListener('click',e=>{const b=e.target.closest('button.btn');if(b)IDEA.ui.app(projects[+b.dataset.i])});
+let ty=0;addEventListener('touchstart',e=>ty=e.touches[0].clientY);addEventListener('touchend',e=>{const d=e.changedTouches[0].clientY-ty;if(Math.abs(d)>50&&!lock)go(cur+(d<0?1:-1))});
+IDEA.ui.bar(null,'top');go(0);
+</script>
+</body>
+</html>

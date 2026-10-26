@@ -1,0 +1,238 @@
+---
+projects:
+- id: kierbud
+  name: Kierbud
+  cat: Budownictwo
+  tag: Notatnik kierownika budowy
+  desc: Wizyty ze zdjęciami i pinezkami na rysunku, zalecenia, kalendarz i raporty
+    PDF dla inwestora. Działa offline.
+  platforms: iPhone · iPad · Mac
+  url: https://apps.apple.com/app/id6823995056
+  web: https://haker.dev/kierbud-public/
+  icon: "/assets/img/kierbud-icon.png"
+  shot: "/assets/img/kierbud.jpg"
+  shot2: "/assets/img/kierbud2.jpg"
+  who: Kierownicy budowy
+  feats:
+  - Wizyty na budowie ze zdjęciami i pinezkami na rysunku
+  - Zalecenia, kalendarz i terminy w jednym miejscu
+  - Raport PDF dla inwestora jednym dotknięciem
+  - Działa offline, także tam, gdzie nie ma zasięgu
+  bg: "#162836"
+  a1: "#E8A33D"
+  a2: "#3a6a94"
+  ink: "#fff"
+- id: mounda
+  name: Mounda
+  cat: Narzędzia
+  tag: Objętość i waga hałdy ze zdjęcia
+  desc: Zrób zdjęcie hałdy piasku, żwiru lub ziemi i dostań objętość, wagę i liczbę
+    kursów. Oferty w PDF.
+  platforms: iPhone
+  url: https://apps.apple.com/app/id6821906262
+  web: https://haker.dev/mounda-public/
+  icon: "/assets/img/mounda-icon.png"
+  shot: "/assets/img/mounda.jpg"
+  shot2: "/assets/img/mounda2.jpg"
+  who: Wykonawcy robót ziemnych i dostawcy kruszyw
+  feats:
+  - Zdjęcie hałdy daje objętość i wagę
+  - Piasek, żwir i ziemia z przeliczeniem na liczbę kursów
+  - Plan warstw i zapisane zlecenia
+  - Oferty w PDF do wysłania klientowi
+  bg: "#2F5D46"
+  a1: "#C96F3B"
+  a2: "#6DB08A"
+  ink: "#fff"
+- id: stanlokalu
+  name: Stan Lokalu
+  cat: Nieruchomości
+  tag: Protokół zdawczo-odbiorczy najmu
+  desc: Zdjęcia, stany liczników, klucze i podpisy na ekranie. Gotowy PDF do wysłania
+    najemcy.
+  platforms: iPhone · iPad
+  url: https://apps.apple.com/app/id6823101110
+  web: https://haker.dev/stanlokalu-public/
+  icon: "/assets/img/stanlokalu-icon.png"
+  shot: "/assets/img/stanlokalu.jpg"
+  shot2: "/assets/img/stanlokalu2.jpg"
+  who: Wynajmujący mieszkania i lokale
+  feats:
+  - Zdjęcia, stany liczników i lista kluczy
+  - Podpisy najemcy i wynajmującego na ekranie
+  - Protokół zdawczo-odbiorczy jako gotowy PDF
+  - Przy zwrocie porównujesz stan z dniem przekazania
+  bg: "#1d1c21"
+  a1: "#8a7cff"
+  a2: "#4a4a66"
+  ink: "#fff"
+- id: kajet
+  name: Kajet
+  cat: Edukacja
+  tag: Planer ucznia i studenta
+  desc: Plan lekcji z tygodniami A/B, oceny i średnie, zadania, sprawdziany, timer
+    nauki, widżet i Siri. Bez konta i reklam.
+  platforms: iPhone · iPad · 13 języków
+  url: https://apps.apple.com/app/id6814474214
+  web: https://haker.dev/kajet-public/
+  icon: "/assets/img/kajet-icon.png"
+  shot: "/assets/img/kajet.jpg"
+  shot2: "/assets/img/kajet2.jpg"
+  who: Uczniowie i studenci
+  feats:
+  - Plan lekcji z tygodniami A/B
+  - Oceny, średnie i statystyki
+  - Zadania i sprawdziany z przypomnieniami
+  - Timer nauki, widżet i Siri. Bez konta i reklam
+  bg: "#4F46E5"
+  a1: "#8b83ff"
+  a2: "#c3bdff"
+  ink: "#fff"
+- id: boxes
+  name: Boxes
+  cat: Organizacja
+  tag: Spis rzeczy w kartonach z kodami QR
+  desc: Dodawaj rzeczy głosem, tekstem lub zdjęciem, drukuj etykiety QR i znajdź rzecz,
+    zanim zaczniesz szukać.
+  platforms: iPhone · iPad · Mac · 8 języków
+  url: https://apps.apple.com/app/id6825208997
+  web: https://haker.dev/boxes-public/
+  icon: "/assets/img/boxes-icon.png"
+  shot: "/assets/img/boxes.jpg"
+  shot2: "/assets/img/boxes2.jpg"
+  who: Każdy, kto się przeprowadza albo porządkuje dom
+  feats:
+  - Dodawanie rzeczy głosem, tekstem lub zdjęciem
+  - Etykiety z kodem QR do wydruku i naklejenia
+  - Znajdziesz rzecz, zanim zaczniesz szukać
+  - iPhone, iPad i Mac, 8 języków
+  bg: "#141826"
+  a1: "#F2A65A"
+  a2: "#6b55a8"
+  ink: "#fff"
+- id: kwity
+  name: Kwity
+  cat: Finanse domowe
+  tag: Paragony i gwarancje
+  desc: Gwarancje, terminy zwrotów, kaucje, bilety parkingowe. Zrób zdjęcie paragonu
+    i dostań przypomnienie, zanim będzie za późno.
+  platforms: iPhone · 10 języków
+  url: https://apps.apple.com/app/id6820909795
+  web: https://haker.dev/kwity-public/
+  icon: "/assets/img/kwity-icon.png"
+  shot: "/assets/img/kwity.jpg"
+  shot2: "/assets/img/kwity2.jpg"
+  who: Każdy, kto robi zakupy
+  feats:
+  - Gwarancje i terminy zwrotów w jednym miejscu
+  - Kaucje, bilety parkingowe i numerki w kolejce
+  - Zdjęcie paragonu i przypomnienie, zanim będzie za późno
+  - 10 języków
+  bg: "#1b1340"
+  a1: "#C6F34E"
+  a2: "#6a4cff"
+  ink: "#fff"
+- id: obiadki
+  name: Obiadki
+  cat: Rodzina
+  tag: Rozliczenia szkolnych obiadów
+  desc: Liczy, ile przelać za obiady, odlicza nieobecności i pomija święta. Dla wielu
+    dzieci naraz.
+  platforms: iPhone
+  url: https://apps.apple.com/app/id6818998861
+  web: https://haker.dev/obiadki-public/
+  icon: "/assets/img/obiadki-icon.png"
+  shot: "/assets/img/obiadki.jpg"
+  shot2: "/assets/img/obiadki2.jpg"
+  who: Rodzice dzieci w szkole
+  feats:
+  - Liczy, ile przelać za szkolne obiady
+  - Odlicza nieobecności dziecka
+  - Pomija dni wolne i święta
+  - Obsługuje wiele dzieci naraz
+  bg: "#14a88f"
+  a1: "#2BC5D1"
+  a2: "#31a2dc"
+  ink: "#fff"
+- id: 50groszy
+  name: 50Groszy
+  cat: Lifestyle
+  tag: Stoper do butelkomatu
+  desc: Liczy, ile czasu stoisz w kolejce do butelkomatu i ile naprawdę zarabiasz
+    na kaucji na godzinę. Z przymrużeniem oka.
+  platforms: iPhone
+  url: https://apps.apple.com/app/id6821369029
+  web: https://haker.dev/50Groszy-public/
+  icon: "/assets/img/50groszy-icon.png"
+  shot: "/assets/img/50groszy.jpg"
+  shot2: "/assets/img/50groszy2.jpg"
+  who: Wszyscy, którzy oddają butelki
+  feats:
+  - Stoper kolejki do butelkomatu
+  - Liczy, ile naprawdę zarabiasz na kaucji na godzinę
+  - Mała aplikacja z przymrużeniem oka
+  bg: "#0e3f2c"
+  a1: "#FFC833"
+  a2: "#2f8a5a"
+  ink: "#fff"
+flow:
+- t: Wymagania
+  sub: Rozmowa i zakres
+  d: 'Pierwszym krokiem jest rozmowa: co powstaje, dla kogo i po co. Pomysł jest przycinany
+    do wersji, którą można szybko sprawdzić z prawdziwymi użytkownikami.'
+  get: Zakres prac, lista ekranów i kryteria akceptacji.
+- t: Prototyp
+  sub: Design i prototyp z AI
+  d: Zamiast makiet w PDF powstaje działający prototyp, który można wziąć do ręki
+    na własnym iPhonie. AI generuje ekrany i warianty bardzo szybko, a developer wybiera
+    to, co pasuje do wytycznych Apple i do użytkowników.
+  get: Działający, klikalny prototyp zamiast statycznych makiet.
+- t: Budowa
+  sub: Kodowanie z agentami
+  d: 'Kod powstaje natywnie w Swift i SwiftUI. Agenci kodujący przejmują rutynę: ekrany,
+    testy, tłumaczenia. Każda zmiana jest czytana i zatwierdzana przez developera,
+    więc odpowiedzialność za kod jest taka sama jak bez AI.'
+  get: Natywna aplikacja w Swift i SwiftUI oraz czysty kod w repozytorium zamawiającego.
+- t: Iteracje
+  sub: Regularne wersje
+  d: Kolejne wersje trafiają do zamawiającego regularnie przez TestFlight. Postęp
+    widać na własnym telefonie, a kierunek można zmienić, zanim zrobi się drogo. Uwagi
+    zamieniają się w zadania.
+  get: Regularne wersje do wypróbowania i możliwość zmiany kierunku.
+- t: Jakość
+  sub: Testy i prywatność
+  d: Testy na prawdziwych urządzeniach, dostępność, wydajność i prywatność danych.
+    Automatyczne testy powstają z pomocą AI, a scenariusze kluczowe dla produktu są
+    sprawdzane ręcznie.
+  get: Stabilna wersja i lista sprawdzonych scenariuszy.
+- t: Premiera
+  sub: App Store
+  d: Opis, zrzuty ekranu, polityka prywatności, zgodność z wymogami i recenzja Apple.
+    Osiem własnych publikacji oznacza, że pułapki sklepu są znane i omijane od początku.
+  get: Aplikacja opublikowana w App Store.
+- t: Rozwój
+  sub: Po premierze
+  d: 'Aplikacja żyje po premierze: poprawki, nowe wersje systemu, reakcja na opinie
+    i kolejne funkcje. Za całość odpowiada ta sama osoba, więc nie ma przekazywania
+    wiedzy.'
+  get: Aktualizacje i jeden stały kontakt.
+faq:
+- q: Czy AI napisze całą aplikację?
+  a: AI przyspiesza pracę, ale nie podejmuje decyzji. Agenci kodujący piszą ekrany,
+    testy i tłumaczenia, a developer projektuje architekturę, czyta każdą zmianę i
+    odpowiada za efekt.
+- q: Kto odpowiada za jakość kodu?
+  a: Developer. Każda zmiana jest przeglądana, zanim trafi do produktu, a kod pozostaje
+    czytelny i możliwy do rozwijania także przez innych.
+- q: Czy kod i pomysł należą do zamawiającego?
+  a: Tak. Kod trafia do repozytorium zamawiającego, a prawa do aplikacji są ustalane
+    w umowie na początku.
+- q: Jak wygląda widoczność postępu?
+  a: Na własnym telefonie. Każda iteracja to nowa wersja w TestFlight, którą można
+    wziąć do ręki i skomentować.
+- q: Co z prywatnością danych?
+  a: Projekt zaczyna się od minimum danych, jasnej polityki prywatności i zgodności
+    z wymogami Apple. Tam, gdzie to możliwe, modele AI działają na urządzeniu.
+- q: Czy można poprawić istniejącą aplikację?
+  a: 'Tak. Pierwszym krokiem jest przegląd kodu: architektura, wydajność, zgodność
+    z nowymi wersjami systemu. Potem plan zmian w małych krokach.'

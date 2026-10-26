@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Kartoteka (wariant 64)</title>
+<style>
+:root{--wood:#7a5232;--paper:#fbf8ef;--ink:#1d1a14;--soft:#756f60}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden}
+body{font:17px/1.55 "Iowan Old Style","Palatino Linotype",Georgia,serif;color:var(--ink);-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;
+ background:radial-gradient(80% 90% at 50% 20%,#a47850,var(--wood) 55%,#4a2f19)}
+a{color:inherit}
+.top{display:flex;justify-content:space-between;align-items:baseline;padding:18px 3vw 8px;color:#f6ead6;font-family:-apple-system,"SF Pro Text",sans-serif;flex:none;gap:20px;flex-wrap:wrap}
+.top b{font-size:20px}.top span{font-size:14px;opacity:.8}
+.tabs{display:flex;gap:6px;padding:0 3vw;align-items:flex-end;flex:none;font-family:-apple-system,sans-serif;overflow-x:auto}
+.tabs button{all:unset;cursor:pointer;padding:11px 24px 10px;border-radius:12px 12px 0 0;background:#c9b48e;color:#3b2c18;font-weight:700;font-size:15px;box-shadow:inset 0 -6px 8px -6px rgba(0,0,0,.35);transition:.2s;white-space:nowrap}
+.tabs button:hover{background:#dbc9a6}
+.tabs button.on{background:var(--paper);color:var(--ink);padding-top:14px;box-shadow:none}
+.tabs .c{font-weight:500;opacity:.6;margin-left:6px;font-size:13px}
+.box{flex:1;min-height:0;margin:0 3vw 18px;background:var(--paper);border-radius:0 14px 14px 14px;box-shadow:0 30px 60px -20px rgba(0,0,0,.6),inset 0 0 0 2px rgba(0,0,0,.05);display:flex;flex-direction:column;overflow:hidden;position:relative}
+.cd{flex:0 0 48px;min-height:48px;border-bottom:1.5px solid rgba(0,0,0,.14);position:relative;overflow:hidden;cursor:pointer;transition:flex .55s cubic-bezier(.3,.8,.2,1),background .3s;background:var(--paper);display:flex;flex-direction:column}
+.cd:hover:not(.on){background:#f3eedd}
+.cd .hd{flex:none;height:48px;display:flex;align-items:center;gap:14px;padding:0 24px;font-family:-apple-system,"SF Pro Text",sans-serif}
+.cd .hd .n{font:700 12px "SF Mono",monospace;color:var(--soft);width:24px}
+.cd .hd .ic{width:30px;height:30px;border-radius:23%;object-fit:cover;display:grid;place-items:center;font:800 14px sans-serif;color:#fff;flex:none;background:var(--c)}
+.cd .hd b{font-size:17px;letter-spacing:-.02em}
+.cd .hd .t{color:var(--soft);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
+.cd .hd .cat{font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;background:color-mix(in srgb,var(--c) 14%,#fff);color:var(--c);white-space:nowrap}
+.cd.on{flex:1 1 0;cursor:default;background:#fff;box-shadow:inset 5px 0 0 var(--c)}
+.cd.on .hd{background:var(--c);color:#fff}
+.cd.on .hd .n,.cd.on .hd .t{color:rgba(255,255,255,.8)}.cd.on .hd .cat{background:rgba(255,255,255,.22);color:#fff}
+.cd.on .hd .ic{box-shadow:0 0 0 2px #fff}
+.cd .bd{flex:1;overflow:auto;padding:26px 34px 30px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:34px;font-family:-apple-system,"SF Pro Text",sans-serif;opacity:0;transition:opacity .3s .25s}
+.cd.on .bd{opacity:1}
+.bd.one{grid-template-columns:minmax(0,760px)}
+.bd h2{font:800 clamp(30px,3.4vw,46px)/1 Georgia,serif;letter-spacing:-.03em;margin-bottom:10px}
+.r-tag{font:800 21px/1.3 Georgia,serif;margin-bottom:8px}
+.r-ds{margin-bottom:12px;color:#34302a;font-size:17px}
+.r-who{margin-bottom:10px;font-size:15.5px}
+.r-ft{list-style:none;padding:0;margin:0 0 14px}
+.r-ft li{position:relative;padding:8px 0 8px 30px;border-bottom:1px solid #ece6d4;font-size:16.5px}
+.r-ft li::before{content:"✓";position:absolute;left:0;top:8px;width:20px;height:20px;border-radius:50%;background:var(--c);color:#fff;font-size:12px;font-weight:800;display:grid;place-items:center}
+.r-shots{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;align-items:flex-start}
+.r-shot{height:min(52vh,420px);border-radius:20px;box-shadow:0 0 0 1px rgba(0,0,0,.12),0 14px 28px -12px rgba(0,0,0,.4);flex:none}
+.r-meta{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}.r-chip{font-size:13px;font-weight:600;padding:4px 12px;border-radius:99px;background:#f0ebdc}
+.r-cta{display:inline-block;background:var(--c);color:#fff;font-weight:800;padding:12px 24px;border-radius:99px;text-decoration:none}
+.col2 .r-shots{margin-top:0}
+.pg p{font-size:17.5px;color:#34302a;margin-bottom:12px}
+.pg .bx{background:#f6f1e2;border-radius:12px;padding:14px 18px;margin:10px 0;font-size:15.5px}
+.pg .big{display:inline-block;font:800 clamp(22px,3vw,36px) Georgia,serif;letter-spacing:-.03em;border-bottom:3px solid var(--c);text-decoration:none;overflow-wrap:anywhere;margin:6px 0}
+.hint{position:absolute;right:14px;bottom:10px;font:12.5px -apple-system,sans-serif;color:var(--soft);pointer-events:none;background:rgba(255,255,255,.85);padding:3px 10px;border-radius:99px}
+@media(max-width:900px){.cd .bd{grid-template-columns:1fr}.cd .hd .t,.cd .hd .cat{display:none}.r-shot{height:300px}}
+</style>
+</head>
+<body>
+<div class="top"><b>ideaapps — kartoteka</b><span>Marcin Polak · iOS · tvOS · AI · wszystko w szufladach</span></div>
+<div class="tabs" id="tabs"></div>
+<div class="box" id="box"></div>
+<script src="data.js"></script><script src="render.js"></script>
+<script>
+const {projects,services,process,email,R}=IDEA;
+const $=s=>document.querySelector(s);
+const deep=c=>`color-mix(in srgb,${c} 85%,#1d1a14)`;
+const drawers={
+ apps:{n:'Aplikacje',c:projects.length,cards:projects.map((p,i)=>({id:p.id,no:i+1,t:p.name,sub:p.tag,cat:p.cat,col:deep(p.color),ic:p,html:`<div><h2>${p.name}</h2>${R.appBody(p,{noShots:true})}</div><div class="col2">${R.shots(p)?`<div class="r-shots">${R.shots(p)}</div>`:`<div style="display:grid;place-items:center;height:100%;min-height:200px">${IDEA.iconHTML(p,'')}</div>`}</div>`}))},
+ pro:{n:'Jak pracuję',c:process.length,cards:process.map((s,i)=>({id:'p'+i,no:i+1,t:s.t,sub:R.out[i],cat:'Etap '+(i+1),col:'#c0701e',one:1,html:`<div class="pg"><h2>${s.t}</h2><p>${s.d}</p><div class="bx"><b>Co dostajesz:</b> ${R.out[i]}</div>${i===3?`<div class="bx"><b>${IDEA.ai.t}.</b> ${IDEA.ai.d}</div>`:''}</div>`}))},
+ svc:{n:'Usługi',c:services.length,cards:services.map((s,i)=>({id:'s'+i,no:i+1,t:s.t,sub:s.d,cat:'Usługa',col:'#0f7a52',one:1,html:`<div class="pg"><h2>${s.t}</h2><p>${s.d}</p><div class="bx">Zaczynamy od rozmowy i jednostronicowego zakresu prac, potem prototyp i regularne wersje do testów.</div></div>`}))},
+ me:{n:'O mnie i kontakt',c:2,cards:[{id:'about',no:1,t:'O mnie',sub:'Marcin Polak, ideaapps',cat:'Wizytówka',col:'#2a3550',one:1,html:`<div class="pg"><h2>Marcin Polak</h2><p>${IDEA.about}</p><div class="bx"><b>W liczbach:</b> 10+ lat iOS i tvOS · 8 własnych aplikacji w App Store · 1 osoba odpowiedzialna za całość</div></div>`},
+  {id:'contact',no:2,t:'Kontakt',sub:email,cat:'Napisz',col:'#b8431f',one:1,html:`<div class="pg"><h2>Opowiedz mi o pomyśle.</h2><p>Opisz w kilku zdaniach, co chcesz zbudować, dla kogo i na jakie urządzenia. Odpowiem i powiem szczerze, jak to widzę.</p><a class="big" href="mailto:${email}">${email}</a></div>`}]}};
+let dk='apps',cur={apps:0,pro:0,svc:0,me:0};
+function drawTabs(){$('#tabs').innerHTML=Object.entries(drawers).map(([k,d])=>`<button data-k="${k}" class="${k===dk?'on':''}">${d.n}<span class="c">${d.c}</span></button>`).join('')}
+function drawBox(){const d=drawers[dk];$('#box').innerHTML=d.cards.map((c,i)=>`<div class="cd ${i===cur[dk]?'on':''}" data-i="${i}" style="--c:${c.col}"><div class="hd"><span class="n">${String(c.no).padStart(2,'0')}</span>${c.ic?IDEA.iconHTML(c.ic,'ic'):''}<b>${c.t}</b><span class="t">${c.sub}</span><span class="cat">${c.cat}</span></div><div class="bd ${c.one?'one':''}">${c.html}</div></div>`).join('')+'<div class="hint">↑ ↓ listaj karty · kliknij kartę, żeby ją wysunąć</div>'}
+$('#tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(b){dk=b.dataset.k;drawTabs();drawBox()}});
+$('#box').addEventListener('click',e=>{const c=e.target.closest('.cd');if(!c||e.target.closest('a'))return;const i=+c.dataset.i;if(i===cur[dk])return;cur[dk]=i;document.querySelectorAll('.cd').forEach((x,k)=>x.classList.toggle('on',k===i));document.documentElement.style.setProperty('--x',1)});
+addEventListener('keydown',e=>{const n=drawers[dk].cards.length;let i=cur[dk];if(e.key==='ArrowDown')i=Math.min(n-1,i+1);else if(e.key==='ArrowUp')i=Math.max(0,i-1);else if(e.key==='ArrowRight'||e.key==='ArrowLeft'){const ks=Object.keys(drawers);dk=ks[(ks.indexOf(dk)+(e.key==='ArrowRight'?1:ks.length-1))%ks.length];drawTabs();drawBox();return}else return;e.preventDefault();cur[dk]=i;document.querySelectorAll('.cd').forEach((x,k)=>x.classList.toggle('on',k===i))});
+drawTabs();drawBox();
+</script>
+</body>
+</html>

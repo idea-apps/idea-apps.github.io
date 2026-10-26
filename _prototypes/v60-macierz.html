@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Macierz (wariant 60)</title>
+<style>
+:root{--bg:#f7f6f2;--ink:#16171b;--soft:#6c6d75;--ln:#dedcd3}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:17px/1.55 -apple-system,"SF Pro Text",Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.w{max-width:1240px;margin:0 auto;padding:0 28px}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;font-weight:700}
+.nav span a{margin-left:22px;font-weight:500;color:var(--soft);text-decoration:none;font-size:15px}.nav span a:hover{color:var(--ink)}
+.hero{padding:30px 0 28px;max-width:900px}
+.hero small{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#e8561a}
+.hero h1{font-size:clamp(38px,6.2vw,86px);line-height:.95;letter-spacing:-.055em;font-weight:800;margin:10px 0 16px}
+.hero p{font-size:20px;color:#3d3e45;max-width:34em}
+.mx{background:#fff;border:1.5px solid var(--ln);border-radius:20px;overflow:auto;box-shadow:0 30px 60px -40px rgba(0,0,0,.3)}
+table{border-collapse:separate;border-spacing:0;width:100%;min-width:960px}
+th,td{padding:0;border-bottom:1px solid #eeece5;text-align:center}
+thead th{position:sticky;top:0;background:#fff;z-index:3;vertical-align:bottom;padding:14px 4px 10px;font-size:13px;font-weight:700;color:var(--soft);border-bottom:2px solid var(--ink);cursor:pointer;transition:.15s;min-width:84px}
+thead th .ci{display:block;font-size:20px;margin-bottom:4px;filter:grayscale(.2)}
+thead th:hover,thead th.on{color:var(--ink);background:#fff6d6}
+thead th:first-child{left:0;z-index:5;text-align:left;padding-left:20px;cursor:default;min-width:220px;background:#fff}
+tbody th{position:sticky;left:0;background:#fff;z-index:2;text-align:left;padding:12px 20px;font-weight:700;border-right:1px solid #eeece5;white-space:nowrap}
+tbody th .ap{display:flex;gap:12px;align-items:center;cursor:pointer}
+tbody th img,tbody th .fb{width:40px;height:40px;border-radius:23%;object-fit:cover;display:grid;place-items:center;font:800 18px sans-serif;color:#fff;flex:none}
+tbody th small{display:block;font-weight:500;color:var(--soft);font-size:12.5px}
+td{height:62px;position:relative;transition:background .15s}
+td.on{background:#fff6d6}
+tr.sl td,tr.sl th{background:#fff6d6}
+td .d{display:inline-block;width:16px;height:16px;border-radius:50%;background:var(--c);cursor:pointer;transition:transform .15s;box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 22%,transparent)}
+td .d:hover{transform:scale(1.5)}
+td.no .d{background:#e6e4dc;box-shadow:none;width:6px;height:6px;cursor:default}
+td .tx{font-size:13px;font-weight:700;color:var(--ink)}
+tfoot td,tfoot th{padding:12px 4px;font-weight:800;background:#faf9f4;font-size:15px;border-top:2px solid var(--ink);border-bottom:0}
+tfoot th{position:sticky;left:0;text-align:left;padding-left:20px}
+tfoot td small{display:block;font-size:11px;font-weight:600;color:var(--soft)}
+.dt{margin-top:18px;background:#16171b;color:#f5f3ec;border-radius:18px;padding:22px 26px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;min-height:100px;transition:background .4s}
+.dt h3{font-size:22px;letter-spacing:-.02em;margin-bottom:4px}.dt p{opacity:.88;font-size:16px;max-width:46em}
+.dt a{display:inline-block;background:#fff;color:#16171b;font-weight:800;padding:12px 22px;border-radius:99px;text-decoration:none;white-space:nowrap}
+.sec{padding:80px 0 10px}
+.sec h2{font-size:clamp(30px,4.4vw,56px);letter-spacing:-.05em;line-height:1;font-weight:800;margin-bottom:10px}
+.sec .lead{color:#3d3e45;font-size:19px;max-width:34em;margin-bottom:26px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.steps div{background:#fff;border:1.5px solid var(--ln);border-radius:18px;padding:22px}
+.steps .n{font-size:44px;font-weight:800;letter-spacing:-.06em;line-height:.9;color:#e8561a}
+.steps h3{font-size:21px;letter-spacing:-.02em;margin:8px 0 6px}.steps p{font-size:15.5px;color:#3d3e45}
+.steps .o{margin-top:10px;font-size:14px;font-weight:700;color:var(--soft)}
+.ai{margin-top:14px;background:linear-gradient(120deg,#16171b,#2c2742);color:#fff;border-radius:18px;padding:26px 30px}
+.ai h3{font-size:24px;margin-bottom:6px}.ai p{opacity:.9;max-width:50em}
+.sv{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.sv div{background:#fff;border:1.5px solid var(--ln);border-radius:18px;padding:22px}.sv b{display:block;font-size:19px;margin-bottom:6px}.sv span{color:#3d3e45;font-size:15.5px}
+.end{margin:80px 0 30px;background:#16171b;color:#fff;border-radius:26px;padding:60px 40px;text-align:center}
+.end h2{font-size:clamp(34px,5.4vw,70px);letter-spacing:-.055em;line-height:.95;font-weight:800;margin-bottom:14px}
+.end a{display:inline-block;font-size:clamp(20px,3.2vw,40px);font-weight:800;letter-spacing:-.03em;border-bottom:3px solid #ffcf3a;text-decoration:none;overflow-wrap:anywhere}
+footer{text-align:center;color:var(--soft);font-size:14px;padding-bottom:40px}
+@media(max-width:900px){.steps,.sv{grid-template-columns:1fr 1fr}.dt{grid-template-columns:1fr}}
+@media(max-width:560px){.steps,.sv{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="w">
+<div class="nav"><span>ideaapps</span><span><a href="#macierz">Macierz</a><a href="#proces">Jak pracuję</a><a href="#uslugi">Usługi</a><a href="#kontakt">Kontakt</a></span></div>
+<header class="hero"><small>Marcin Polak · iOS · tvOS · AI</small><h1>Co potrafię, udowodnione aplikacjami.</h1><p>Zamiast listy obietnic tabela faktów. Każda kropka to funkcja, którą już zbudowałem i wydałem w prawdziwej aplikacji. Kliknij nagłówek kolumny, żeby posortować aplikacje, a kropkę, żeby zobaczyć szczegóły.</p></header>
+<div class="mx" id="macierz"><table id="tb"></table></div>
+<div class="dt" id="dt"></div>
+
+<section class="sec" id="proces"><h2>Jak pracuję.</h2><p class="lead">Jedna osoba, od pierwszej rozmowy do publikacji w App Store. Rozmawiasz z tym, kto pisze kod.</p><div class="steps" id="st"></div><div class="ai" id="ai"></div></section>
+<section class="sec" id="uslugi"><h2>Usługi.</h2><p class="lead">Cztery rodzaje zleceń.</p><div class="sv" id="sv"></div></section>
+<section class="end" id="kontakt"><h2>Masz pomysł z tej tabeli?<br>Albo spoza niej?</h2><a id="mail" href="#"></a></section>
+<footer>© 2026 ideaapps</footer>
+</div>
+<script src="data.js"></script><script src="render.js"></script>
+<script>
+const {projects,services,process,email,R}=IDEA;
+const $=s=>document.querySelector(s);
+$('#mail').href='mailto:'+email;$('#mail').textContent=email;
+const deep=c=>`color-mix(in srgb,${c} 85%,#15171c)`;
+// kompetencje i dowody (wyłącznie z opisów aplikacji)
+const caps=[
+ {k:'iphone',i:'📱',n:'iPhone',t:p=>p.platforms.includes('iPhone'),x:'Natywna aplikacja na iPhone’a'},
+ {k:'ipad',i:'▭',n:'iPad',t:p=>p.platforms.includes('iPad'),x:'Układ dopasowany do iPada'},
+ {k:'mac',i:'💻',n:'Mac',t:p=>p.platforms.includes('Mac'),x:'Wersja na Maca'},
+ {k:'photo',i:'📷',n:'Zdjęcia i aparat',has:{kierbud:'Wizyty ze zdjęciami i pinezkami na rysunku',mounda:'Objętość hałdy liczona ze zdjęcia',stanlokalu:'Zdjęcia stanu lokalu w protokole',boxes:'Dodawanie rzeczy ze zdjęcia',kwity:'Zdjęcie paragonu'}},
+ {k:'voice',i:'🎙',n:'Głos',has:{boxes:'Dodawanie rzeczy głosem, także dyktowanie na urządzeniu'}},
+ {k:'pdf',i:'📄',n:'Raporty PDF',has:{kierbud:'Raport PDF dla inwestora',mounda:'Oferty w PDF',stanlokalu:'Protokół jako gotowy PDF'}},
+ {k:'notif',i:'🔔',n:'Przypomnienia',has:{kajet:'Przypomnienia o zadaniach i sprawdzianach',kwity:'Przypomnienie przed końcem gwarancji lub zwrotu'}},
+ {k:'widget',i:'▦',n:'Widżety i Siri',has:{kajet:'Widżet na ekran główny i Siri'}},
+ {k:'offline',i:'⇵',n:'Offline',has:{kierbud:'Działa offline, także bez zasięgu na budowie'}},
+ {k:'qr',i:'▣',n:'Kody QR',has:{boxes:'Etykiety z kodem QR do wydruku'}},
+ {k:'sig',i:'✍',n:'Podpis na ekranie',has:{stanlokalu:'Podpisy najemcy i wynajmującego na ekranie'}},
+ {k:'lang',i:'🌍',n:'Wiele języków',has:{kajet:'13 języków',boxes:'8 języków',kwity:'10 języków',stanlokalu:'Wersje w kilku językach'}}];
+const has=(c,p)=>c.t?c.t(p):!!(c.has&&c.has[p.id]);
+const why=(c,p)=>c.x||(c.has&&c.has[p.id])||'';
+let sortK=null,selRow=null,selCol=null;
+function draw(){
+ let list=[...projects];if(sortK){const c=caps.find(x=>x.k===sortK);list.sort((a,b)=>has(c,b)-has(c,a))}
+ $('#tb').innerHTML=`<thead><tr><th>Aplikacja</th>${caps.map(c=>`<th data-k="${c.k}" class="${sortK===c.k?'on':''}"><span class="ci">${c.i}</span>${c.n}</th>`).join('')}</tr></thead>
+ <tbody>${list.map(p=>`<tr data-id="${p.id}" class="${selRow===p.id?'sl':''}"><th><div class="ap">${p.icon?`<img src="${p.icon}" alt="">`:`<span class="fb" style="background:${p.color}">${p.name[0]}</span>`}<div>${p.name}<small>${p.cat}</small></div></div></th>${caps.map(c=>{const h=has(c,p);return `<td class="${h?'':'no'} ${selCol===c.k?'on':''}" data-k="${c.k}"><span class="d" style="--c:${deep(p.color)}"></span></td>`}).join('')}</tr>`).join('')}</tbody>
+ <tfoot><tr><th>Wdrożone w</th>${caps.map(c=>`<td class="${selCol===c.k?'on':''}">${projects.filter(p=>has(c,p)).length}<small>z 8 apek</small></td>`).join('')}</tr></tfoot>`}
+function detail(p,c){const d=$('#dt');d.style.background=deep(p.color);
+ const w=has(c,p);d.innerHTML=`<div><h3>${p.name} · ${c.n}${w?'':' (nie)'}</h3><p>${w?why(c,p):'Ta aplikacja nie korzysta z tej funkcji. Zobacz, w których innych została wdrożona.'}</p></div><a href="${p.url}" target="_blank" rel="noopener">${p.name} w App Store ↗</a>`}
+$('#tb').addEventListener('click',e=>{
+ const th=e.target.closest('thead th[data-k]');if(th){sortK=sortK===th.dataset.k?null:th.dataset.k;selCol=sortK;draw();return}
+ const row=e.target.closest('tbody tr');if(!row)return;const p=projects.find(x=>x.id===row.dataset.id);
+ const td=e.target.closest('td[data-k]');const c=caps.find(x=>x.k===(td?td.dataset.k:'iphone'));
+ selRow=p.id;selCol=td?c.k:selCol;draw();detail(p,c)});
+$('#dt').innerHTML=`<div><h3>Wybierz kropkę</h3><p>Pokażę, jak dana funkcja działa w konkretnej aplikacji.</p></div>`;
+draw();
+$('#st').innerHTML=process.map((s,i)=>`<div><span class="n">${i+1}</span><h3>${s.t}</h3><p>${s.d}</p><div class="o">Co dostajesz: ${R.out[i]}</div></div>`).join('');
+$('#ai').innerHTML=`<h3>${IDEA.ai.t}</h3><p>${IDEA.ai.d}</p>`;
+$('#sv').innerHTML=services.map(s=>`<div><b>${s.t}</b><span>${s.d}</span></div>`).join('');
+</script>
+</body>
+</html>

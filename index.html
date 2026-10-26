@@ -1,3 +1,24 @@
 ---
 layout: default
+title: ideaapps — natywne aplikacje Apple
+description: Natywne aplikacje na iOS, iPadOS i macOS od pomysłu do App Store. Prototypy i kod z pomocą AI, każda zmiana sprawdzana przez developera.
 ---
+{% capture mail %}mailto:{{ site.email }}?subject=Pomysł%20na%20aplikację&body=Kilka%20zdań%20o%20pomyśle:{% endcapture %}
+<section class="hero"><div class="stage" id="stage"><div class="glow" id="gl"></div><div class="top mono"><span>Jak powstaje aplikacja</span><span id="an">Kwity</span></div><div class="pipe">
+<div class="k4" data-i="0"><div class="h"><span>01 · Wymagania</span><i>✓</i></div><div class="ck"><u></u>Skan paragonu</div><div class="ck"><u></u>Przypomnienie o gwarancji</div><div class="ck"><u></u>Działa offline</div><div class="ck"><u></u>Wiele języków</div></div>
+<div class="k4" data-i="1"><div class="h"><span>02 · Prototyp</span><i>✓</i></div><div class="wf" id="wf"><b></b><b></b><b></b><b></b><b></b></div></div>
+<div class="k4" data-i="2"><div class="h"><span>03 · Kod</span><i>✓</i></div><pre id="tp"></pre></div>
+<div class="k4 app" data-i="3"><div class="h"><span>04 · Premiera</span><i>✓</i></div><img class="sh" id="ri" alt=""><div class="bdg"><img id="bi" alt=""><span><small>App Store</small><span id="bn"></span></span></div></div>
+</div><div class="ttl"><b id="st">Wymagania</b><div class="pg" id="pg"><i></i><i></i><i></i><i></i></div></div></div><h1>Partnerzy w drodze od pomysłu do aplikacji.</h1></section>
+<section class="reel" id="reel"><div class="st"><div class="box" id="box"><div class="tx"><h2 id="rh">Od pomysłu do aplikacji</h2><div class="dots" id="dots"><i></i><i></i><i></i><i></i></div></div><div class="cards" id="cds"></div></div></div></section>
+<section class="stt"><p>ideaapps projektuje i buduje natywne aplikacje Apple na iOS, iPadOS i macOS. Strategia, projekt, kod i publikacja w jednym zespole, tak aby każdy etap wspierał następny.</p><a class="pill a" href="#proces">Zobacz proces ▸</a></section>
+<section class="wk" id="przyklady"><div class="top"><span class="mono">Przykłady wdrożeń</span><a class="pill o" href="#kontakt">Napisz ▸</a></div><div class="grid" id="grid">
+{% for p in site.data.site.projects %}<a class="pc rv" data-id="{{ p.id }}" href="{{ p.web }}" style="--t:{{ p.bg }};--a1:{{ p.a1 }};--ic:{{ p.ink }}"><div class="tx"><div class="hd2">{% if p.icon %}<img class="ico" src="{{ p.icon }}" alt="Ikona {{ p.name }}">{% else %}<span class="ico-fallback">{{ p.name | slice: 0 }}</span>{% endif %}</div><div><h3>{{ p.name }}</h3><p class="tag">{{ p.tag }}</p></div><div class="ft"><span class="mono chip">{{ p.cat }}</span><span class="mono go">Zobacz ▸</span></div></div><div class="ph"><img src="{{ p.shot }}" alt="Zrzut ekranu aplikacji {{ p.name }}" loading="lazy"></div></a>
+{% endfor %}</div></section>
+<section class="pr" id="proces"><div class="row"><span class="mono">Proces</span><p>Każdy etap ma własny cel. Prototypy i kod powstają z pomocą AI, a każdą zmianę sprawdza doświadczony developer.</p></div><div class="st7" id="st7">
+{% for f in site.data.site.flow %}<div class="it rv"><span class="mono">Etap {{ forloop.index }}</span><h3>{{ f.t }}</h3><p>{{ f.d }}</p></div>
+{% endfor %}</div></section>
+<section class="fq" id="pytania">
+{% for f in site.data.site.faq %}<div class="row rv"><span class="mono">{% if forloop.first %}Pytania{% endif %}</span><h3>{{ f.q }}</h3><p>{{ f.a }}</p></div>
+{% endfor %}</section>
+<section class="ct" id="kontakt"><h2>Masz pomysł?<br>Opisz go.</h2><div class="l"><a class="m" href="mailto:{{ site.email }}">{{ site.email }}</a><a class="pill" href="{{ mail }}">Napisz ▸</a></div></section>

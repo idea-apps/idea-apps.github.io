@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Ławica (wariant 47)</title>
+<style>
+:root{--c:#0e5b7a}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden}
+body{font:18px/1.5 -apple-system,"SF Pro Text",Helvetica,sans-serif;color:#fff;-webkit-font-smoothing:antialiased;user-select:none;touch-action:none}
+.sea{position:fixed;inset:0;background:linear-gradient(180deg,color-mix(in srgb,var(--c) 60%,#9be8ff) 0%,var(--c) 38%,color-mix(in srgb,var(--c) 40%,#02101a) 100%);transition:--c .9s;transition:background .9s}
+.rays{position:fixed;inset:0;background:repeating-linear-gradient(105deg,rgba(255,255,255,.07) 0 60px,transparent 60px 160px);mask-image:linear-gradient(#000,transparent 70%);-webkit-mask-image:linear-gradient(#000,transparent 70%);animation:sw 14s linear infinite alternate;pointer-events:none}
+@keyframes sw{to{transform:translateX(120px)}}
+.top{position:fixed;left:4vw;top:22px;z-index:5;pointer-events:none}
+.top b{font-size:20px}.top span{display:block;font-size:14px;opacity:.8}
+.hook{position:fixed;left:4vw;bottom:90px;z-index:5;max-width:min(520px,60vw);pointer-events:none}
+.hook h1{font-size:clamp(34px,5.4vw,84px);line-height:.9;letter-spacing:-.06em;font-weight:800;text-shadow:0 4px 30px rgba(0,30,50,.4)}
+.hook p{margin-top:10px;font-size:16px;opacity:.9;text-shadow:0 2px 10px rgba(0,30,50,.5)}
+.fish{position:fixed;left:0;top:0;width:68px;height:68px;margin:-34px;border-radius:23%;overflow:hidden;display:grid;place-items:center;font:800 30px sans-serif;color:#fff;cursor:pointer;will-change:transform;box-shadow:0 10px 24px rgba(0,20,40,.5);z-index:3}
+.fish img{width:100%;height:100%;object-fit:cover;pointer-events:none}
+.fish .nm{position:absolute;bottom:-26px;left:50%;transform:translateX(-50%);font-size:12px;font-weight:800;white-space:nowrap;opacity:0;transition:.2s;text-shadow:0 2px 6px #000}
+.fish:hover .nm{opacity:1}
+.fish.sel{z-index:10;box-shadow:0 0 0 4px #fff,0 0 60px 12px rgba(255,255,255,.55)}
+.bub{position:fixed;bottom:-30px;border-radius:50%;border:1.5px solid rgba(255,255,255,.55);background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.5),rgba(255,255,255,.05));pointer-events:none;animation:up linear infinite;z-index:2}
+@keyframes up{to{transform:translateY(-110vh) translateX(var(--dx))}}
+.food{position:fixed;width:14px;height:14px;margin:-7px;border-radius:50%;background:#ffd36b;box-shadow:0 0 14px #ffd36b;pointer-events:none;z-index:2;animation:fd 5s forwards}
+@keyframes fd{80%{opacity:1}100%{opacity:0;transform:translateY(60px)}}
+.tip{position:fixed;left:50%;top:22px;transform:translateX(-50%);z-index:5;font-size:14px;opacity:.85;pointer-events:none;white-space:nowrap;background:rgba(0,0,0,.18);padding:6px 16px;border-radius:99px}
+@media(max-width:800px){.hook{bottom:96px;max-width:90vw}.tip{display:none}}
+</style>
+</head>
+<body>
+<div class="sea" id="sea"></div><div class="rays"></div>
+<div class="top"><b>ideaapps</b><span>Marcin Polak · iOS · tvOS · AI</span></div>
+<div class="tip">ruszaj myszką: ławica ucieka · kliknij w tło: rzucasz jedzenie · kliknij ikonę: łapiesz</div>
+<div class="hook"><h1>Osiem aplikacji pływa luzem.</h1><p>Spróbuj którąś złapać. Jedzenie je przyciąga, kursor płoszy.</p></div>
+<script src="data.js"></script><script src="ui.js"></script>
+<script>
+const {projects}=IDEA;
+const $=s=>document.querySelector(s);
+let W=innerWidth,H=innerHeight;addEventListener('resize',()=>{W=innerWidth;H=innerHeight});
+const fish=projects.map((p,i)=>{const e=document.createElement('div');e.className='fish';e.dataset.id=p.id;
+ e.innerHTML=(p.icon?`<img src="${p.icon}" alt="">`:`<span style="position:absolute;inset:0;display:grid;place-items:center;background:${p.color}">${p.name[0]}</span>`)+`<span class="nm">${p.name}</span>`;document.body.appendChild(e);
+ return {e,p,x:W*.3+Math.random()*W*.5,y:H*.2+Math.random()*H*.5,vx:(Math.random()-.5)*3,vy:(Math.random()-.5)*3,h:0}});
+// bubbles
+for(let i=0;i<22;i++){const b=document.createElement('i');b.className='bub';const s=6+Math.random()*26;b.style.cssText=`left:${Math.random()*100}vw;width:${s}px;height:${s}px;--dx:${(Math.random()-.5)*120}px;animation-duration:${8+Math.random()*12}s;animation-delay:${-Math.random()*16}s`;document.body.appendChild(b)}
+let mx=-999,my=-999,foods=[],sel=null;
+addEventListener('pointermove',e=>{mx=e.clientX;my=e.clientY});
+addEventListener('pointerleave',()=>{mx=my=-999});
+document.addEventListener('pointerdown',e=>{if(e.target.closest('.ix')||e.target.closest('.fish'))return;
+ const f=document.createElement('div');f.className='food';f.style.left=e.clientX+'px';f.style.top=e.clientY+'px';document.body.appendChild(f);foods.push({x:e.clientX,y:e.clientY,t:performance.now(),e:f});setTimeout(()=>{f.remove();foods=foods.filter(q=>q.e!==f)},5000)});
+function step(){
+ const sx=sel?(W>700?(W-560)/2:W/2):0,sy=sel?(W>700?H/2:H*.3):0;
+ for(const a of fish){
+  if(a===sel){a.x+=(sx-a.x)*.08;a.y+=(sy-a.y)*.08;a.vx=a.vy=0;continue}
+  let ax=0,ay=0,cx=0,cy=0,vx=0,vy=0,n=0;
+  for(const b of fish){if(a===b)continue;const dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy)||1;
+   if(d<110){ax-=dx/d*(110-d)*.04;ay-=dy/d*(110-d)*.04}
+   if(d<340){cx+=b.x;cy+=b.y;vx+=b.vx;vy+=b.vy;n++}}
+  if(n){a.vx+=((cx/n-a.x)*.0009)+((vx/n-a.vx)*.02);a.vy+=((cy/n-a.y)*.0009)+((vy/n-a.vy)*.02)}
+  a.vx+=ax;a.vy+=ay;
+  // cursor scares
+  const dx=a.x-mx,dy=a.y-my,d=Math.hypot(dx,dy);if(d<200){const f=(200-d)/200;a.vx+=dx/d*f*1.4;a.vy+=dy/d*f*1.4}
+  // food attracts
+  for(const f of foods){const fx=f.x-a.x,fy=f.y-a.y,fd=Math.hypot(fx,fy)||1;if(fd<600){a.vx+=fx/fd*.22;a.vy+=fy/fd*.22}}
+  // keep inside
+  const m=90;if(a.x<m)a.vx+=.35;if(a.x>W-m)a.vx-=.35;if(a.y<m+40)a.vy+=.35;if(a.y>H-m)a.vy-=.35;
+  // wander
+  a.vx+=(Math.random()-.5)*.25;a.vy+=(Math.random()-.5)*.25;
+  const sp=Math.hypot(a.vx,a.vy),max=sel?3:5.2;if(sp>max){a.vx*=max/sp;a.vy*=max/sp}if(sp<1.2){a.vx*=1.05;a.vy*=1.05}
+  a.x+=a.vx;a.y+=a.vy;a.h+=((a.vx*3)-a.h)*.1}
+ for(const a of fish)a.e.style.transform=`translate(${a.x}px,${a.y}px) rotate(${Math.max(-25,Math.min(25,a.h))}deg) scale(${a===sel?1.9:1})`;
+ requestAnimationFrame(step)}
+step();
+document.addEventListener('click',e=>{const f=e.target.closest('.fish');if(!f)return;const a=fish.find(x=>x.e===f);pick(a)});
+function pick(a){sel=a;fish.forEach(x=>x.e.classList.toggle('sel',x===a));$('#sea').style.setProperty('--c',a.p.color);
+ IDEA.ui.app(a.p,{onOpen:q=>{const n=fish.find(x=>x.p.id===q.id);sel=n;fish.forEach(x=>x.e.classList.toggle('sel',x===n));$('#sea').style.setProperty('--c',q.color)},onClose:()=>{sel=null;fish.forEach(x=>x.e.classList.remove('sel'));$('#sea').style.setProperty('--c','#0e5b7a')}})}
+IDEA.ui.bar();
+</script>
+</body>
+</html>

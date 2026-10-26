@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Pulpit (wariant 9)</title>
+<style>
+:root{--k:#000;--w:#fff;--g:#c8c8c8}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{font:14px/1.4 Geneva,Chicago,"Lucida Grande",Verdana,sans-serif;color:var(--k);overflow:hidden;
+ background:#7a8a94;background-image:linear-gradient(45deg,#6c7c86 25%,transparent 25%,transparent 75%,#6c7c86 75%),linear-gradient(45deg,#6c7c86 25%,transparent 25%,transparent 75%,#6c7c86 75%);background-size:4px 4px;background-position:0 0,2px 2px;user-select:none}
+.mb{position:fixed;top:0;left:0;right:0;height:26px;background:var(--w);border-bottom:2px solid var(--k);display:flex;align-items:center;padding:0 12px;gap:20px;z-index:9999;font-weight:700}
+.mb span{cursor:default;padding:2px 8px}.mb span:hover{background:var(--k);color:var(--w)}
+.mb .r{margin-left:auto;font-weight:400}
+.mb .ap{font-size:17px;padding:0 6px}
+.icons{position:fixed;top:44px;right:20px;display:flex;flex-direction:column;gap:14px;align-items:flex-end;z-index:1;max-height:calc(100% - 60px);flex-wrap:wrap-reverse}
+.ic{width:92px;text-align:center;cursor:pointer;color:var(--w)}
+.ic img,.ic .ico-fallback{width:52px;height:52px;border-radius:12px;object-fit:cover;display:grid;place-items:center;margin:0 auto 4px;font:700 26px Arial;color:#fff;border:2px solid var(--k);image-rendering:auto}
+.ic span{background:var(--k);padding:0 4px;font-size:12px;display:inline-block}
+.ic.sel img,.ic.sel .ico-fallback{filter:invert(1)}.ic.sel span{background:var(--w);color:var(--k)}
+.fld{width:52px;height:42px;margin:5px auto 9px;background:var(--w);border:2px solid var(--k);border-radius:3px;position:relative}
+.fld::before{content:"";position:absolute;top:-8px;left:-2px;width:22px;height:8px;background:var(--w);border:2px solid var(--k);border-bottom:0;border-radius:3px 3px 0 0}
+.win{position:absolute;background:var(--w);border:2px solid var(--k);box-shadow:4px 4px 0 var(--k);min-width:280px;display:none}
+.win.on{display:block}
+.tt{height:24px;border-bottom:2px solid var(--k);display:flex;align-items:center;justify-content:center;position:relative;cursor:grab;font-weight:700;background:repeating-linear-gradient(0deg,var(--w) 0 2px,var(--k) 2px 3px)}
+.tt b{background:var(--w);padding:0 10px;position:relative}
+.tt i{position:absolute;left:8px;top:4px;width:14px;height:14px;border:2px solid var(--k);background:var(--w);cursor:pointer}
+.tt i:hover{background:var(--k)}
+.bd{padding:16px 18px;max-height:min(72vh,640px);overflow:auto;user-select:text}
+.bd h1{font:700 26px/1.1 Geneva,sans-serif;margin-bottom:10px}
+.bd p{margin-bottom:10px}
+.bd a{color:var(--k);font-weight:700}
+.bd hr{border:0;border-top:2px solid var(--k);margin:14px 0}
+.btn{display:inline-block;border:2px solid var(--k);border-radius:8px;padding:3px 16px;font-weight:700;background:var(--w);text-decoration:none;box-shadow:inset -2px -2px 0 var(--g);cursor:pointer}
+.btn:active,.btn.d{background:var(--k);color:var(--w)}
+.btn.d{box-shadow:0 0 0 3px var(--w),0 0 0 5px var(--k)}
+.shot{display:block;width:100%;max-width:210px;margin:8px 0;border:2px solid var(--k);filter:grayscale(1) contrast(1.15)}
+.shot.c{filter:none}
+.lst{list-style:none}.lst li{padding:5px 0;border-bottom:1px dotted var(--k)}
+.lst b{display:block}
+.row2{display:flex;gap:14px;align-items:flex-start}
+.row2 img.ap,.row2 .ico-fallback{width:56px;height:56px;border-radius:13px;border:2px solid var(--k);flex:none;object-fit:cover;display:grid;place-items:center;font:700 28px Arial;color:#fff}
+.dock{position:fixed;left:12px;bottom:12px;font-size:12px;background:var(--w);border:2px solid var(--k);padding:4px 10px;box-shadow:3px 3px 0 var(--k);z-index:2}
+@media(max-width:760px){body{overflow:auto}.win{position:fixed!important;inset:34px 8px 8px 8px!important;width:auto!important;z-index:5000}.icons{position:static;margin-top:40px;padding:0 10px;flex-direction:row;flex-wrap:wrap;justify-content:center}.ic{width:84px}.dock{display:none}}
+</style>
+</head>
+<body>
+<div class="mb"><span class="ap"></span><span style="font-weight:700">ideaapps</span><span>Plik</span><span>Edycja</span><span>Widok</span><span>Projekty</span><span class="r" id="clk"></span></div>
+<div class="icons" id="icons"></div>
+<div class="dock">Kliknij ikonę dwa razy, żeby otworzyć. Okna można przeciągać.</div>
+<div id="wins"></div>
+
+<script src="data.js"></script>
+<script>
+const {projects,services,email}=IDEA;
+const $=s=>document.querySelector(s);
+const W=$('#wins');let z=100,off=0;
+const win=(id,title,body,x,y,w)=>{const d=document.createElement('div');d.className='win';d.id='w-'+id;d.style.cssText=`left:${x}px;top:${y}px;width:${w}px`;
+ d.innerHTML=`<div class="tt"><i></i><b>${title}</b></div><div class="bd">${body}</div>`;W.appendChild(d);return d};
+const open=id=>{const d=$('#w-'+id);d.classList.add('on');d.style.zIndex=++z};
+const mailBtn=`<a class="btn d" href="mailto:${email}">Napisz e-mail</a>`;
+
+win('readme','Czytaj mnie',`<h1>Cześć, jestem Marcin.</h1>
+<p>Robię aplikacje na iOS i tvOS. Od ponad 10 lat. Wcześniej pisałem na Androida. Teraz dokładam do tego sztuczną inteligencję.</p>
+<p>Wszystko, co tu widzisz na pulpicie, to moje aplikacje z App Store. Kliknij dwa razy ikonę po prawej, żeby zobaczyć szczegóły.</p><hr>${mailBtn} <a class="btn" href="#" data-open="uslugi">Usługi…</a>`,60,60,400);
+win('uslugi','Co robię',`<ul class="lst">${services.map(s=>`<li><b>${s.t}</b>${s.d}</li>`).join('')}</ul><hr>${mailBtn}`,140,170,420);
+win('proj','Moje aplikacje',`<ul class="lst">${projects.map(p=>`<li><a href="#" data-open="${p.id}">${p.name}</a> — ${p.tag}</li>`).join('')}</ul>`,230,90,380);
+projects.forEach((p,i)=>win(p.id,p.name,`<div class="row2">${p.icon?`<img class="ap" src="${p.icon}" alt="">`:IDEA.iconHTML(p,'')}<div><h1 style="margin:0">${p.name}</h1><div>${p.cat}</div></div></div><hr>
+<p><b>${p.tag}.</b></p><p>${p.desc}</p><p>Platformy: ${p.platforms}.</p>${p.shot&&p.id!=='boxes'?`<img class="shot" src="${p.shot}" alt="">`:''}<hr><a class="btn d" href="${p.url}" target="_blank" rel="noopener">Otwórz w App Store</a>`,300+i*26,100+i*24,330));
+win('kontakt','Kontakt',`<h1>Masz pomysł?</h1><p>Napisz, odpowiem i powiem uczciwie, czy i jak to zbudować.</p><p><a href="mailto:${email}">${email}</a></p><hr>${mailBtn}`,180,260,380);
+
+const icons=[['readme','Czytaj mnie'],['uslugi','Usługi'],['kontakt','Kontakt']];
+$('#icons').innerHTML=`<div class="ic" data-open="proj"><div class="fld"></div><span>Aplikacje</span></div>`
++icons.map(([id,n])=>`<div class="ic" data-open="${id}"><div class="fld" style="background:repeating-linear-gradient(0deg,#fff 0 3px,#ddd 3px 4px)"></div><span>${n}</span></div>`).join('')
++projects.map(p=>`<div class="ic" data-open="${p.id}">${IDEA.iconHTML(p,'')}<span>${p.name}</span></div>`).join('');
+document.addEventListener('dblclick',e=>{const t=e.target.closest('.ic');if(t)open(t.dataset.open)});
+document.addEventListener('click',e=>{
+ const t=e.target.closest('.ic');document.querySelectorAll('.ic').forEach(x=>x.classList.toggle('sel',x===t));
+ if(t&&matchMedia('(max-width:760px)').matches)open(t.dataset.open);
+ const o=e.target.closest('[data-open]:not(.ic)');if(o){e.preventDefault();open(o.dataset.open)}
+ const c=e.target.closest('.tt i');if(c)c.closest('.win').classList.remove('on');
+ const w=e.target.closest('.win');if(w)w.style.zIndex=++z});
+let dr=null;
+document.addEventListener('mousedown',e=>{const t=e.target.closest('.tt');if(!t||e.target.tagName==='I')return;const w=t.parentElement;dr={w,x:e.clientX-w.offsetLeft,y:e.clientY-w.offsetTop}});
+document.addEventListener('mousemove',e=>{if(dr){dr.w.style.left=Math.max(0,e.clientX-dr.x)+'px';dr.w.style.top=Math.max(28,e.clientY-dr.y)+'px'}});
+document.addEventListener('mouseup',()=>dr=null);
+const tick=()=>$('#clk').textContent=new Date().toLocaleTimeString('pl',{hour:'2-digit',minute:'2-digit'});tick();setInterval(tick,20000);
+open('readme');open('proj');
+</script>
+</body>
+</html>

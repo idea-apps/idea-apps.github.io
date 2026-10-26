@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Arkusz (wariant 59)</title>
+<style>
+:root{--bg:#fff;--hd:#f3f4f6;--ln:#d8dbe0;--ink:#1d2129;--soft:#6b7280;--g:#107c41;--sel:#e3f1ea}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden}
+body{font:13.5px/1.4 -apple-system,"SF Pro Text",Helvetica,sans-serif;color:var(--ink);background:var(--bg);display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+a{color:#0a58ca}
+.ttl{background:var(--g);color:#fff;display:flex;align-items:center;gap:14px;padding:8px 14px;font-weight:600}
+.ttl b{font-size:15px}.ttl span{opacity:.85;font-weight:400}
+.ttl .r{margin-left:auto}.ttl a{color:#fff;background:rgba(255,255,255,.2);padding:4px 14px;border-radius:5px;text-decoration:none;font-weight:600}
+.rib{background:var(--hd);border-bottom:1px solid var(--ln);padding:6px 14px;display:flex;gap:18px;color:var(--soft);font-size:13px}
+.fx{display:flex;align-items:stretch;border-bottom:1px solid var(--ln);background:#fff}
+.fx .nm{width:80px;padding:6px 10px;border-right:1px solid var(--ln);font-weight:600;text-align:center;background:var(--hd)}
+.fx .f{padding:6px 10px;color:var(--soft);font-style:italic;border-right:1px solid var(--ln);width:36px;text-align:center}
+.fx .v{flex:1;padding:6px 12px;min-height:34px;white-space:pre-wrap;overflow:auto;max-height:110px}
+.gw{flex:1;overflow:auto;position:relative}
+table{border-collapse:separate;border-spacing:0;font-size:13.5px;min-width:100%}
+th,td{border-right:1px solid var(--ln);border-bottom:1px solid var(--ln);padding:6px 10px;white-space:nowrap;max-width:420px;overflow:hidden;text-overflow:ellipsis;vertical-align:top}
+thead th{position:sticky;top:0;background:var(--hd);z-index:3;font-weight:500;color:var(--soft);text-align:center;font-size:12px;padding:3px}
+tbody th{position:sticky;left:0;background:var(--hd);z-index:2;color:var(--soft);font-weight:500;text-align:center;width:42px;font-size:12px}
+thead th:first-child{left:0;z-index:4}
+tr.h td{background:#eaf4ee;font-weight:700;position:sticky;top:24px;z-index:2}
+td.sel{outline:2px solid var(--g);outline-offset:-2px;background:var(--sel)}
+tr.rw.on td{background:#f3faf6}
+td.wrap{white-space:normal;min-width:260px}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+td.ic{display:flex;gap:8px;align-items:center}
+td img.i{width:22px;height:22px;border-radius:6px;object-fit:cover}
+td .sw{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:6px;color:#fff;font-weight:800;font-size:12px}
+td.f{color:#6b7280;font-style:italic}
+.tabs{display:flex;background:var(--hd);border-top:1px solid var(--ln);padding:0 8px}
+.tabs button{all:unset;cursor:pointer;padding:9px 18px;font-size:13px;color:var(--soft);border-top:3px solid transparent}
+.tabs button:hover{background:#e8eaee}.tabs button.on{background:#fff;color:var(--g);font-weight:700;border-top-color:var(--g)}
+.st{background:var(--hd);border-top:1px solid var(--ln);padding:4px 14px;font-size:12px;color:var(--soft);display:flex;gap:22px}
+.card{position:fixed;right:18px;bottom:78px;width:min(400px,92vw);max-height:68vh;overflow:auto;background:#fff;border:1px solid var(--ln);border-radius:12px;box-shadow:0 20px 50px rgba(0,0,0,.25);z-index:20;padding:0;display:none}
+.card.on{display:block}
+.card .ch{padding:14px 16px;color:#fff;display:flex;gap:12px;align-items:center;background:var(--c)}
+.card .ch h3{font-size:20px;letter-spacing:-.02em}.card .ch small{opacity:.85}
+.card .ch button{margin-left:auto;all:unset;cursor:pointer;font-size:20px;opacity:.8}
+.card .cb{padding:14px 16px 16px;font-size:14.5px}
+.r-tag{font-weight:800;font-size:16.5px;margin-bottom:6px}.r-ds{margin-bottom:8px}.r-who{margin-bottom:8px;color:var(--soft)}
+.r-ft{padding-left:18px;margin-bottom:10px}.r-ft li{margin-bottom:3px}
+.r-shots{display:flex;gap:8px;overflow-x:auto;margin:6px 0 10px}.r-shot{height:260px;border-radius:14px;flex:none;box-shadow:0 0 0 1px rgba(0,0,0,.12)}
+.r-meta{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}.r-chip{padding:2px 10px;border-radius:99px;background:var(--hd);font-size:12.5px}
+.r-cta{display:inline-block;background:var(--g);color:#fff;font-weight:700;padding:9px 18px;border-radius:6px;text-decoration:none}
+@media(max-width:700px){.rib{display:none}.card{right:8px;bottom:70px}}
+</style>
+</head>
+<body>
+<div class="ttl"><b>ideaapps.xlsx</b><span>— Marcin Polak · iOS · tvOS · AI</span><span class="r"><a id="mail" href="#">Napisz do mnie</a></span></div>
+<div class="rib"><span>Plik</span><span>Narzędzia główne</span><span>Wstawianie</span><span>Formuły</span><span>Dane</span><span>Widok</span></div>
+<div class="fx"><div class="nm" id="ref">A1</div><div class="f">fx</div><div class="v" id="fv"></div></div>
+<div class="gw"><table id="tb"></table></div>
+<div class="tabs" id="tabs"></div>
+<div class="st"><span id="s1">Gotowe</span><span id="s2"></span><span style="margin-left:auto">Kliknij komórkę, żeby zobaczyć pełną treść</span></div>
+<div class="card" id="card"></div>
+<script src="data.js"></script><script src="render.js"></script>
+<script>
+const {projects,services,process,email,R}=IDEA;
+const $=s=>document.querySelector(s);
+$('#mail').href='mailto:'+email;
+const L=i=>String.fromCharCode(65+i);
+const deep=c=>`color-mix(in srgb,${c} 85%,#15171c)`;
+const sheets={
+ apps:{n:'Aplikacje',head:['Aplikacja','Kategoria','Platformy','Dla kogo','Co robi','Języki / uwagi','Link'],
+  rows:projects.map(p=>[{i:p},p.cat,p.platforms,p.who,{t:p.tag+'. '+p.desc,w:1},(p.platforms.match(/\d+ języków?|\d+ języki/)||['—'])[0],{l:p.url,t:'App Store ↗'}]),
+  sum:[['Razem aplikacji','=COUNTA(A2:A9)',8],['Z iPadem','=COUNTIF(C2:C9;"*iPad*")',projects.filter(p=>p.platforms.includes('iPad')).length],['Z Makiem','=COUNTIF(C2:C9;"*Mac*")',projects.filter(p=>p.platforms.includes('Mac')).length]]},
+ pro:{n:'Jak pracuję',head:['Etap','Nazwa','Co robię','Co dostajesz'],
+  rows:process.map((s,i)=>[{n:i+1},s.t,{t:s.d,w:1},{t:R.out[i],w:1}]),sum:[['Liczba etapów','=COUNTA(B2:B7)',process.length],['Kto to robi','=1','1 osoba']]},
+ svc:{n:'Usługi',head:['Nr','Usługa','Zakres'],rows:services.map((s,i)=>[{n:i+1},s.t,{t:s.d,w:1}]),sum:[['Liczba usług','=COUNTA(B2:B5)',services.length]]},
+ me:{n:'O mnie i kontakt',head:['Pole','Wartość'],rows:[['Imię i nazwisko','Marcin Polak'],['Firma','ideaapps'],['Doświadczenie','10+ lat iOS i tvOS, wcześniej kilka lat Androida'],['Obszary','iOS, tvOS, AI'],['Technologie','Swift, SwiftUI, UIKit, tvOS, Core ML, Claude API'],['Opis',{t:IDEA.about,w:1}],['E-mail',{l:'mailto:'+email,t:email}],['Pierwsza rozmowa','Bezpłatna, opisz pomysł w kilku zdaniach']],sum:[]}
+};
+let cur='apps',selR=null,selC=null;
+function cellText(c){if(c==null)return'';if(typeof c==='string')return c;if(c.i)return c.i.name;if(c.n!=null)return String(c.n);return c.t||''}
+function draw(){const s=sheets[cur];
+ let h=`<thead><tr><th></th>${s.head.map((_,i)=>`<th>${L(i)}</th>`).join('')}</tr></thead><tbody><tr class="h"><th>1</th>${s.head.map(x=>`<td>${x}</td>`).join('')}</tr>`;
+ s.rows.forEach((r,ri)=>{h+=`<tr class="rw" data-r="${ri}"><th>${ri+2}</th>${r.map((c,ci)=>{let cls=c&&c.w?'wrap':'';let inner;
+  if(c&&c.i){cls='ic';inner=`${c.i.icon?`<img class="i" src="${c.i.icon}" alt="">`:`<span class="sw" style="background:${c.i.color}">${c.i.name[0]}</span>`}<b>${c.i.name}</b>`}
+  else if(c&&c.l){inner=`<a href="${c.l}" ${c.l.startsWith('http')?'target="_blank" rel="noopener"':''}>${c.t}</a>`}
+  else if(c&&c.n!=null){cls='num';inner=c.n}
+  else inner=cellText(c);
+  return `<td class="${cls}" data-r="${ri}" data-c="${ci}">${inner}</td>`}).join('')}</tr>`});
+ const base=s.rows.length+3;
+ s.sum.forEach((x,i)=>{h+=`<tr><th>${base+i}</th><td class="f" data-sum="1" data-f="${x[1]}">${x[0]}</td><td class="num" data-sum="1" data-f="${x[1]}">${x[2]}</td></tr>`});
+ $('#tb').innerHTML=h+'</tbody>';
+ $('#s2').textContent=`${s.rows.length} wierszy · arkusz „${s.n}”`;
+ $('#tabs').innerHTML=Object.entries(sheets).map(([k,v])=>`<button data-k="${k}" class="${k===cur?'on':''}">${v.n}</button>`).join('');
+ selR=null;select(0,0)}
+function select(r,c){const s=sheets[cur];document.querySelectorAll('td.sel').forEach(x=>x.classList.remove('sel'));document.querySelectorAll('tr.rw.on').forEach(x=>x.classList.remove('on'));
+ const td=document.querySelector(`td[data-r="${r}"][data-c="${c}"]`);if(!td)return;td.classList.add('sel');td.parentElement.classList.add('on');selR=r;selC=c;
+ $('#ref').textContent=L(c)+(r+2);const cell=s.rows[r][c];$('#fv').textContent=cell&&cell.i?cell.i.name+' — '+cell.i.tag:cellText(cell)+(cell&&cell.l?'  →  '+cell.l:'');
+ const app=cur==='apps'?s.rows[r][0].i:null;const card=$('#card');
+ if(app){card.style.setProperty('--c',deep(app.color));card.innerHTML=`<div class="ch"><div><h3>${app.name}</h3><small>${app.cat}</small></div><button>×</button></div><div class="cb">${R.appBody(app)}</div>`;card.classList.add('on')}else card.classList.remove('on')}
+$('#tb').addEventListener('click',e=>{const td=e.target.closest('td');if(!td)return;if(td.dataset.sum){$('#ref').textContent='fx';$('#fv').textContent=td.dataset.f;return}if(e.target.closest('a'))return;select(+td.dataset.r,+td.dataset.c)});
+$('#tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(b){cur=b.dataset.k;draw()}});
+$('#card').addEventListener('click',e=>{if(e.target.tagName==='BUTTON')$('#card').classList.remove('on')});
+addEventListener('keydown',e=>{const s=sheets[cur];let r=selR,c=selC;if(r==null)return;
+ if(e.key==='ArrowDown')r++;else if(e.key==='ArrowUp')r--;else if(e.key==='ArrowRight')c++;else if(e.key==='ArrowLeft')c--;else return;
+ e.preventDefault();r=Math.max(0,Math.min(s.rows.length-1,r));c=Math.max(0,Math.min(s.head.length-1,c));select(r,c);document.querySelector('td.sel')?.scrollIntoView({block:'nearest',inline:'nearest'})});
+draw();
+</script>
+</body>
+</html>

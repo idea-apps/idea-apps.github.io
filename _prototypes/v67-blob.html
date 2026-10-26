@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Blob (wariant 67)</title>
+<style>
+:root{--a:#4d7cfe;--b:#8a5cff;--d:#0c0d16}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden}
+body{font:18px/1.5 -apple-system,BlinkMacSystemFont,"SF Pro Display",Helvetica,sans-serif;color:#fff;-webkit-font-smoothing:antialiased;background:var(--d);transition:background 1s}
+.brand{position:fixed;left:4vw;top:24px;z-index:20;font-weight:800;font-size:20px;letter-spacing:-.03em}
+.brand small{display:block;font-weight:500;font-size:13px;opacity:.65}
+.scene{position:fixed;inset:0;display:grid;place-items:center;overflow:hidden}
+.name{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);font-size:clamp(90px,20vw,340px);font-weight:900;letter-spacing:-.08em;line-height:.8;white-space:nowrap;color:transparent;-webkit-text-stroke:2px rgba(255,255,255,.55);z-index:1;pointer-events:none;user-select:none}
+.name.in{animation:ni .9s cubic-bezier(.2,.9,.2,1)}
+.name.out{animation:no .5s ease-in forwards}
+@keyframes ni{from{opacity:0;transform:translate(-50%,-10%) scale(.9)}}
+@keyframes no{to{opacity:0;transform:translate(-50%,-90%) scale(1.05)}}
+.blobw{position:absolute;left:50%;top:50%;width:min(72vmin,740px);height:min(72vmin,740px);transform:translate(-50%,-52%);z-index:0}
+.blob{position:absolute;inset:0;background:radial-gradient(circle at 30% 25%,color-mix(in srgb,var(--a) 70%,#fff),var(--a) 45%,var(--b));border-radius:46% 54% 58% 42%/48% 42% 58% 52%;animation:mo 9s ease-in-out infinite alternate;transition:background .8s,transform .9s cubic-bezier(.3,1.6,.5,1);box-shadow:0 0 140px 30px color-mix(in srgb,var(--a) 50%,transparent)}
+.blob.pulse{transform:scale(.55)}
+@keyframes mo{0%{border-radius:46% 54% 58% 42%/48% 42% 58% 52%;rotate:0deg}50%{border-radius:60% 40% 36% 64%/44% 60% 40% 56%;rotate:40deg}100%{border-radius:38% 62% 52% 48%/58% 38% 62% 42%;rotate:90deg}}
+.ring{position:absolute;inset:-10%;border-radius:50%;border:1.5px solid rgba(255,255,255,.28);animation:rot 24s linear infinite}
+.ring:nth-child(2){inset:-22%;border-color:rgba(255,255,255,.15);animation-duration:38s;animation-direction:reverse}
+.ring::after{content:"";position:absolute;top:-6px;left:50%;width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 0 18px #fff}
+@keyframes rot{to{transform:rotate(360deg)}}
+.ph{position:absolute;left:50%;top:50%;height:min(70vh,660px);aspect-ratio:9/19.5;transform:translate(-50%,-52%);border-radius:46px;overflow:hidden;background:#000;box-shadow:0 0 0 8px #0a0a0e,0 0 0 10px rgba(255,255,255,.18),0 50px 90px -20px rgba(0,0,0,.7);z-index:3;opacity:0;transition:opacity .6s,transform .9s cubic-bezier(.2,.9,.2,1)}
+.ph.on{opacity:1;transform:translate(-50%,-52%) rotate(var(--r,-3deg))}
+.ph img{width:100%;height:100%;object-fit:cover;object-position:top}
+.ph .fb{width:100%;height:100%;display:grid;place-items:center;font:900 min(24vh,200px) sans-serif;color:#fff}
+.side{position:absolute;bottom:128px;z-index:6;max-width:min(300px,26vw)}
+.side.l{left:4vw}.side.r{right:4vw;text-align:right}
+.side small{font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.7;display:block;margin-bottom:6px}
+.side p{font-size:clamp(15px,1.4vw,19px);line-height:1.35;font-weight:600}
+.side .btn{margin-top:14px}
+.btn{all:unset;cursor:pointer;display:inline-block;background:#fff;color:#14141c;font-weight:800;padding:12px 22px;border-radius:99px;font-size:15px;transition:.2s}
+.btn:hover{transform:translateY(-2px)}
+.arr{position:fixed;top:50%;z-index:8;width:54px;height:54px;margin-top:-27px;border-radius:50%;border:1.5px solid rgba(255,255,255,.4);background:rgba(255,255,255,.08);backdrop-filter:blur(10px);color:#fff;font-size:22px;cursor:pointer;display:grid;place-items:center;transition:.2s}
+.arr:hover{background:#fff;color:#111}.arr.l{left:3vw}.arr.r{right:3vw}
+.pills{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:10;display:flex;gap:6px;padding:7px;background:rgba(255,255,255,.1);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.22);border-radius:99px}
+.pl{all:unset;cursor:pointer;display:flex;align-items:center;gap:0;border-radius:99px;overflow:hidden;height:46px;transition:.45s cubic-bezier(.3,.9,.3,1);padding:0 0 0 0}
+.pl .ico,.pl .ico-fallback{width:46px;height:46px;border-radius:50%;object-fit:cover;display:grid;place-items:center;font:800 18px sans-serif;color:#fff;flex:none;opacity:.7;transition:.3s}
+.pl span{max-width:0;overflow:hidden;white-space:nowrap;font-weight:700;font-size:15px;transition:max-width .45s,padding .45s}
+.pl.on{background:#fff;color:#111}.pl.on span{max-width:160px;padding:0 18px 0 6px}.pl.on .ico,.pl.on .ico-fallback{opacity:1}
+.pl:hover .ico,.pl:hover .ico-fallback{opacity:1}
+@media(max-width:860px){.side{display:none}.arr{display:none}.pills{max-width:96vw;overflow-x:auto}.name{top:30%}}
+</style>
+</head>
+<body>
+<div class="brand">ideaapps<small>Marcin Polak · iOS · tvOS · AI</small></div>
+<div class="scene" id="scene"><div class="name" id="name"></div><div class="blobw"><div class="ring"></div><div class="ring"></div><div class="blob" id="blob"></div></div><div id="phs"></div></div>
+<div class="side l" id="sl"></div><div class="side r" id="sr"></div>
+<button class="arr l" id="pv">‹</button><button class="arr r" id="nx">›</button>
+<div class="pills" id="pills"></div>
+<script src="data.js"></script><script src="fx.js"></script><script src="ui.js"></script>
+<script>
+const {projects}=IDEA;
+const $=s=>document.querySelector(s);
+$('#phs').innerHTML=projects.map((p,i)=>`<div class="ph" data-i="${i}" style="--r:${i%2?3:-3}deg">${p.shot&&p.id!=='boxes'?`<img src="${p.shot}" alt="">`:`<div class="fb" style="background:linear-gradient(160deg,${p.color},color-mix(in srgb,${p.color} 50%,#000))">${p.name[0]}</div>`}</div>`).join('');
+$('#pills').innerHTML=projects.map((p,i)=>`<button class="pl" data-i="${i}">${IDEA.iconHTML(p,'')}<span>${p.name}</span></button>`).join('');
+let cur=-1;
+function select(i){if(i===cur)return;cur=i;const p=projects[i];const pa=IDEA.fx.pal(p.color);
+ const r=document.documentElement.style;r.setProperty('--a',pa.a);r.setProperty('--b',pa.b);r.setProperty('--d',pa.d);
+ const bl=$('#blob');bl.classList.add('pulse');setTimeout(()=>bl.classList.remove('pulse'),120);
+ const n=$('#name');n.classList.remove('in');n.classList.add('out');setTimeout(()=>{n.textContent=p.name;n.classList.remove('out');n.classList.add('in')},380);
+ document.querySelectorAll('.ph').forEach((e,k)=>e.classList.toggle('on',k===i));
+ document.querySelectorAll('.pl').forEach((e,k)=>e.classList.toggle('on',k===i));
+ $('#sl').innerHTML=`<small>${p.cat} · ${p.platforms.split(' · ')[0]}</small><p>${p.tag}</p>`;
+ $('#sr').innerHTML=`<small>Dla</small><p>${p.who}</p><button class="btn" id="more">Szczegóły →</button>`;
+ $('#more').onclick=()=>IDEA.ui.app(p)}
+$('#pills').addEventListener('click',e=>{const b=e.target.closest('.pl');if(b)select(+b.dataset.i)});
+$('#nx').onclick=()=>select((cur+1)%projects.length);$('#pv').onclick=()=>select((cur-1+projects.length)%projects.length);
+addEventListener('keydown',e=>{if(e.key==='ArrowRight')$('#nx').click();if(e.key==='ArrowLeft')$('#pv').click()});
+// parallax
+addEventListener('pointermove',e=>{const x=(e.clientX/innerWidth-.5),y=(e.clientY/innerHeight-.5);$('.blobw').style.transform=`translate(calc(-50% + ${x*-40}px),calc(-52% + ${y*-30}px))`;$('#name').style.marginLeft=x*50+'px'});
+IDEA.ui.bar(null,'top');select(0);
+</script>
+</body>
+</html>

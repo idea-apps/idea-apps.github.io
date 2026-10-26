@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Rysunek techniczny (wariant 8)</title>
+<style>
+:root{--bg:#0f3a6e;--ln:rgba(255,255,255,.88);--dim:rgba(255,255,255,.55);--hi:#ffd23f}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{color:var(--ln);font:15px/1.55 Menlo,"Andale Mono",Monaco,monospace;
+ background-color:var(--bg);
+ background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+ background-size:120px 120px,120px 120px,24px 24px,24px 24px}
+a{color:inherit}
+.sheet{max-width:1200px;margin:24px auto;border:2px solid var(--ln);position:relative;padding:34px 40px}
+.sheet::before{content:"";position:absolute;inset:6px;border:1px solid var(--dim);pointer-events:none}
+.tb{display:flex;justify-content:space-between;align-items:center;font-size:13px;text-transform:uppercase;letter-spacing:.08em}
+.tb a{margin-left:22px;text-decoration:none}.tb a:hover{color:var(--hi)}
+h1{font:700 clamp(40px,7.5vw,104px)/.95 "Helvetica Neue",Arial,sans-serif;letter-spacing:-.04em;text-transform:uppercase;color:transparent;-webkit-text-stroke:2px var(--ln);margin:50px 0 10px}
+h1 em{font-style:normal;color:var(--hi);-webkit-text-stroke:0}
+.lead{max-width:600px;margin:22px 0}
+.dimline{display:flex;align-items:center;gap:10px;color:var(--dim);font-size:12px;margin:26px 0}
+.dimline::before,.dimline::after{content:"";height:1px;flex:1;background:var(--dim)}
+.dimline::before{background:linear-gradient(90deg,transparent 0,var(--dim) 0)}
+.dimline span{padding:0 4px}
+h2{font:700 13px Menlo,monospace;text-transform:uppercase;letter-spacing:.14em;color:var(--hi);margin:56px 0 20px;display:flex;gap:14px;align-items:center}
+h2::after{content:"";flex:1;height:1px;background:var(--dim)}
+.specs{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--ln);margin-top:36px}
+.specs div{padding:14px 16px;border-right:1px solid var(--ln)}.specs div:last-child{border:0}
+.specs b{display:block;font:700 40px "Helvetica Neue",Arial,sans-serif;letter-spacing:-.04em}
+.specs span{font-size:12px;color:var(--dim);text-transform:uppercase}
+.row{display:grid;grid-template-columns:230px 1fr;gap:34px;padding:34px 0;border-top:1px dashed var(--dim);text-decoration:none;position:relative}
+.row:hover .dr{border-color:var(--hi)}.row:hover h3{color:var(--hi)}
+.dr{position:relative;width:200px;margin:14px 0 30px 12px;border:2px solid var(--ln);border-radius:26px;aspect-ratio:9/17;overflow:hidden;background:rgba(255,255,255,.06);transition:.2s}
+.dr img.s{width:100%;height:100%;object-fit:cover;object-position:top;opacity:.92;filter:saturate(.8)}
+.dr .ico,.dr .ico-fallback{position:absolute;inset:0;margin:auto;width:84px;height:84px;border-radius:20px;object-fit:cover;display:grid;place-items:center;font:700 40px Arial;color:#fff}
+.wd,.ht{position:absolute;color:var(--dim);font-size:11px;white-space:nowrap}
+.wd{left:12px;width:200px;bottom:2px;text-align:center;border-top:1px solid var(--dim);padding-top:4px}
+.ht{left:0;top:14px;height:calc(100% - 44px);width:12px;border-right:1px solid var(--dim)}
+.ht span{position:absolute;right:6px;top:50%;transform:translateY(-50%) rotate(180deg);writing-mode:vertical-rl}
+.col{position:relative}
+.inf h3{font:700 clamp(28px,4vw,48px)/1 "Helvetica Neue",Arial,sans-serif;text-transform:uppercase;letter-spacing:-.03em;margin:6px 0 10px}
+.inf .no{color:var(--hi);font-size:13px}
+.inf p{max-width:520px;margin-bottom:16px}
+table{border-collapse:collapse;font-size:13px;margin-bottom:14px}
+td{border:1px solid var(--dim);padding:5px 14px}td:first-child{color:var(--dim);text-transform:uppercase}
+.go{color:var(--hi);font-size:13px;text-transform:uppercase;letter-spacing:.06em}
+.sv{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.sv div{border:1px solid var(--ln);padding:18px 20px;position:relative}
+.sv div::before{content:attr(data-n);position:absolute;top:-1px;right:-1px;background:var(--ln);color:var(--bg);padding:1px 8px;font-size:12px}
+.sv h4{font:700 20px "Helvetica Neue",Arial,sans-serif;text-transform:uppercase;margin-bottom:8px;letter-spacing:-.01em}
+.sv p{font-size:14px;color:rgba(255,255,255,.8)}
+.bt{display:grid;grid-template-columns:2fr 1fr 1fr;border:2px solid var(--ln);margin-top:60px}
+.bt div{padding:10px 14px;border-right:1px solid var(--ln);border-bottom:1px solid var(--ln);font-size:12px}
+.bt div:nth-child(3n){border-right:0}.bt div:nth-last-child(-n+3){border-bottom:0}
+.bt small{display:block;color:var(--dim);text-transform:uppercase;font-size:10.5px}
+.bt b{font-size:16px;font-weight:700}
+.bt a{color:var(--hi)}
+@media(max-width:820px){.sheet{margin:0;padding:22px 18px}.row{grid-template-columns:1fr}.dr{width:170px}.wd{width:170px}.specs{grid-template-columns:1fr 1fr}.sv{grid-template-columns:1fr}.bt{grid-template-columns:1fr}.bt div{border-right:0!important;border-bottom:1px solid var(--ln)!important}.tb nav{display:none}}
+</style>
+</head>
+<body>
+<div class="sheet">
+<div class="tb"><b>ideaapps / rys. 001</b><nav><a href="#projekty">Projekty</a><a href="#uslugi">Usługi</a><a href="#kontakt">Kontakt</a></nav></div>
+<h1>Aplikacje<br>zaprojektowane <em>dokładnie.</em></h1>
+<p class="lead">Marcin Polak. Niezależny developer iOS, tvOS i AI. Od 10 lat pracuję z platformami Apple. Rysuję, buduję i wypuszczam aplikacje, w których wszystko pasuje do siebie.</p>
+<div class="specs"><div><b>10+</b><span>lat doświadczenia</span></div><div><b>8</b><span>aplikacji w sklepie</span></div><div><b>iOS tvOS</b><span>platformy</span></div><div><b>1</b><span>osoba w zespole</span></div></div>
+
+<h2 id="projekty">A. Wykaz projektów</h2>
+<div id="list"></div>
+
+<h2 id="uslugi">B. Zakres prac</h2>
+<div class="sv" id="sv"></div>
+
+<div class="bt" id="kontakt">
+<div><small>Projekt</small><b>Twoja aplikacja</b></div><div><small>Wykonawca</small><b>M. Polak</b></div><div><small>Skala</small><b>1:1</b></div>
+<div><small>Kontakt</small><b><a id="mail" href="#"></a></b></div><div><small>Data</small><b>2026</b></div><div><small>Rewizja</small><b>A</b></div>
+</div>
+</div>
+<script src="data.js"></script>
+<script>
+const {projects,services,email}=IDEA;
+const m=document.getElementById('mail');m.href='mailto:'+email;m.textContent=email;
+document.getElementById('list').innerHTML=projects.map((p,i)=>`<a class="row" href="${p.url}" target="_blank" rel="noopener">
+<div class="col"><div class="ht"><span>${p.shot?'1170':'—'} px</span></div><div class="dr">${p.shot?`<img class="s" src="${p.shot}" alt="">`:IDEA.iconHTML(p,'ico')}</div><div class="wd">← 390 pt →</div></div>
+<div class="inf"><span class="no">POZ. ${String(i+1).padStart(2,'0')}</span><h3>${p.name}</h3><p>${p.tag}. ${p.desc}</p>
+<table><tr><td>Kategoria</td><td>${p.cat}</td></tr><tr><td>Platformy</td><td>${p.platforms}</td></tr><tr><td>Status</td><td>Opublikowano</td></tr></table>
+<span class="go">Otwórz w App Store →</span></div></a>`).join('');
+document.getElementById('sv').innerHTML=services.map((s,i)=>`<div data-n="B.${i+1}"><h4>${s.t}</h4><p>${s.d}</p></div>`).join('');
+</script>
+</body>
+</html>

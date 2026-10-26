@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Mapa myśli (wariant 63)</title>
+<style>
+:root{--bg:#f6f4ee;--ink:#17171c;--soft:#6c6c76;--ln:#dcd8cc}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 -apple-system,"SF Pro Text",Helvetica,sans-serif;-webkit-font-smoothing:antialiased;display:grid;grid-template-columns:minmax(0,1fr) 440px;background-image:radial-gradient(#d9d5c8 1px,transparent 1.4px);background-size:22px 22px}
+a{color:inherit}
+.map{position:relative;overflow:hidden}
+.top{position:absolute;left:22px;top:18px;z-index:5;pointer-events:none}
+.top b{font-size:20px}.top span{display:block;color:var(--soft);font-size:14px}
+.hint{position:absolute;left:22px;bottom:16px;z-index:5;font-size:13.5px;color:var(--soft);background:rgba(246,244,238,.9);padding:6px 12px;border-radius:99px}
+svg{position:absolute;inset:0;width:100%;height:100%}
+svg path{fill:none;stroke:var(--c);stroke-width:3;stroke-linecap:round;opacity:.55;transition:d .5s,opacity .3s}
+svg path.hide{opacity:0}
+.nd{position:absolute;transform:translate(-50%,-50%);transition:left .5s cubic-bezier(.3,.8,.2,1),top .5s cubic-bezier(.3,.8,.2,1),opacity .3s,transform .3s;cursor:pointer;display:flex;align-items:center;gap:10px;white-space:nowrap;z-index:2}
+.nd.hide{opacity:0;pointer-events:none;transform:translate(-50%,-50%) scale(.4)}
+.nd.root{background:var(--ink);color:#fff;font-weight:800;font-size:19px;padding:18px 24px;border-radius:99px;letter-spacing:-.02em;box-shadow:0 14px 30px -10px rgba(0,0,0,.5)}
+.nd.br{background:var(--c);color:#fff;font-weight:800;font-size:16px;padding:11px 20px;border-radius:99px;box-shadow:0 10px 22px -10px var(--c)}
+.nd.br .ct{background:rgba(255,255,255,.28);border-radius:99px;padding:0 9px;font-size:13px}
+.nd.br .ar{transition:.3s;display:inline-block}.nd.br.open .ar{transform:rotate(90deg)}
+.nd.lf{background:#fff;border:2px solid var(--c);color:var(--ink);font-weight:700;font-size:14.5px;padding:7px 14px 7px 8px;border-radius:99px}
+.nd.lf .ico,.nd.lf .ico-fallback{width:30px;height:30px;border-radius:23%;object-fit:cover;display:grid;place-items:center;font:800 14px sans-serif;color:#fff}
+.nd.lf .b{width:26px;height:26px;border-radius:50%;background:var(--c);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:800}
+.nd.lf:hover,.nd.lf.on{background:var(--c);color:#fff}
+.nd.lf.rt{transform:translate(0,-50%)}.nd.lf.lt{transform:translate(-100%,-50%)}
+.nd.lf.rt.hide{transform:translate(0,-50%) scale(.4)}.nd.lf.lt.hide{transform:translate(-100%,-50%) scale(.4)}
+.nd.root:hover,.nd.br:hover{transform:translate(-50%,-50%) scale(1.06)}
+.side{background:#fff;border-left:1.5px solid var(--ln);overflow:auto;display:flex;flex-direction:column;min-height:0}
+.side .hd{padding:28px 28px 22px;background:var(--c,#17171c);color:#fff;position:relative;flex:none}
+.side .hd small{font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.85}
+.side .hd h2{font-size:36px;letter-spacing:-.045em;line-height:1;margin-top:4px}
+.side .bd{padding:22px 28px 36px}
+.r-tag{font-size:21px;font-weight:800;letter-spacing:-.02em;line-height:1.25;margin-bottom:8px}
+.r-ds{margin-bottom:12px;color:#33333b;font-size:16.5px}
+.r-who{margin-bottom:10px;font-size:15px}
+.r-ft{list-style:none;padding:0;margin:0 0 14px}
+.r-ft li{position:relative;padding:7px 0 7px 28px;border-bottom:1px solid #eeece4;font-size:16px}
+.r-ft li::before{content:"✓";position:absolute;left:0;top:7px;width:19px;height:19px;border-radius:50%;background:var(--c);color:#fff;font-size:11px;font-weight:800;display:grid;place-items:center}
+.r-shots{display:flex;gap:10px;overflow-x:auto;margin:6px 0 14px}.r-shot{height:300px;border-radius:18px;box-shadow:0 0 0 1px rgba(0,0,0,.1);flex:none}
+.r-meta{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}.r-chip{font-size:13px;font-weight:600;padding:4px 12px;border-radius:99px;background:#f0eee6}
+.r-cta{display:inline-block;background:var(--c);color:#fff;font-weight:800;padding:12px 22px;border-radius:99px;text-decoration:none}
+.side .bd p{font-size:17px;color:#33333b;margin-bottom:12px}
+.side .box{background:#f6f4ee;border-radius:14px;padding:14px 16px;margin-top:12px;font-size:15px}
+.side .big{display:inline-block;font-size:22px;font-weight:800;letter-spacing:-.03em;border-bottom:3px solid var(--c);text-decoration:none;overflow-wrap:anywhere}
+@media(max-width:900px){body{grid-template-columns:1fr;grid-template-rows:55vh 1fr}.side{border-left:0;border-top:1.5px solid var(--ln)}}
+</style>
+</head>
+<body>
+<div class="map" id="map"><div class="top"><b>ideaapps</b><span>Marcin Polak · iOS · tvOS · AI</span></div><svg id="svg"></svg><div class="hint">Kliknij gałąź, żeby ją rozwinąć (otwarta jest jedna naraz). Kliknij liść, żeby przeczytać.</div></div>
+<aside class="side" id="side"></aside>
+<script src="data.js"></script><script src="render.js"></script>
+<script>
+const {projects,services,process,email,R}=IDEA;
+const $=s=>document.querySelector(s);
+const deep=c=>`color-mix(in srgb,${c} 85%,#15151a)`;
+const tree={root:{t:'ideaapps'},br:[
+ {id:'apps',t:'Aplikacje',c:'#2f6bff',ang:-50,span:125,kids:projects.map(p=>({id:p.id,t:p.name,p,c:deep(p.color)}))},
+ {id:'pro',t:'Jak pracuję',c:'#d9822b',ang:72,span:80,kids:process.map((s,i)=>({id:'p'+i,t:`${i+1}. ${s.t}`,pro:s,i,c:'#d9822b'}))},
+ {id:'svc',t:'Usługi',c:'#0f9b6c',ang:158,span:62,kids:services.map((s,i)=>({id:'s'+i,t:s.t,svc:s,c:'#0f9b6c'}))},
+ {id:'me',t:'O mnie i kontakt',c:'#c23b3b',ang:-135,span:40,kids:[{id:'about',t:'O mnie',about:1,c:'#c23b3b'},{id:'contact',t:'Kontakt',contact:1,c:'#c23b3b'}]}]};
+const open=new Set(['apps']);let sel=null;
+const map=$('#map'),svg=$('#svg');
+const nodes=[];
+nodes.push({k:'root',id:'root',t:tree.root.t});
+tree.br.forEach(b=>{nodes.push({k:'br',id:b.id,t:b.t,c:b.c,b});b.kids.forEach(l=>nodes.push({k:'lf',id:l.id,t:l.t,c:l.c,l,b}))});
+nodes.forEach(n=>{const e=document.createElement('div');e.className='nd '+n.k;e.style.setProperty('--c',n.c||'#17171c');
+ if(n.k==='root')e.textContent=n.t;
+ else if(n.k==='br')e.innerHTML=`<span class="ar">▸</span>${n.t}<span class="ct">${n.b.kids.length}</span>`;
+ else e.innerHTML=(n.l.p?IDEA.iconHTML(n.l.p,''):`<span class="b">${n.l.pro?n.l.i+1:n.l.svc?'★':'•'}</span>`)+n.t;
+ e.dataset.id=n.id;map.appendChild(e);n.e=e});
+const P=document.createElementNS('http://www.w3.org/2000/svg','g');svg.appendChild(P);
+const paths=[];
+function layout(){const W=map.clientWidth,H=map.clientHeight;const cx=W/2,cy=H/2+10;
+ const root=nodes[0];root.x=cx;root.y=cy;
+ const pos={apps:[1,-.52],pro:[1,.52],svc:[-1,.52],me:[-1,-.52]};
+ nodes.forEach(n=>{if(n.k==='br'){const [sx,sy]=pos[n.id];n.x=cx+sx*W*.12;n.y=cy+sy*H*.36;n.sx=sx}});
+ const step=Math.min(54,(H-120)/9);
+ tree.br.forEach(b=>{const bn=nodes.find(n=>n.id===b.id);const kids=nodes.filter(n=>n.k==='lf'&&n.b===b);const o=open.has(b.id);const m=kids.length;
+  kids.forEach((n,i)=>{n.sx=bn.sx;n.x=bn.x+bn.sx*(bn.e.offsetWidth/2+34);n.y=bn.y+(i-(m-1)/2)*step;n.hide=!o;if(!o){n.x=bn.x;n.y=bn.y}
+   n.y=Math.max(60,Math.min(H-50,n.y))})});
+ nodes.forEach(n=>{n.e.style.left=n.x+'px';n.e.style.top=n.y+'px';n.e.classList.toggle('hide',!!n.hide);if(n.k==='lf'){n.e.classList.toggle('rt',n.sx>0);n.e.classList.toggle('lt',n.sx<0)}if(n.k==='br')n.e.classList.toggle('open',open.has(n.id))});
+ paths.forEach(p=>p.remove());paths.length=0;
+ nodes.forEach(n=>{if(n.k==='root')return;const par=n.k==='br'?nodes[0]:nodes.find(m=>m.id===n.b.id);const p=document.createElementNS('http://www.w3.org/2000/svg','path');
+  const sx=n.k==='lf'?n.sx*8:0;const x1=par.x,y1=par.y,x2=n.x+sx,y2=n.y;const mx=(x1+x2)/2;
+  p.setAttribute('d',`M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`);p.style.setProperty('--c',n.c||'#17171c');if(n.hide)p.classList.add('hide');svg.insertBefore(p,P);paths.push(p)})}
+addEventListener('resize',layout);
+function body(l){
+ if(l.p)return R.appBody(l.p);
+ if(l.pro)return `<p>${l.pro.d}</p><div class="box"><b>Co dostajesz:</b> ${R.out[l.i]}</div>${l.i===3?`<div class="box"><b>${IDEA.ai.t}.</b> ${IDEA.ai.d}</div>`:''}`;
+ if(l.svc)return `<p>${l.svc.d}</p><div class="box">Zaczynamy od rozmowy i jednostronicowego zakresu prac, potem prototyp i regularne wersje do testów.</div>`;
+ if(l.about)return `<p>${IDEA.about}</p><div class="box"><b>W liczbach:</b> 10+ lat iOS i tvOS, 8 własnych aplikacji w App Store, 1 osoba odpowiedzialna za całość.</div>`;
+ return `<p>Opisz w kilku zdaniach, co chcesz zbudować, dla kogo i na jakie urządzenia. Odpowiem i powiem szczerze, jak to widzę.</p><a class="big" href="mailto:${email}">${email}</a>`}
+function show(n){sel=n;nodes.forEach(x=>x.e.classList.toggle('on',x===n));const s=$('#side');
+ if(!n||n.k==='root'){s.style.setProperty('--c','#17171c');s.innerHTML=`<div class="hd"><small>Start</small><h2>Mapa ideaapps</h2></div><div class="bd"><p>Marcin Polak, niezależny developer iOS i tvOS. Cała oferta w jednej mapie: aplikacje, sposób pracy, usługi i kontakt.</p><div class="box"><b>Jak czytać:</b> gałęzie rozwijasz kliknięciem. Liść (aplikacja, etap, usługa) otwiera pełny opis tutaj, po prawej.</div><div class="box"><b>Zacznij od:</b> „Aplikacje” albo „Jak pracuję”.</div></div>`;return}
+ if(n.k==='br'){const b=n.b;if(open.has(b.id))open.delete(b.id);else{open.clear();open.add(b.id)}layout();s.style.setProperty('--c',n.c);s.innerHTML=`<div class="hd"><small>Gałąź</small><h2>${b.t}</h2></div><div class="bd"><p>${b.kids.length} ${b.id==='apps'?'aplikacji':b.id==='pro'?'etapów pracy':b.id==='svc'?'rodzaje zleceń':'pozycje'}. Wybierz liść na mapie, żeby przeczytać szczegóły.</p></div>`;return}
+ const l=n.l;s.style.setProperty('--c',n.c);s.innerHTML=`<div class="hd"><small>${n.b.t}</small><h2>${l.p?l.p.name:l.t.replace(/^\d+\.\s/,'')}</h2></div><div class="bd">${body(l)}</div>`;s.scrollTop=0}
+map.addEventListener('click',e=>{const t=e.target.closest('.nd');if(!t)return;show(nodes.find(n=>n.id===t.dataset.id))});
+layout();show(nodes[0]);
+</script>
+</body>
+</html>

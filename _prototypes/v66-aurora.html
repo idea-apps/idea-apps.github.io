@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Aurora (wariant 66)</title>
+<style>
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden}
+body{font:18px/1.5 -apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Helvetica,sans-serif;color:#fff;-webkit-font-smoothing:antialiased;background:#0b0b12}
+.brand{position:fixed;left:4vw;top:24px;z-index:20;font-weight:800;font-size:20px;letter-spacing:-.03em;display:flex;gap:10px;align-items:center}
+.brand small{font-weight:500;font-size:14px;opacity:.7}
+.stage{position:relative;z-index:5;height:100%;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:center;padding:56px 5vw 0}
+.list{display:flex;flex-direction:column;gap:2px}
+.it{all:unset;cursor:pointer;display:flex;align-items:baseline;gap:18px;font-size:clamp(28px,min(5.2vw,6.4vh),76px);font-weight:800;letter-spacing:-.055em;line-height:1.0;color:rgba(255,255,255,.3);transition:color .5s,transform .5s cubic-bezier(.2,.8,.2,1);padding:2px 0;position:relative;width:max-content;max-width:100%}
+.it i{font:600 14px "SF Mono",ui-monospace,monospace;font-style:normal;letter-spacing:0;opacity:.7;transform:translateY(-.9em)}
+.it:hover{color:rgba(255,255,255,.65)}
+.it.on{color:#fff;transform:translateX(18px)}
+.it.on::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:3px;border-radius:3px;background:#fff;transform-origin:0 50%;transform:scaleX(var(--p,0));opacity:.9}
+.info{margin-top:22px;max-width:34em;min-height:130px;padding-left:18px}
+.info .in{animation:up .6s cubic-bezier(.2,.8,.2,1)}
+@keyframes up{from{opacity:0;transform:translateY(16px)}}
+.info .t{font-size:clamp(18px,1.9vw,26px);font-weight:700;letter-spacing:-.02em;line-height:1.25;margin-bottom:10px}
+.info .ch{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.info .ch span{font-size:14px;font-weight:600;padding:5px 13px;border-radius:99px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(10px)}
+.btn{all:unset;cursor:pointer;display:inline-flex;gap:10px;align-items:center;background:#fff;color:#14141c;font-weight:800;padding:13px 24px;border-radius:99px;font-size:16px;transition:.25s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 14px 30px -10px rgba(0,0,0,.5)}
+.btn.g{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.3);margin-left:8px;backdrop-filter:blur(10px)}
+.vis{position:relative;height:100%;display:grid;place-items:center}
+.ph{position:absolute;height:min(76vh,720px);aspect-ratio:9/19.5;border-radius:48px;overflow:hidden;background:#000;box-shadow:0 0 0 9px #0a0a0e,0 0 0 11px rgba(255,255,255,.15),0 60px 100px -20px rgba(0,0,0,.65);opacity:0;transform:translateY(60px) rotate(6deg) scale(.92);transition:opacity .8s,transform 1s cubic-bezier(.2,.9,.2,1);will-change:transform}
+.ph.on{opacity:1;transform:rotate(-4deg)}
+.ph.out{transform:translateY(-70px) rotate(-10deg) scale(.92)}
+.ph img{width:100%;height:100%;object-fit:cover;object-position:top}
+.ph .fb{width:100%;height:100%;display:grid;place-items:center;align-content:center;gap:12px;font:800 min(20vh,170px)/1 sans-serif;color:#fff;text-align:center}
+.ph .fb span{font-size:20px;font-weight:700;opacity:.9}
+.badge{position:absolute;right:2%;bottom:14%;width:112px;height:112px;border-radius:26%;box-shadow:0 24px 50px rgba(0,0,0,.5);display:grid;place-items:center;overflow:hidden;font:800 52px sans-serif;color:#fff;transition:transform .8s cubic-bezier(.2,.9,.2,1);z-index:3;animation:fl 5s ease-in-out infinite}
+.badge img{width:100%;height:100%;object-fit:cover}
+@keyframes fl{50%{translate:0 -12px}}
+.tick{position:fixed;left:4vw;bottom:22px;z-index:20;font:600 13px "SF Mono",monospace;opacity:.7}
+@media(max-width:860px){.stage{grid-template-columns:1fr;padding:80px 6vw 70px;align-content:start;overflow:auto}.vis{display:none}.it{font-size:36px}.info{padding-left:0}.it.on{transform:none}}
+</style>
+</head>
+<body>
+<div class="brand">ideaapps<small>Marcin Polak · iOS · tvOS · AI</small></div>
+<main class="stage"><div><div class="list" id="list"></div><div class="info" id="info"></div></div><div class="vis" id="vis"></div></main>
+<div class="tick" id="tick"></div>
+<script src="data.js"></script><script src="fx.js"></script><script src="ui.js"></script>
+<script>
+const {projects}=IDEA;
+const $=s=>document.querySelector(s);
+const au=IDEA.fx.aurora();
+$('#list').innerHTML=projects.map((p,i)=>`<button class="it" data-i="${i}"><i>${String(i+1).padStart(2,'0')}</i>${p.name}</button>`).join('');
+$('#vis').innerHTML=projects.map((p,i)=>`<div class="ph" data-i="${i}">${p.shot&&p.id!=='boxes'?`<img src="${p.shot}" alt="">`:`<div class="fb" style="background:linear-gradient(160deg,${p.color},color-mix(in srgb,${p.color} 55%,#000))">${p.name[0]}<span>${p.name}</span></div>`}</div>`).join('')
+ +'<div class="badge" id="badge"></div>';
+let cur=-1,timer=null,start=0,paused=false,auto=true;
+const DUR=6500;
+function select(i,user){if(i===cur)return;const prev=cur;cur=i;const p=projects[i];au.set(p.color);
+ document.querySelectorAll('.it').forEach((e,k)=>e.classList.toggle('on',k===i));
+ document.querySelectorAll('.ph').forEach((e,k)=>{e.classList.toggle('on',k===i);e.classList.toggle('out',k===prev&&k!==i)});
+ if(prev>=0)setTimeout(()=>document.querySelectorAll('.ph')[prev]?.classList.remove('out'),1000);
+ const b=$('#badge');b.style.background=p.color;b.innerHTML=p.icon?`<img src="${p.icon}" alt="">`:p.name[0];b.animate([{transform:'scale(.4) rotate(-20deg)',opacity:0},{transform:'scale(1) rotate(0)',opacity:1}],{duration:700,easing:'cubic-bezier(.3,1.5,.5,1)'});
+ $('#info').innerHTML=`<div class="in"><div class="t">${p.tag}</div><div class="ch">${(p.feats||[]).slice(0,3).map(f=>`<span>${f.split(/[,.]/)[0]}</span>`).join('')}</div><button class="btn" id="more">Zobacz szczegóły →</button><a class="btn g" href="${p.url}" target="_blank" rel="noopener">App Store ↗</a></div>`;
+ $('#more').onclick=()=>IDEA.ui.app(p);
+ $('#tick').textContent=`${String(i+1).padStart(2,'0')} / ${String(projects.length).padStart(2,'0')} · ${p.cat} · ${p.platforms.split(' · ')[0]}`;
+ start=performance.now();if(user)auto=false}
+$('#list').addEventListener('click',e=>{const b=e.target.closest('.it');if(b)select(+b.dataset.i,true)});
+$('#list').addEventListener('pointerenter',()=>paused=true);$('#list').addEventListener('pointerleave',()=>{paused=false;start=performance.now()});
+addEventListener('keydown',e=>{if(e.key==='ArrowDown'||e.key==='ArrowRight')select((cur+1)%projects.length,true);if(e.key==='ArrowUp'||e.key==='ArrowLeft')select((cur-1+projects.length)%projects.length,true)});
+(function loop(t){const on=document.querySelector('.it.on');if(on){const k=auto&&!paused&&!document.querySelector('.ix-dr.on')?Math.min(1,(t-start)/DUR):0;on.style.setProperty('--p',auto?k:0);if(k>=1)select((cur+1)%projects.length)}requestAnimationFrame(loop)})(performance.now());
+IDEA.ui.bar(null,'top');
+select(0);
+</script>
+</body>
+</html>

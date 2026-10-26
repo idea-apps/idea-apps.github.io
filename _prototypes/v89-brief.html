@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Zdanie (koncept 89)</title>
+<link rel="stylesheet" href="l.css">
+<style>
+body{background:var(--bg,#fbfaf7);transition:background .8s}
+.w{max-width:1320px;margin:0 auto;padding:130px 4vw 40px}
+.w h1{font:400 clamp(26px,3vw,40px)/1 var(--serif);color:var(--mute);margin-bottom:3vh}
+.sent{font:400 clamp(44px,6.6vw,110px)/1.08 var(--serif);letter-spacing:-.03em}
+.sent .s{display:inline-block;position:relative}
+.sent select{appearance:none;-webkit-appearance:none;font:inherit;letter-spacing:inherit;color:var(--c,#ff5a36);background:transparent;border:0;border-bottom:.05em dashed currentColor;cursor:pointer;padding:0 .08em;outline:0;max-width:100%}
+.sent select:hover{background:var(--t,#ffe8e0)}
+.sent option{font:400 20px var(--sans);color:#111}
+.hint{margin-top:3vh;font-size:15px;color:var(--mute)}
+.plan{margin-top:7vh;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:3vw;align-items:start}
+.plan h2{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:14px}
+.steps{display:grid;gap:10px}
+.st{display:grid;grid-template-columns:54px 1fr;gap:14px;align-items:center;background:#fff;border:1.5px solid var(--line);border-radius:20px;padding:14px 18px;transition:.4s}
+.st .n{font:400 40px/1 var(--serif);color:var(--c)}
+.st b{display:block;font-size:19px;letter-spacing:-.02em}.st span{font-size:15px;color:var(--mute);line-height:1.35;display:block}
+.st.hot{border-color:var(--ink);box-shadow:6px 6px 0 var(--c);transform:translateX(6px)}
+.st.hot .why{display:block;color:var(--ink);font-weight:600;margin-top:4px}
+.st .why{display:none}
+.ex{display:grid;gap:12px}
+.ex button{all:unset;cursor:pointer;display:grid;grid-template-columns:84px 1fr;gap:16px;align-items:center;background:var(--t);border-radius:22px;padding:14px;transition:.3s}
+.ex button:hover{transform:translateY(-4px)}
+.ex .im{aspect-ratio:3/4;border-radius:12px;overflow:hidden;background:#fff;display:grid;place-items:center}
+.ex .im img{width:100%;height:100%;object-fit:cover;object-position:top}
+.ex .im .ico,.ex .im .ico-fallback{width:56px;height:56px;border-radius:23%;object-fit:cover;display:grid;place-items:center;font:800 24px sans-serif;color:#fff}
+.ex b{display:block;font:400 28px var(--serif)}.ex span{font-size:14.5px;color:#3a3a42;line-height:1.35;display:block}
+.send{margin-top:6vh;background:var(--ink);color:#fff;border-radius:30px;padding:30px 34px;display:flex;justify-content:space-between;gap:20px;align-items:center;flex-wrap:wrap}
+.send p{font:400 clamp(24px,2.6vw,38px)/1.15 var(--serif);max-width:26em}
+.send .btn{background:#fff;color:var(--ink)}
+.send .btn.o{background:transparent;color:#fff;border-color:#fff}
+footer{display:flex;justify-content:space-between;padding:8vh 4vw 4vh;color:var(--mute);font-size:14px}
+@media(max-width:900px){.plan{grid-template-columns:1fr}}
+</style></head><body>
+<div class="w"><h1>Brief w jednym zdaniu.</h1>
+<div class="sent serif" id="sent"></div>
+<div class="hint">Kliknij podkreślone słowa i zmień zdanie. Poniżej pojawia się plan oraz przykłady z podobnymi funkcjami.</div>
+<div class="plan"><div><h2>Etapy, które mają tu największe znaczenie</h2><div class="steps" id="steps"></div></div><div><h2>Podobne aplikacje, które już istnieją</h2><div class="ex" id="ex"></div></div></div>
+<div class="send"><p id="brief"></p><div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn" id="mail" href="#">Wyślij ten brief →</a><button class="btn o" id="cp">Kopiuj</button></div></div></div>
+<footer><span>© 2026 ideaapps</span><span>Swift · SwiftUI · iOS · iPadOS · macOS · AI</span></footer>
+<script src="data.js"></script><script src="flow.js"></script><script src="ui.js"></script><script src="l.js"></script>
+<script>
+const {flow,projects,email,L}=IDEA,$=s=>document.querySelector(s);
+const O={
+ what:[['aplikację',''],['aplikację z funkcjami AI','ai'],['narzędzie dla firmy',''],['wersję MVP do sprawdzenia pomysłu','mvp']],
+ where:[['iPhone’a',''],['iPada',''],['iPhone’a i iPada',''],['Maca','mac'],['iPhone’a, iPada i Maca','mac']],
+ who:[['klientów',''],['zespołu',''],['uczniów','edu'],['rodziców','fam'],['wykonawców na budowie','build'],['właścicieli mieszkań','home']],
+ does:[['planuje i przypomina','plan'],['skanuje i liczy','scan'],['dokumentuje i generuje raporty','doc'],['porządkuje i znajduje','org'],['rozpoznaje zdjęcia i głos','ai']]};
+const S={what:0,where:0,who:0,does:0};
+const ex={plan:['kajet','kwity'],scan:['mounda','kwity'],doc:['kierbud','stanlokalu'],org:['boxes','kierbud'],ai:['boxes','mounda'],edu:['kajet'],fam:['obiadki','kajet'],build:['kierbud','mounda'],home:['stanlokalu','boxes'],mvp:['obiadki','50groszy'],mac:['boxes','kierbud'],'':[]};
+const hot={mvp:[0,1,3],ai:[0,2,4],mac:[2,4],'':[]};
+const why={0:'Tu zapada decyzja, co naprawdę jest potrzebne w pierwszej wersji.',1:'Prototyp pozwala sprawdzić pomysł, zanim powstanie kod.',2:'Najwięcej rutyny przejmują agenci, a developer sprawdza każdą zmianę.',3:'Regularne wersje pozwalają zmieniać kierunek na bieżąco.',4:'Tu liczy się prywatność danych i stabilność.',5:'Materiały sklepowe i recenzja Apple.',6:'Opinie użytkowników wracają do kolejnych wersji.'};
+function sel(k,cls){return `<span class="s"><select data-k="${k}">${O[k].map((o,i)=>`<option value="${i}">${o[0]}</option>`).join('')}</select></span>`}
+$('#sent').innerHTML=`Powstaje ${sel('what')} na ${sel('where')} dla ${sel('who')}, która ${sel('does')}.`;
+function fit(el){const t=document.createElement('span');t.style.cssText='position:absolute;visibility:hidden;white-space:pre;font:inherit;letter-spacing:inherit';t.style.font=getComputedStyle(el).font;t.textContent=el.options[el.selectedIndex].text;document.body.appendChild(t);el.style.width=(t.getBoundingClientRect().width+10)+'px';t.remove()}
+function render(){
+ document.querySelectorAll('.sent select').forEach(s=>{s.value=S[s.dataset.k];fit(s)});
+ const tags=[O.what[S.what][1],O.where[S.where][1],O.who[S.who][1],O.does[S.does][1]].filter(Boolean);
+ let hs=new Set();tags.forEach(t=>(hot[t]||[]).forEach(i=>hs.add(i)));if(!hs.size)hs=new Set([0,1,2]);
+ const f=flow[[...hs][0]];
+ const c=f.c;document.documentElement.style.setProperty('--c',c);document.documentElement.style.setProperty('--t',L.tint(c,22));document.documentElement.style.setProperty('--bg',L.tint(c,9));
+ $('#steps').innerHTML=flow.map((f,i)=>`<div class="st ${hs.has(i)?'hot':''}" style="--c:${f.c}"><span class="n">${i+1}</span><div><b>${f.t}</b><span>${f.sub}</span><span class="why">${why[i]}</span></div></div>`).join('');
+ let ids=[];tags.forEach(t=>(ex[t]||[]).forEach(id=>{if(!ids.includes(id))ids.push(id)}));if(!ids.length)ids=['kierbud','kajet'];
+ $('#ex').innerHTML=ids.slice(0,3).map(id=>{const p=projects.find(x=>x.id===id);return `<button data-id="${id}" style="--t:${L.tint(p.color,22)}"><div class="im">${p.shot?`<img src="${p.shot}" alt="">`:IDEA.iconHTML(p,'')}</div><div><b>${p.name}</b><span>${p.tag}. ${p.cat}.</span></div></button>`}).join('');
+ const txt=`Chcę zbudować ${O.what[S.what][0]} na ${O.where[S.where][0]} dla ${O.who[S.who][0]}, która ${O.does[S.does][0]}.`;
+ $('#brief').textContent=txt;$('#mail').href=`mailto:${email}?subject=${encodeURIComponent('Brief aplikacji')}&body=${encodeURIComponent(txt+'\n\nKilka zdań o pomyśle:\n')}`;
+ window._t=txt}
+$('#sent').addEventListener('change',e=>{S[e.target.dataset.k]=+e.target.value;render()});
+$('#ex').addEventListener('click',e=>{const b=e.target.closest('button');if(b)IDEA.ui.app(projects.find(p=>p.id===b.dataset.id))});
+$('#cp').onclick=e=>{navigator.clipboard&&navigator.clipboard.writeText(window._t).catch(()=>{});e.target.textContent='Skopiowano ✓';setTimeout(()=>e.target.textContent='Kopiuj',1500)};
+addEventListener('load',render);render();
+</script></body></html>

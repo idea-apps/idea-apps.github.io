@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Scroll (wariant 69)</title>
+<style>
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:auto}
+body{font:18px/1.5 -apple-system,BlinkMacSystemFont,"SF Pro Display",Helvetica,sans-serif;color:#fff;-webkit-font-smoothing:antialiased;background:#0b0b12}
+a{color:inherit;text-decoration:none}
+.brand{position:fixed;left:4vw;top:24px;z-index:20;font-weight:800;font-size:20px;letter-spacing:-.03em}
+.brand small{display:block;font-weight:500;font-size:13px;opacity:.7}
+.intro{position:relative;z-index:5;height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 6vw}
+.intro small{font-size:14px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;opacity:.75}
+.intro h1{font-size:clamp(46px,9.6vw,170px);line-height:.88;letter-spacing:-.07em;font-weight:900;margin:14px 0 22px;max-width:11em}
+.intro p{font-size:clamp(18px,2vw,26px);opacity:.85;max-width:26em}
+.intro .sc{margin-top:36px;font-size:14px;opacity:.7;display:flex;gap:10px;align-items:center}
+.intro .sc i{width:2px;height:40px;background:#fff;opacity:.6;animation:sc 1.6s ease-in-out infinite;transform-origin:top}
+@keyframes sc{0%{transform:scaleY(0)}60%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
+#story{position:relative;z-index:5}
+.sticky{position:sticky;top:0;height:100vh;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);align-items:center;padding:0 6vw 0 8vw}
+.num{position:absolute;left:5vw;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px}
+.num i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35);transition:.4s}
+.num i.on{background:#fff;height:28px;border-radius:6px}
+.tx{position:relative;min-height:60vh}
+.tx .blk{position:absolute;left:0;top:50%;transform:translateY(-50%);opacity:0;pointer-events:none;transition:opacity .5s,transform .7s cubic-bezier(.2,.9,.2,1);width:100%}
+.tx .blk:not(.on){transform:translateY(-40%)}
+.tx .blk.on{opacity:1;pointer-events:auto}
+.tx small{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;opacity:.8}
+.tx h2{font-size:clamp(60px,10vw,180px);line-height:.84;letter-spacing:-.08em;font-weight:900;margin:8px 0 16px;margin-left:-.04em}
+.tx .t{font-size:clamp(20px,2.3vw,32px);font-weight:700;letter-spacing:-.03em;line-height:1.2;max-width:17em;margin-bottom:12px}
+.tx .w{opacity:.85;margin-bottom:20px;font-size:17px}
+.btn{all:unset;cursor:pointer;display:inline-flex;gap:10px;background:#fff;color:#14141c;font-weight:800;padding:13px 24px;border-radius:99px;font-size:16px;transition:.25s}
+.btn:hover{transform:translateY(-2px)}
+.vs{position:relative;height:100%;display:grid;place-items:center}
+.ph{position:absolute;height:min(74vh,700px);aspect-ratio:9/19.5;border-radius:46px;overflow:hidden;background:#000;box-shadow:0 0 0 8px #0a0a0e,0 0 0 10px rgba(255,255,255,.18),0 60px 100px -20px rgba(0,0,0,.65);will-change:transform,opacity}
+.ph img{width:100%;height:100%;object-fit:cover;object-position:top}
+.ph .fb{width:100%;height:100%;display:grid;place-items:center;font:900 min(24vh,200px) sans-serif;color:#fff}
+.after{position:relative;z-index:5;padding:14vh 6vw 8vh}
+.after h2{font-size:clamp(40px,7vw,110px);line-height:.9;letter-spacing:-.065em;font-weight:900;margin-bottom:26px}
+.after .lead{font-size:clamp(18px,2vw,24px);opacity:.88;max-width:30em;margin-bottom:34px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:60px}
+.steps div{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:22px;padding:22px 24px}
+.steps .n{font-size:44px;font-weight:900;letter-spacing:-.06em;line-height:.9;color:#ffcf3a}
+.steps b{display:block;font-size:21px;letter-spacing:-.02em;margin:8px 0 6px}.steps span{font-size:15.5px;opacity:.9;display:block;line-height:1.45}
+.cta{padding:10vh 0 4vh}
+.cta h2{margin-bottom:20px}
+.cta a.m{display:inline-block;font-size:clamp(22px,4.2vw,64px);font-weight:800;letter-spacing:-.05em;border-bottom:4px solid #ffcf3a;overflow-wrap:anywhere}
+@media(max-width:860px){.sticky{grid-template-columns:1fr;padding:0 6vw}.vs{display:none}.num{display:none}.steps{grid-template-columns:1fr}.tx .blk{top:45%}}
+</style>
+</head>
+<body>
+<div class="brand">ideaapps<small>Marcin Polak · iOS · tvOS · AI</small></div>
+<header class="intro"><small>Przewijaj w dół</small><h1>Osiem aplikacji. Jeden twórca.</h1><p>Natywne aplikacje na iOS i tvOS, od pomysłu po App Store. Tło zmienia się razem z aplikacją.</p><div class="sc"><i></i>przewiń</div></header>
+<section id="story"><div class="sticky"><div class="num" id="num"></div><div class="tx" id="tx"></div><div class="vs" id="vs"></div></div></section>
+<section class="after" id="after"><h2>Jak pracuję.</h2><p class="lead">Rozmawiasz z osobą, która pisze kod. Od pierwszej rozmowy po publikację w App Store.</p><div class="steps" id="steps"></div><div class="cta" id="kontakt"><h2>Masz pomysł?<br>Napisz.</h2><a class="m" id="mail" href="#"></a></div></section>
+<script src="data.js"></script><script src="fx.js"></script><script src="ui.js"></script>
+<script>
+const {projects,process,email}=IDEA;
+const $=s=>document.querySelector(s);
+const au=IDEA.fx.aurora();au.set('#2d3a8c');
+$('#mail').href='mailto:'+email;$('#mail').textContent=email;
+const N=projects.length;
+const story=$('#story');story.style.height=(N*100+60)+'vh';
+$('#num').innerHTML=projects.map(()=>'<i></i>').join('');
+$('#tx').innerHTML=projects.map((p,i)=>`<div class="blk" data-i="${i}"><small>${p.cat} · ${String(i+1).padStart(2,'0')}/${String(N).padStart(2,'0')}</small><h2>${p.name}</h2><div class="t">${p.tag}</div><div class="w">Dla: ${p.who}</div><button class="btn" data-i="${i}">Szczegóły →</button></div>`).join('');
+$('#vs').innerHTML=projects.map(p=>`<div class="ph">${p.shot&&p.id!=='boxes'?`<img src="${p.shot}" alt="">`:`<div class="fb" style="background:linear-gradient(160deg,${p.color},color-mix(in srgb,${p.color} 50%,#000))">${p.name[0]}</div>`}</div>`).join('');
+$('#steps').innerHTML=process.map((s,i)=>`<div><span class="n">${i+1}</span><b>${s.t}</b><span>${s.d}</span></div>`).join('');
+const blks=[...document.querySelectorAll('.blk')],phs=[...document.querySelectorAll('.ph')],dots=[...document.querySelectorAll('.num i')];
+document.querySelectorAll('.blk .btn').forEach(b=>b.onclick=()=>IDEA.ui.app(projects[+b.dataset.i]));
+let lastNear=-1,ticking=false;
+function update(){ticking=false;const r=story.getBoundingClientRect();const total=story.offsetHeight-innerHeight;let t=Math.max(0,Math.min(1,-r.top/total));
+ const f=t*(N-.0001)*(N/(N+.0))*(1)*(N-1)/(N-1);
+ const pos=Math.max(0,Math.min(N-1,t*(N-1)*1.0));
+ const i0=Math.min(N-2,Math.floor(pos)),k=pos-i0;
+ const hex=IDEA.fx.mix(projects[i0].color,projects[i0+1].color,k);au.set(hex,false);
+ const near=Math.round(pos);
+ if(near!==lastNear){lastNear=near;blks.forEach((b,i)=>b.classList.toggle('on',i===near));dots.forEach((d,i)=>d.classList.toggle('on',i===near));au.set(projects[near].color,true)}
+ phs.forEach((p,i)=>{const d=i-pos,a=Math.abs(d);p.style.opacity=Math.max(0,1-a*1.35);p.style.transform=`translateY(${d*38}vh) rotate(${d*-9-3}deg) scale(${1-Math.min(1,a)*.1})`;p.style.zIndex=10-Math.round(a*4)})}
+addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(update)}},{passive:true});addEventListener('resize',update);
+update();
+IDEA.ui.bar(null,'top');
+</script>
+</body>
+</html>

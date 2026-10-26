@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Bento (koncept 90)</title>
+<link rel="stylesheet" href="l.css">
+<style>
+.w{max-width:1360px;margin:0 auto;padding:96px 3vw 40px}
+.g{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:minmax(230px,auto);gap:14px;grid-auto-flow:dense}
+.t{position:relative;border-radius:30px;padding:26px 28px;overflow:hidden;background:var(--bg,#fff);border:1px solid rgba(18,18,22,.07);transition:transform .45s cubic-bezier(.2,.9,.2,1),box-shadow .45s;cursor:pointer;display:flex;flex-direction:column}
+.t:hover{transform:translateY(-6px);box-shadow:0 30px 50px -30px rgba(18,18,22,.4)}
+.c2{grid-column:span 2}.r2{grid-row:span 2}
+.k{font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(18,18,22,.55);margin-bottom:10px}
+.hero{background:#fff;justify-content:space-between;cursor:default}
+.hero:hover{transform:none;box-shadow:none}
+.hero h1{font:400 clamp(52px,6.4vw,104px)/.9 var(--serif);letter-spacing:-.04em}
+.hero h1 em{color:#ff5a36}
+.hero p{font-size:18px;color:#3a3a42;max-width:26em;margin:14px 0 20px}
+.hero .row{display:flex;gap:10px;flex-wrap:wrap}
+.big{font:400 clamp(80px,9vw,140px)/.85 var(--serif);letter-spacing:-.05em;margin-top:auto}
+.sm{font-size:16px;font-weight:600;margin-top:6px}
+.proc h3{font:400 clamp(34px,3.6vw,54px)/1 var(--serif);letter-spacing:-.03em;margin:4px 0 8px}
+.proc p{font-size:16px;color:#2d2d34;max-width:30em}
+.proc .bar{display:flex;gap:6px;margin-top:auto;padding-top:16px}
+.proc .bar i{flex:1;height:7px;border-radius:7px;background:rgba(18,18,22,.12);position:relative;overflow:hidden}
+.proc .bar i.on::after{content:"";position:absolute;inset:0;background:var(--ink);transform-origin:0 50%;animation:fill 4.5s linear forwards}
+.proc .bar i.done{background:var(--ink)}
+@keyframes fill{from{transform:scaleX(0)}}
+.ai{background:#15151a;color:#fff}
+.ai .k{color:rgba(255,255,255,.55)}
+.ai pre{font:13.5px/1.6 "SF Mono",ui-monospace,monospace;color:#d9dbe8;white-space:pre-wrap;margin-top:6px;min-height:120px}
+.ai .pr{color:#9fe8be}.ai .cur::after{content:"▍";animation:bl 1s infinite}
+@keyframes bl{50%{opacity:0}}
+.ai .tag{margin-top:auto;font-size:15px;color:#b8b9c6;padding-top:12px}
+.loop{align-items:center;justify-content:center;text-align:center}
+.loop svg{width:min(100%,200px)}
+.loop b{font:400 28px var(--serif);display:block;margin-top:6px}
+.app{padding:0;justify-content:flex-end;color:#14141c}
+.app .im{position:absolute;inset:0;background:var(--bg)}
+.app .im img{position:absolute;left:50%;top:22px;width:62%;margin-left:-31%;border-radius:22px;box-shadow:0 30px 50px -20px rgba(0,0,0,.4);transition:transform .5s}
+.app:hover .im img{transform:translateY(-10px) rotate(-2deg)}
+.app .tx{position:relative;padding:60px 24px 22px;background:linear-gradient(transparent,var(--bg) 55%)}
+.app .tx b{display:block;font:400 34px/1 var(--serif);letter-spacing:-.02em}.app .tx span{font-size:14.5px;color:#2d2d34;line-height:1.35;display:block;margin-top:2px}
+.more{background:#fff}
+.more .ic{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:auto}
+.more .ico,.more .ico-fallback{width:100%;aspect-ratio:1;border-radius:23%;object-fit:cover;display:grid;place-items:center;font:800 28px sans-serif;color:#fff}
+.plat .dev{display:flex;gap:14px;align-items:flex-end;margin-top:auto}
+.plat .dev i{display:block;border:2.5px solid var(--ink);border-radius:10px;background:rgba(255,255,255,.6)}
+.plat .dev i:nth-child(1){width:46px;height:88px;border-radius:12px}.plat .dev i:nth-child(2){width:100px;height:74px}.plat .dev i:nth-child(3){width:130px;height:84px;border-radius:8px 8px 3px 3px}
+.plat h3{font:400 32px/1.05 var(--serif);margin-top:12px}
+.sv ul{list-style:none;padding:0;margin-top:auto}.sv li{padding:9px 0;border-top:1px solid rgba(18,18,22,.14);font-weight:600;font-size:16px}
+.ct{background:var(--ink);color:#fff;justify-content:space-between}
+.ct .k{color:rgba(255,255,255,.55)}
+.ct h2{font:400 clamp(40px,4.6vw,72px)/.95 var(--serif);letter-spacing:-.035em}
+.ct a{display:inline-block;font:400 clamp(20px,2.4vw,34px) var(--serif);border-bottom:2px solid #fff;overflow-wrap:anywhere;margin-top:14px}
+footer{display:flex;justify-content:space-between;padding:6vh 3vw 4vh;color:var(--mute);font-size:14px;max-width:1360px;margin:0 auto}
+@media(max-width:1000px){.g{grid-template-columns:repeat(2,1fr)}.c2{grid-column:span 2}}
+@media(max-width:600px){.g{grid-template-columns:1fr}.c2{grid-column:auto}.r2{grid-row:auto}.app{min-height:380px}}
+</style></head><body>
+<div class="w"><div class="g" id="g"></div></div>
+<footer><span>© 2026 ideaapps</span><span>Swift · SwiftUI · iOS · iPadOS · macOS · AI</span></footer>
+<script src="data.js"></script><script src="flow.js"></script><script src="ui.js"></script><script src="l.js"></script>
+<script>
+const {flow,projects,services,email,L}=IDEA,$=s=>document.querySelector(s);
+const P=id=>projects.find(p=>p.id===id);
+const tile=(cls,html,attrs='')=>`<div class="t ${cls}" ${attrs}>${html}</div>`;
+let h='';
+h+=tile('hero c2 r2',`<div><div class="k">Pracownia aplikacji Apple</div><h1>Pomysł, który <em>działa</em> w kieszeni.</h1><p>Natywne aplikacje na iOS, iPadOS i macOS, od pierwszej rozmowy po App Store. Prototyp i kod powstają z AI, a decyzje i jakość pozostają po stronie doświadczonego developera.</p></div><div class="row"><button class="btn" data-a="process">Zobacz proces →</button><button class="btn o" data-a="contact">Napisz</button></div>`);
+h+=tile('',`<div class="k">Doświadczenie</div><div class="big">10+</div><div class="sm">lat z platformami Apple</div>`,'style="--bg:#ffe9a8" data-a="about"');
+h+=tile('',`<div class="k">W App Store</div><div class="big">8</div><div class="sm">własnych aplikacji</div>`,'style="--bg:#d3f2e1" data-a="about"');
+h+=tile('proc c2',`<div class="k">Proces</div><h3 id="pt"></h3><p id="pd"></p><div class="bar" id="pb"></div>`,'style="--bg:#e6e1ff" data-a="process"');
+h+=tile('ai c2',`<div class="k">Kodowanie z agentami</div><pre id="ty"></pre><div class="tag">Agent pisze, developer czyta i zatwierdza każdą zmianę.</div>`,'data-a="process"');
+h+=tile('app r2',`<div class="im" style="--bg:${L.tint(P('kierbud').color,30)}"><img src="${P('kierbud').shot}" alt=""></div><div class="tx" style="--bg:${L.tint(P('kierbud').color,30)}"><b>Kierbud</b><span>${P('kierbud').tag}</span></div>`,'data-p="kierbud"');
+h+=tile('loop',`<div class="k">Iteracje</div><svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="74" fill="none" stroke="#121216" stroke-width="2.5" stroke-dasharray="3 9" stroke-linecap="round"/><g id="lp"><circle cx="100" cy="26" r="11" fill="#ff5a36"/></g><text x="100" y="108" text-anchor="middle" font-family="Instrument Serif,serif" font-size="30" fill="#121216">pętla</text></svg><b>Wymagania → wersja → opinie</b>`,'style="--bg:#ffd9d0" data-a="process"');
+h+=tile('plat',`<div class="k">Platformy</div><div class="dev"><i></i><i></i><i></i></div><h3>iOS, iPadOS, macOS</h3>`,'style="--bg:#d8ecff" data-a="services"');
+h+=tile('app r2',`<div class="im" style="--bg:${L.tint(P('mounda').color,30)}"><img src="${P('mounda').shot}" alt=""></div><div class="tx" style="--bg:${L.tint(P('mounda').color,30)}"><b>Mounda</b><span>${P('mounda').tag}</span></div>`,'data-p="mounda"');
+h+=tile('app r2',`<div class="im" style="--bg:${L.tint(P('kajet').color,30)}"><img src="${P('kajet').shot}" alt=""></div><div class="tx" style="--bg:${L.tint(P('kajet').color,30)}"><b>Kajet</b><span>${P('kajet').tag}</span></div>`,'data-p="kajet"');
+h+=tile('sv',`<div class="k">Usługi</div><ul>${services.map(s=>`<li>${s.t}</li>`).join('')}</ul>`,'style="--bg:#fff0c9" data-a="services"');
+h+=tile('more',`<div class="k">Więcej przykładów</div><div class="ic">${['stanlokalu','boxes','kwity','obiadki'].map(id=>`<span data-p="${id}">${IDEA.iconHTML(P(id),'')}</span>`).join('')}</div>`);
+h+=tile('ct c2',`<div><div class="k">Kontakt</div><h2>Opowiedz o pomyśle.</h2></div><a href="mailto:${email}">${email}</a>`,'data-a="contact"');
+$('#g').innerHTML=h;
+$('#g').addEventListener('click',e=>{if(e.target.closest('a'))return;const pe=e.target.closest('[data-p]');if(pe){IDEA.ui.app(P(pe.dataset.p));return}const a=e.target.closest('[data-a]');if(a)IDEA.ui.panel(a.dataset.a)});
+// stepper
+let si=0;const pb=$('#pb');pb.innerHTML=flow.map(()=>'<i></i>').join('');
+function step(){const f=flow[si];$('#pt').textContent=f.t;$('#pd').textContent=f.get;[...pb.children].forEach((b,k)=>{b.className=k<si?'done':k===si?'on':''});}
+step();setInterval(()=>{si=(si+1)%flow.length;step()},4500);
+// pisanie
+const lines=['> Dodaj ekran szczegółów paragonu\n  z przypomnieniem o gwarancji.','✔ Plan: model, powiadomienie, test.','✔ Kod napisany, testy zielone.','↳ Review developera: zatwierdzone.'];
+let li=0,ci=0;const ty=$('#ty');let out='';
+(function type(){const l=lines[li];if(ci<l.length){out+=l[ci++];ty.innerHTML=out.replace(/(✔[^\n]*)/g,'<span class="pr">$1</span>')+'<span class="cur"></span>';setTimeout(type,l.startsWith('>')?28:14)}else{out+='\n';li++;ci=0;if(li>=lines.length){setTimeout(()=>{out='';li=0;type()},3500)}else setTimeout(type,500)}})();
+// pętla
+let a=0;(function r(){a+=.6;$('#lp').setAttribute('transform',`rotate(${a} 100 100)`);requestAnimationFrame(r)})();
+</script></body></html>

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Finder (wariant 65)</title>
+<style>
+:root{--bg:#fff;--side:#e9e9ee;--ln:#d6d6dc;--ink:#1c1c21;--soft:#7a7a86;--sel:#0a7aff}
+@media(prefers-color-scheme:dark){:root{--bg:#1e1e22;--side:#2a2a30;--ln:#3a3a42;--ink:#f1f1f5;--soft:#9b9ba8}}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden}
+body{background:linear-gradient(135deg,#5b86c9,#8e6bc4 55%,#d4789a);font:14.5px/1.4 -apple-system,"SF Pro Text",Helvetica,sans-serif;color:var(--ink);display:grid;place-items:center;padding:20px;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.win{width:min(1360px,100%);height:min(900px,100%);background:var(--bg);border-radius:12px;box-shadow:0 40px 100px -20px rgba(0,0,0,.6),0 0 0 1px rgba(0,0,0,.25);display:flex;flex-direction:column;overflow:hidden}
+.tb{height:50px;background:var(--side);border-bottom:1px solid var(--ln);display:flex;align-items:center;gap:14px;padding:0 14px;flex:none}
+.tl{display:flex;gap:8px}.tl i{width:12px;height:12px;border-radius:50%;background:#ff5f57}.tl i:nth-child(2){background:#febc2e}.tl i:nth-child(3){background:#28c840}
+.tb .nav button{all:unset;cursor:pointer;width:28px;height:24px;text-align:center;font-size:18px;color:var(--soft);border-radius:5px}
+.tb .nav button:hover{background:rgba(128,128,140,.2)}
+.tb .ttl{font-weight:700;font-size:15px}
+.tb .sp{flex:1}
+.tb .ql{all:unset;cursor:pointer;font-size:13px;background:var(--bg);border:1px solid var(--ln);padding:5px 12px;border-radius:6px;color:var(--ink)}
+.body{flex:1;display:grid;grid-template-columns:200px minmax(0,1fr);min-height:0}
+.sb{background:var(--side);border-right:1px solid var(--ln);padding:12px 8px;overflow:auto}
+.sb h6{font-size:11.5px;color:var(--soft);font-weight:700;padding:8px 10px 3px}
+.sb .it{display:flex;gap:9px;align-items:center;padding:5px 10px;border-radius:6px;cursor:pointer;font-size:14px}
+.sb .it:hover{background:rgba(128,128,140,.15)}.sb .it.on{background:rgba(128,128,140,.3)}
+.cols{display:flex;min-width:0;overflow-x:auto;scroll-behavior:smooth}
+.col{flex:none;width:260px;border-right:1px solid var(--ln);overflow:auto;padding:6px}
+.col.pv{flex:1 0 440px;width:auto;padding:0;border:0;min-width:440px;background:var(--bg)}
+.row{display:flex;gap:9px;align-items:center;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:14.5px}
+.row:hover{background:rgba(128,128,140,.12)}
+.row.on{background:var(--sel);color:#fff}.row.on.off{background:rgba(128,128,140,.35);color:var(--ink)}
+.row .ic{width:22px;height:22px;border-radius:5px;object-fit:cover;display:grid;place-items:center;font:800 11px sans-serif;color:#fff;flex:none}
+.row .fo{font-size:19px;width:22px;text-align:center;flex:none}
+.row .ch{margin-left:auto;opacity:.5;font-size:12px}
+.pvh{padding:28px 32px 18px;display:flex;gap:18px;align-items:center;border-bottom:1px solid var(--ln)}
+.pvh .big{width:84px;height:84px;border-radius:23%;object-fit:cover;display:grid;place-items:center;font:800 40px sans-serif;color:#fff;flex:none;box-shadow:0 10px 24px rgba(0,0,0,.3)}
+.pvh h2{font-size:30px;letter-spacing:-.04em;line-height:1}.pvh small{color:var(--soft);font-size:14px}
+.pvb{padding:22px 32px 40px;font-size:16.5px}
+.pvb .kv{display:grid;grid-template-columns:110px 1fr;gap:6px 14px;font-size:14px;margin:10px 0 20px;padding:12px 14px;background:var(--side);border-radius:10px}
+.pvb .kv dt{color:var(--soft)}
+.r-tag{font-size:20px;font-weight:800;letter-spacing:-.02em;line-height:1.25;margin-bottom:8px}
+.r-ds{margin-bottom:12px}.r-who{display:none}
+.r-ft{list-style:none;padding:0;margin:0 0 14px}
+.r-ft li{position:relative;padding:7px 0 7px 28px;border-bottom:1px solid var(--ln)}
+.r-ft li::before{content:"✓";position:absolute;left:0;top:7px;width:19px;height:19px;border-radius:50%;background:var(--c,var(--sel));color:#fff;font-size:11px;font-weight:800;display:grid;place-items:center}
+.r-shots{display:flex;gap:10px;overflow-x:auto;margin:6px 0 14px}.r-shot{height:320px;border-radius:18px;box-shadow:0 0 0 1px rgba(128,128,140,.3);flex:none}
+.r-meta{display:none}
+.r-cta{display:inline-block;background:var(--c,var(--sel));color:#fff;font-weight:800;padding:11px 22px;border-radius:99px;text-decoration:none}
+.pvb p{margin-bottom:12px}
+.pvb .bx{background:var(--side);border-radius:12px;padding:14px 16px;margin:10px 0}
+.pvb .bm{display:inline-block;font-size:21px;font-weight:800;letter-spacing:-.02em;text-decoration:underline;overflow-wrap:anywhere}
+.path{height:28px;background:var(--side);border-top:1px solid var(--ln);display:flex;align-items:center;padding:0 14px;font-size:12.5px;color:var(--soft);gap:6px;flex:none;overflow:hidden;white-space:nowrap}
+.path b{color:var(--ink);font-weight:600}
+.ql-o{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:50;display:none;place-items:center;backdrop-filter:blur(6px)}
+.ql-o.on{display:grid}
+.ql-w{width:min(780px,94vw);max-height:92vh;overflow:auto;background:var(--bg);border-radius:14px;box-shadow:0 40px 100px rgba(0,0,0,.6)}
+.ql-w .pvh{position:sticky;top:0;background:var(--bg);z-index:2}
+@media(max-width:900px){.body{grid-template-columns:1fr}.sb{display:none}.col{width:200px}.col.pv{min-width:320px}}
+</style>
+</head>
+<body>
+<div class="win">
+<div class="tb"><div class="tl"><i></i><i></i><i></i></div><div class="nav"><button id="bk">‹</button><button id="fw">›</button></div><div class="ttl" id="ttl">ideaapps</div><span class="sp"></span><button class="ql" id="qlb">Podgląd (spacja)</button></div>
+<div class="body"><aside class="sb" id="sb"></aside><div class="cols" id="cols"></div></div>
+<div class="path" id="path"></div>
+</div>
+<div class="ql-o" id="qo"><div class="ql-w" id="qw"></div></div>
+<script src="data.js"></script><script src="render.js"></script>
+<script>
+const {projects,services,process,email,R}=IDEA;
+const $=s=>document.querySelector(s);
+const deep=c=>`color-mix(in srgb,${c} 85%,#15151a)`;
+// drzewo plików
+const T={n:'ideaapps',kids:[
+ {n:'Aplikacje',fo:1,kids:projects.map(p=>({n:p.name,p,fo:0}))},
+ {n:'Jak pracuję',fo:1,kids:process.map((s,i)=>({n:`${i+1}. ${s.t}`,pro:s,i,e:'⚙'}))},
+ {n:'Usługi',fo:1,kids:services.map((s,i)=>({n:s.t,svc:s,e:'★'}))},
+ {n:'O mnie',fo:1,kids:[{n:'O mnie.txt',about:1,e:'☺'},{n:'Kontakt.txt',contact:1,e:'✉'}]}]};
+let path=[T.kids[0],T.kids[0].kids[0]];let hist=[],fwd=[];
+const ico=n=>n.p?IDEA.iconHTML(n.p,'ic'):n.kids?'<span class="fo">📁</span>':`<span class="fo">${n.e||'📄'}</span>`;
+function pv(n){const c=n.p?deep(n.p.color):n.pro?'#c0701e':n.svc?'#0f7a52':'#0a7aff';
+ let h=`<div style="--c:${c}">`;
+ const big=n.p?IDEA.iconHTML(n.p,'big'):`<span class="big" style="background:${c}">${n.e||'●'}</span>`;
+ const title=n.p?n.p.name:n.n.replace(/^\d+\.\s/,'');
+ const sub=n.p?`${n.p.cat} · ${n.p.platforms}`:n.pro?`Etap ${n.i+1} z 6`:n.svc?'Usługa':n.about?'Dokument tekstowy':n.contact?'Dokument tekstowy':`${n.kids.length} elementów`;
+ h+=`<div class="pvh">${big}<div><h2>${title}</h2><small>${sub}</small></div></div><div class="pvb">`;
+ if(n.p)h+=`<dl class="kv"><dt>Dla kogo</dt><dd>${n.p.who}</dd><dt>Kategoria</dt><dd>${n.p.cat}</dd><dt>Platformy</dt><dd>${n.p.platforms}</dd></dl>`+R.appBody(n.p);
+ else if(n.pro)h+=`<p>${n.pro.d}</p><div class="bx"><b>Co dostajesz:</b> ${R.out[n.i]}</div>${n.i===3?`<div class="bx"><b>${IDEA.ai.t}.</b> ${IDEA.ai.d}</div>`:''}`;
+ else if(n.svc)h+=`<p>${n.svc.d}</p><div class="bx">Zaczynamy od rozmowy i jednostronicowego zakresu prac, potem prototyp i regularne wersje do testów.</div>`;
+ else if(n.about)h+=`<p>${IDEA.about}</p><div class="bx"><b>W liczbach:</b> 10+ lat iOS i tvOS · 8 własnych aplikacji · 1 osoba odpowiedzialna za całość</div>`;
+ else if(n.contact)h+=`<p>Opisz w kilku zdaniach, co chcesz zbudować, dla kogo i na jakie urządzenia. Odpowiem i powiem szczerze, jak to widzę.</p><a class="bm" href="mailto:${email}">${email}</a>`;
+ else h+=`<p>${n.n==='Aplikacje'?'Osiem aplikacji w App Store. Wybierz jedną w kolumnie obok.':n.n==='Jak pracuję'?'Sześć etapów od rozmowy do wsparcia po premierze.':n.n==='Usługi'?'Cztery rodzaje zleceń.':'Wizytówka i kontakt.'}</p>`;
+ return h+'</div></div>'}
+function render(){
+ const levels=[T,...path];let h='';
+ // kolumna 0: lista sekcji (już w sidebarze) - pokazujemy kolumny dla level>=1
+ for(let d=0;d<levels.length;d++){const node=levels[d];if(!node.kids)break;
+  h+=`<div class="col" data-d="${d}">${node.kids.map((k,i)=>`<div class="row ${levels[d+1]===k?'on':''} ${levels[d+1]===k&&d+1<levels.length-1?'off':''}" data-d="${d}" data-i="${i}">${ico(k)}<span>${k.n}</span>${k.kids?'<span class="ch">›</span>':''}</div>`).join('')}</div>`}
+ const last=levels[levels.length-1];h+=`<div class="col pv">${pv(last)}</div>`;
+ $('#cols').innerHTML=h;
+ $('#cols').scrollLeft=1e5;
+ $('#path').innerHTML=levels.map((n,i)=>(i?'<span>›</span>':'')+`<b>${n.n}</b>`).join('');
+ $('#ttl').textContent=last.p?last.p.name:last.n;
+ document.querySelectorAll('.sb .it').forEach(e=>e.classList.toggle('on',path[0]&&e.dataset.n===path[0].n))}
+function sidebar(){$('#sb').innerHTML='<h6>Ulubione</h6>'+T.kids.map(k=>`<div class="it" data-n="${k.n}"><span>📁</span>${k.n}</div>`).join('')}
+function go(newPath,rec=true){if(rec){hist.push(path);fwd=[]}path=newPath;render()}
+$('#cols').addEventListener('click',e=>{const r=e.target.closest('.row');if(!r)return;const d=+r.dataset.d,i=+r.dataset.i;const levels=[T,...path];const node=levels[d].kids[i];go([...path.slice(0,d),node])});
+$('#sb').addEventListener('click',e=>{const it=e.target.closest('.it');if(!it)return;const n=T.kids.find(k=>k.n===it.dataset.n);go([n,n.kids[0]])});
+$('#bk').onclick=()=>{if(hist.length){fwd.push(path);path=hist.pop();render()}};
+$('#fw').onclick=()=>{if(fwd.length){hist.push(path);path=fwd.pop();render()}};
+function ql(){const last=[T,...path].pop();$('#qw').innerHTML=pv(last);$('#qo').classList.add('on')}
+$('#qlb').onclick=ql;$('#qo').onclick=e=>{if(e.target.id==='qo')$('#qo').classList.remove('on')};
+addEventListener('keydown',e=>{
+ if(e.key===' '){e.preventDefault();$('#qo').classList.contains('on')?$('#qo').classList.remove('on'):ql();return}
+ if(e.key==='Escape'){$('#qo').classList.remove('on');return}
+ const levels=[T,...path];const d=levels.length-2;const par=levels[d];if(!par||!par.kids)return;const idx=par.kids.indexOf(levels[d+1]);
+ if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();const n=Math.max(0,Math.min(par.kids.length-1,idx+(e.key==='ArrowDown'?1:-1)));go([...path.slice(0,d),par.kids[n]])}
+ else if(e.key==='ArrowRight'){const cur=levels[levels.length-1];if(cur.kids){e.preventDefault();go([...path,cur.kids[0]])}}
+ else if(e.key==='ArrowLeft'&&path.length>1){e.preventDefault();go(path.slice(0,-1))}});
+sidebar();render();
+</script>
+</body>
+</html>

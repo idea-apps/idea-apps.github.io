@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Balony (wariant 49)</title>
+<style>
+:root{--c:#6fc3ff}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden}
+body{font:18px/1.5 -apple-system,"SF Pro Text",Helvetica,sans-serif;color:#14233a;-webkit-font-smoothing:antialiased;user-select:none}
+.sky{position:fixed;inset:0;background:linear-gradient(180deg,color-mix(in srgb,var(--c) 85%,#fff),color-mix(in srgb,var(--c) 45%,#fff) 70%,color-mix(in srgb,var(--c) 25%,#fff));transition:background .9s}
+.cloud{position:fixed;height:60px;border-radius:99px;background:#fff;opacity:.85;filter:blur(1px);animation:cl linear infinite}
+.cloud::before,.cloud::after{content:"";position:absolute;background:#fff;border-radius:50%}
+.cloud::before{width:60%;height:140%;left:12%;top:-60%}.cloud::after{width:44%;height:110%;right:10%;top:-40%}
+@keyframes cl{from{transform:translateX(-30vw)}to{transform:translateX(130vw)}}
+.top{position:fixed;left:4vw;top:22px;z-index:5;pointer-events:none;color:#0f2a4a}
+.top b{font-size:20px}.top span{display:block;font-size:14px;opacity:.75}
+.hook{position:fixed;left:4vw;bottom:90px;z-index:5;max-width:min(460px,50vw);pointer-events:none;color:#0b2342}
+.hook h1{font-size:clamp(34px,5.4vw,84px);line-height:.9;letter-spacing:-.06em;font-weight:800}
+.hook p{margin-top:10px;font-size:16px;opacity:.85}
+.bal{position:fixed;left:0;top:0;width:var(--s);height:calc(var(--s)*1.18);margin-left:calc(var(--s)/-2);cursor:pointer;will-change:transform;z-index:3}
+.bal .bd{position:absolute;inset:0 0 14% 0;border-radius:50% 50% 48% 48%/56% 56% 44% 44%;background:radial-gradient(circle at 32% 26%,color-mix(in srgb,var(--c) 40%,#fff),var(--c) 60%,color-mix(in srgb,var(--c) 70%,#000));box-shadow:inset -10px -14px 28px rgba(0,0,0,.18),0 12px 30px rgba(20,40,80,.25);display:grid;place-items:center;transition:transform .2s}
+.bal:hover .bd{transform:scale(1.07)}
+.bal .bd::after{content:"";position:absolute;left:20%;top:12%;width:22%;height:16%;border-radius:50%;background:rgba(255,255,255,.55);transform:rotate(-30deg)}
+.bal .ic{width:46%;aspect-ratio:1;border-radius:23%;object-fit:cover;display:grid;place-items:center;font:800 28px sans-serif;color:#fff;box-shadow:0 4px 12px rgba(0,0,0,.3);border:2.5px solid #fff;position:relative;z-index:1;overflow:hidden}
+.bal .ic img{width:100%;height:100%;object-fit:cover}
+.bal .kn{position:absolute;left:50%;bottom:11%;width:14px;height:12px;margin-left:-7px;background:var(--c);clip-path:polygon(50% 0,100% 100%,0 100%);filter:brightness(.8)}
+.bal .st{position:absolute;left:50%;top:88%;width:2px;height:120px;background:linear-gradient(rgba(60,70,90,.7),rgba(60,70,90,.05));transform-origin:50% 0;animation:sw 2.4s ease-in-out infinite alternate}
+@keyframes sw{from{transform:rotate(-6deg)}to{transform:rotate(6deg)}}
+.bal .nm{position:absolute;left:50%;top:106%;transform:translateX(-50%);font-weight:800;font-size:13px;background:#fff;color:#14233a;padding:2px 10px;border-radius:99px;opacity:0;transition:.2s;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.bal:hover .nm{opacity:1}
+.pop{position:fixed;width:10px;height:10px;border-radius:50%;pointer-events:none;z-index:6}
+.tip{position:fixed;left:50%;top:22px;transform:translateX(-50%);font-size:14px;z-index:5;background:rgba(255,255,255,.6);padding:6px 16px;border-radius:99px;color:#0f2a4a;white-space:nowrap}
+@media(max-width:800px){.hook{max-width:90vw}.tip{display:none}}
+</style>
+</head>
+<body>
+<div class="sky" id="sky"></div>
+<div class="top"><b>ideaapps</b><span>Marcin Polak · iOS · tvOS · AI</span></div>
+<div class="tip">dmuchaj kursorem · kliknij balon, żeby go przebić</div>
+<div class="hook"><h1>Przebij balon, zobacz aplikację.</h1><p>W każdym balonie siedzi aplikacja, którą zrobiłem. Pęknie, a zostanie po niej pełna karta.</p></div>
+<script src="data.js"></script><script src="ui.js"></script>
+<script>
+const {projects}=IDEA;
+let W=innerWidth,H=innerHeight;addEventListener('resize',()=>{W=innerWidth;H=innerHeight});
+for(let i=0;i<5;i++){const c=document.createElement('div');c.className='cloud';c.style.cssText=`top:${8+i*16}vh;width:${180+i*40}px;animation-duration:${60+i*25}s;animation-delay:${-i*18}s;opacity:${.5+i*.08}`;document.body.appendChild(c)}
+const S=()=>Math.max(96,Math.min(150,W/9));
+const bal=projects.map((p,i)=>{const e=document.createElement('div');e.className='bal';e.style.setProperty('--c',p.color);e.style.setProperty('--s',S()+'px');
+ e.innerHTML=`<div class="bd"><span class="ic" style="background:${p.color}">${p.icon?`<img src="${p.icon}" alt="">`:p.name[0]}</span></div><i class="kn"></i><i class="st"></i><span class="nm">${p.name}</span>`;document.body.appendChild(e);
+ return {e,p,x:W*(.2+.6*(i/(projects.length-1)))+(Math.random()-.5)*40,y:H*(.25+Math.random()*.6),vx:0,vy:-.45-Math.random()*.4,ph:Math.random()*6,alive:true}});
+let mx=-999,my=-999,pmx=0,pmy=0,wind=0;
+addEventListener('pointermove',e=>{pmx=e.clientX-mx;pmy=e.clientY-my;mx=e.clientX;my=e.clientY});
+const sky=document.getElementById('sky');
+function step(t){
+ for(const b of bal){if(!b.alive)continue;b.ph+=.02;
+  b.vx+=Math.sin(b.ph)*.012;b.vx*=.985;b.vy+=(-.5-b.vy)*.01;
+  const dx=b.x-mx,dy=b.y-my,d=Math.hypot(dx,dy);if(d<170&&mx>-900){const f=(170-d)/170;b.vx+=dx/d*f*.9+pmx*.01;b.vy+=dy/d*f*.5}
+  for(const o of bal){if(o===b||!o.alive)continue;const ox=b.x-o.x,oy=b.y-o.y,od=Math.hypot(ox,oy);if(od<S()*.9&&od>0){b.vx+=ox/od*.12;b.vy+=oy/od*.08}}
+  b.x+=b.vx;b.y+=b.vy;if(b.x<S()/2){b.x=S()/2;b.vx=Math.abs(b.vx)}if(b.x>W-S()/2){b.x=W-S()/2;b.vx=-Math.abs(b.vx)}
+  if(b.y<-S()*1.6){b.y=H+S()*.6;b.x=W*(.1+Math.random()*.8)}
+  b.e.style.transform=`translate(${b.x}px,${b.y}px) rotate(${b.vx*5}deg)`}
+ requestAnimationFrame(step)}
+step();
+document.addEventListener('click',e=>{const el=e.target.closest('.bal');if(!el)return;const b=bal.find(x=>x.e===el);pop(b)});
+function pop(b){b.alive=false;b.e.style.display='none';const col=b.p.color;
+ for(let i=0;i<22;i++){const s=document.createElement('i');s.className='pop';s.style.background=i%3?col:'#fff';s.style.left=b.x+'px';s.style.top=(b.y+S()*.4)+'px';document.body.appendChild(s);
+  const a=Math.random()*6.28,v=80+Math.random()*180;s.animate([{transform:'translate(0,0) scale(1)',opacity:1},{transform:`translate(${Math.cos(a)*v}px,${Math.sin(a)*v+80}px) scale(.2)`,opacity:0}],{duration:700+Math.random()*400,easing:'cubic-bezier(.2,.8,.3,1)'}).onfinish=()=>s.remove()}
+ sky.style.setProperty('--c',b.p.color);
+ IDEA.ui.app(b.p,{onOpen:q=>sky.style.setProperty('--c',q.color),onClose:()=>{sky.style.setProperty('--c','#6fc3ff');setTimeout(()=>{b.alive=true;b.e.style.display='';b.y=H+S();b.x=W*(.15+Math.random()*.7)},800)}})}
+IDEA.ui.bar();
+</script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Magnes (wariant 36)</title>
+<style>
+:root{--bgc:#17171c;--ink:#fff}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bgc);color:var(--ink);font:18px/1.5 -apple-system,"SF Pro Text",Helvetica,sans-serif;-webkit-font-smoothing:antialiased;transition:background .9s cubic-bezier(.3,.7,.2,1)}
+a{color:inherit;text-decoration:none}
+.nav{position:fixed;top:0;left:0;right:0;display:flex;justify-content:space-between;padding:20px 4vw;z-index:30;font-weight:700}
+.nav span a{margin-left:24px;font-weight:500;opacity:.7}.nav span a:hover{opacity:1}
+.play{position:relative;height:100vh;min-height:640px;overflow:hidden;touch-action:none}
+.play::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 70% at 70% 40%,rgba(255,255,255,.14),transparent 70%);pointer-events:none}
+.txt{position:absolute;left:4vw;top:16vh;max-width:min(560px,44vw);pointer-events:none}
+.txt small{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;opacity:.7}
+.txt h1{font-size:clamp(40px,6.4vw,100px);line-height:.9;letter-spacing:-.065em;font-weight:800;margin:14px 0 18px}
+.txt p{font-size:clamp(16px,1.4vw,20px);opacity:.82;max-width:26em}
+.ball{position:absolute;left:0;top:0;border-radius:23%;display:grid;place-items:center;cursor:grab;will-change:transform;box-shadow:0 10px 24px -6px rgba(0,0,0,.5);overflow:hidden;font:800 40px sans-serif;color:#fff;user-select:none;touch-action:none;transition:box-shadow .3s,filter .3s}
+.ball:active{cursor:grabbing}
+.ball img{width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none}
+.ball.sel{box-shadow:0 0 0 4px #fff,0 0 50px 8px rgba(255,255,255,.55)}
+.ball.dim{filter:saturate(.5) brightness(.75)}
+.modes{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);display:flex;gap:4px;background:rgba(255,255,255,.14);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.25);padding:5px;border-radius:99px;z-index:5}
+.modes button{all:unset;cursor:pointer;padding:9px 18px;border-radius:99px;font-weight:600;font-size:15px;transition:.2s}
+.modes button.on{background:#fff;color:#111}
+.card{position:absolute;right:4vw;top:50%;transform:translateY(-50%) scale(.92);width:min(360px,34vw);opacity:0;pointer-events:none;background:rgba(0,0,0,.28);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.22);border-radius:30px;padding:22px;transition:.5s cubic-bezier(.2,.9,.2,1);z-index:6}
+.card.on{opacity:1;transform:translateY(-50%);pointer-events:auto}
+.card .sh{border-radius:20px;overflow:hidden;height:260px;background:rgba(0,0,0,.25);display:grid;place-items:center;margin-bottom:16px}
+.card .sh img.s{width:48%;border-radius:22px 22px 0 0;align-self:end;margin-top:26px;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.card .sh .ico,.card .sh .ico-fallback{width:96px;height:96px;border-radius:23%;object-fit:cover;display:grid;place-items:center;font:800 46px sans-serif;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.card small{opacity:.75;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.card h3{font-size:30px;letter-spacing:-.04em;line-height:1;margin:4px 0 6px}
+.card p{font-size:15.5px;opacity:.9;margin-bottom:14px}
+.card .b{display:inline-block;background:#fff;color:#111;font-weight:700;padding:11px 22px;border-radius:99px}
+.card .x{position:absolute;top:12px;right:16px;font-size:24px;background:none;border:0;color:#fff;opacity:.7;cursor:pointer}
+.sec{padding:14vh 5vw 4vh}
+.sec h2{font-size:clamp(40px,7vw,110px);line-height:.9;letter-spacing:-.065em;font-weight:800;margin-bottom:5vh}
+.sv{display:grid;grid-template-columns:repeat(4,1fr);border-top:2px solid rgba(255,255,255,.7)}
+.sv div{padding:20px 20px 40px 0}.sv b{display:block;font-size:24px;letter-spacing:-.03em;line-height:1.1;margin-bottom:8px}.sv span{opacity:.8;font-size:16px}
+.end{padding:12vh 5vw 5vh}
+.end h2{font-size:clamp(44px,9vw,150px);line-height:.88;letter-spacing:-.07em;font-weight:800}
+.end a{display:inline-block;margin-top:5vh;font-size:clamp(20px,4.2vw,64px);letter-spacing:-.05em;font-weight:700;border-bottom:3px solid #fff;overflow-wrap:anywhere}
+.end .f{display:flex;justify-content:space-between;margin-top:9vh;font-size:14px;opacity:.6}
+@media(max-width:860px){.txt{max-width:92vw;top:12vh}.card{right:50%;transform:translate(50%,-45%) scale(.92);width:min(92vw,360px);top:56%}.card.on{transform:translate(50%,-45%)}.sv{grid-template-columns:1fr 1fr}.modes button{padding:8px 11px;font-size:13px}}
+</style>
+</head>
+<body>
+<div class="nav"><b>ideaapps</b><span><a href="#uslugi">Usługi</a><a href="#kontakt">Kontakt</a></span></div>
+<section class="play" id="play">
+<div class="txt"><small>Marcin Polak · iOS · tvOS · AI</small><h1>Osiem aplikacji. Złap którąś.</h1><p>Rzucaj ikonami, przyciągaj je magnesem albo puść w nieważkość. Kliknij ikonę, a cała strona zmieni kolor.</p></div>
+<div class="card" id="card"></div>
+<div class="modes" id="modes"><button class="on" data-m="down">↓ Grawitacja</button><button data-m="magnet">◎ Magnes</button><button data-m="zero">✦ Nieważkość</button></div>
+</section>
+<section class="sec" id="uslugi"><h2>Co mogę<br>zbudować.</h2><div class="sv" id="sv"></div></section>
+<footer class="end" id="kontakt"><h2>Masz pomysł?<br>Napisz.</h2><a id="mail" href="#"></a><div class="f"><span>© 2026 ideaapps</span><span>Swift · SwiftUI · tvOS · AI</span></div></footer>
+<script src="data.js"></script><script src="phys.js"></script>
+<script>
+const {projects,services,email}=IDEA;
+const $=s=>document.querySelector(s);
+$('#mail').href='mailto:'+email;$('#mail').textContent=email;
+$('#sv').innerHTML=services.map(s=>`<div><b>${s.t}</b><span>${s.d}</span></div>`).join('');
+const play=$('#play');
+const deep=c=>`color-mix(in srgb,${c} 78%,#0b0b10)`;
+const R=()=>Math.max(34,Math.min(58,play.clientWidth/15));
+let sel=null;
+const ph=Phys(play,{onTap:b=>select(b)});
+projects.forEach((p,i)=>{const r=R();const el=document.createElement('div');el.className='ball';el.style.cssText=`width:${r*2}px;height:${r*2}px;background:${p.color}`;
+ el.innerHTML=p.icon?`<img src="${p.icon}" alt="${p.name}" draggable="false">`:p.name[0];play.appendChild(el);
+ ph.add({el,p,r,x:play.clientWidth*(.45+Math.random()*.5),y:-80-i*90,vx:(Math.random()-.5)*5})});
+addEventListener('resize',()=>{ph.resize();const r=R();ph.B.forEach(b=>{b.r=r;b.el.style.width=b.el.style.height=r*2+'px'})});
+function select(b){sel=b;const p=b.p;document.documentElement.style.setProperty('--bgc',deep(p.color));
+ ph.B.forEach(x=>{x.el.classList.toggle('sel',x===b);x.el.classList.toggle('dim',x!==b)});
+ $('#card').innerHTML=`<button class="x" id="cx">×</button><div class="sh">${p.shot&&p.id!=='boxes'?`<img class="s" src="${p.shot}" alt="">`:IDEA.iconHTML(p,'')}</div><small>${p.cat} · ${p.platforms}</small><h3>${p.name}</h3><p><b>${p.tag}.</b> ${p.desc}</p><a class="b" href="${p.url}" target="_blank" rel="noopener">Zobacz w App Store ↗</a>`;
+ $('#card').classList.add('on')}
+function clear(){sel=null;document.documentElement.style.setProperty('--bgc','#17171c');ph.B.forEach(x=>x.el.classList.remove('sel','dim'));$('#card').classList.remove('on')}
+$('#card').addEventListener('click',e=>{if(e.target.id==='cx')clear()});
+addEventListener('keydown',e=>e.key==='Escape'&&clear());
+$('#modes').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;ph.o.mode=b.dataset.m;document.querySelectorAll('#modes button').forEach(x=>x.classList.toggle('on',x===b));
+ if(b.dataset.m==='zero')ph.B.forEach(x=>{x.vx+=(Math.random()-.5)*8;x.vy-=Math.random()*8})});
+</script>
+</body>
+</html>

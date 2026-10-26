@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Dock (wariant 38)</title>
+<style>
+:root{--c:#2a2d3a}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden}
+body{font:18px/1.5 -apple-system,BlinkMacSystemFont,"SF Pro Text",Helvetica,sans-serif;color:#fff;-webkit-font-smoothing:antialiased;background:#0d0e12}
+a{color:inherit;text-decoration:none}
+.bg{position:fixed;inset:0;background:radial-gradient(80% 90% at 75% 20%,color-mix(in srgb,var(--c) 95%,#fff 8%),color-mix(in srgb,var(--c) 70%,#000) 60%,color-mix(in srgb,var(--c) 40%,#000));transition:--c .6s;z-index:0}
+.bg2{position:fixed;inset:0;z-index:0;opacity:0;transition:opacity .7s}
+.menu{position:fixed;top:0;left:0;right:0;height:30px;background:rgba(0,0,0,.28);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;align-items:center;padding:0 18px;gap:22px;font-size:13.5px;font-weight:600;z-index:10}
+.menu span{opacity:.85}.menu .r{margin-left:auto;font-weight:500}
+.stage{position:relative;z-index:1;height:100%;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:60px 6vw 160px;gap:4vw}
+.info{max-width:600px;transition:opacity .3s,transform .3s}
+.info.sw{opacity:0;transform:translateY(12px)}
+.info small{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;opacity:.75}
+.info h1{font-size:clamp(54px,9vw,150px);line-height:.86;letter-spacing:-.07em;font-weight:800;margin:12px 0 18px}
+.info p{font-size:clamp(17px,1.6vw,23px);line-height:1.35;opacity:.92;max-width:26em;margin-bottom:22px}
+.info .m{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
+.info .m span{font-size:13.5px;font-weight:600;padding:5px 14px;border-radius:99px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25)}
+.btn{display:inline-block;background:#fff;color:#111;font-weight:700;padding:14px 26px;border-radius:99px;transition:.2s}
+.btn:hover{transform:scale(1.05)}
+.svl{display:grid;gap:12px;margin-bottom:18px}
+.svl div{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:18px;padding:14px 18px;backdrop-filter:blur(14px)}
+.svl b{display:block;font-size:18px}.svl span{font-size:14.5px;opacity:.88}
+.vis{position:relative;height:100%;display:grid;place-items:center;min-height:0}
+.vis .ph{position:absolute;height:min(70vh,640px);aspect-ratio:9/19.5;border-radius:44px;overflow:hidden;box-shadow:0 0 0 8px #0a0a0c,0 50px 90px -10px rgba(0,0,0,.55);opacity:0;transform:translateY(30px) rotate(4deg) scale(.96);transition:opacity .5s,transform .7s cubic-bezier(.2,.9,.2,1);background:var(--pc)}
+.vis .ph.on{opacity:1;transform:rotate(-3deg)}
+.vis .ph img{width:100%;height:100%;object-fit:cover;object-position:top}
+.vis .ph .fb{width:100%;height:100%;display:grid;place-items:center;font:800 min(26vh,200px)/1 sans-serif;color:rgba(255,255,255,.95)}
+.dockw{position:fixed;bottom:16px;left:0;right:0;display:flex;justify-content:center;z-index:5;pointer-events:none}
+.dock{display:flex;align-items:flex-end;gap:10px;padding:10px 14px;background:rgba(255,255,255,.2);backdrop-filter:blur(26px) saturate(160%);-webkit-backdrop-filter:blur(26px) saturate(160%);border:1px solid rgba(255,255,255,.35);border-radius:28px;pointer-events:auto;box-shadow:0 20px 50px -12px rgba(0,0,0,.5)}
+.di{position:relative;width:64px;height:64px;flex:none;cursor:pointer;transition:width .08s,height .08s}
+.di .ico,.di .ico-fallback,.di .sys{width:100%;height:100%;border-radius:23%;object-fit:cover;display:grid;place-items:center;font:800 28px sans-serif;color:#fff;box-shadow:0 6px 14px rgba(0,0,0,.35)}
+.di .sys{font-size:30px}
+.di.on::after{content:"";position:absolute;bottom:-9px;left:50%;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:#fff}
+.di .tip{position:absolute;bottom:calc(100% + 12px);left:50%;transform:translateX(-50%) scale(.9);background:rgba(20,20,24,.9);padding:4px 12px;border-radius:9px;font-size:13px;font-weight:600;white-space:nowrap;opacity:0;pointer-events:none;transition:.15s}
+.di:hover .tip{opacity:1;transform:translateX(-50%)}
+.di.bounce{animation:bn .5s}
+@keyframes bn{30%{transform:translateY(-26px)}60%{transform:translateY(0)}80%{transform:translateY(-8px)}}
+.sep{width:1.5px;align-self:stretch;margin:4px 2px;background:rgba(255,255,255,.4)}
+@media(max-width:860px){.stage{grid-template-columns:1fr;padding:50px 22px 150px;overflow:auto;align-content:start}.vis{display:none}.dock{max-width:96vw;overflow-x:auto;gap:8px}.di{width:52px!important;height:52px!important}}
+</style>
+</head>
+<body>
+<div class="bg" id="bg"></div>
+<div class="menu"><b></b><b>ideaapps</b><span>Plik</span><span>Widok</span><span>Aplikacje</span><span class="r" id="clk"></span></div>
+<main class="stage"><div class="info" id="info"></div><div class="vis" id="vis"></div></main>
+<div class="dockw"><div class="dock" id="dock"></div></div>
+<script src="data.js"></script>
+<script>
+const {projects,services,email}=IDEA;
+const $=s=>document.querySelector(s);
+const deep=c=>`color-mix(in srgb,${c} 80%,#08080c)`;
+const sys=(id,bg,g,n)=>`<div class="di" data-id="${id}"><span class="tip">${n}</span><div class="sys" style="background:${bg}">${g}</div></div>`;
+$('#dock').innerHTML=projects.map(p=>`<div class="di" data-id="${p.id}"><span class="tip">${p.name}</span>${IDEA.iconHTML(p,'')}</div>`).join('')+'<div class="sep"></div>'
+ +sys('uslugi','linear-gradient(#8e94a3,#4d525e)','⚙','Usługi')+sys('kontakt','linear-gradient(#4aa8ff,#1478f0)','✉','Kontakt');
+$('#vis').innerHTML=projects.map(p=>`<div class="ph" data-id="${p.id}" style="--pc:${p.color}">${p.shot&&p.id!=='boxes'?`<img src="${p.shot}" alt="">`:`<div class="fb">${p.name[0]}</div>`}</div>`).join('');
+const views={};
+projects.forEach(p=>views[p.id]={c:deep(p.color),h:`<small>${p.cat}</small><h1>${p.name}</h1><p><b>${p.tag}.</b> ${p.desc}</p><div class="m"><span>${p.platforms}</span></div><a class="btn" href="${p.url}" target="_blank" rel="noopener">Zobacz w App Store ↗</a>`});
+views.uslugi={c:'#2f3340',h:`<small>Usługi</small><h1>Co zbuduję.</h1><div class="svl">${services.map(s=>`<div><b>${s.t}</b><span>${s.d}</span></div>`).join('')}</div>`};
+views.kontakt={c:'#1456b8',h:`<small>Kontakt</small><h1>Masz pomysł?</h1><p>Opisz w kilku zdaniach, co chcesz zbudować. Odpowiem i powiem szczerze, jak to widzę. Ponad 10 lat iOS i tvOS.</p><a class="btn" href="mailto:${email}">${email}</a>`};
+let cur=null;
+function show(id,bounce){if(cur===id)return;cur=id;const v=views[id];const info=$('#info');info.classList.add('sw');
+ document.documentElement.style.setProperty('--c',v.c);
+ setTimeout(()=>{info.innerHTML=v.h;info.classList.remove('sw')},180);
+ document.querySelectorAll('.ph').forEach(e=>e.classList.toggle('on',e.dataset.id===id));
+ document.querySelectorAll('.di').forEach(e=>e.classList.toggle('on',e.dataset.id===id));
+ if(bounce){const d=document.querySelector(`.di[data-id="${id}"]`);d.classList.remove('bounce');void d.offsetWidth;d.classList.add('bounce')}}
+// fisheye
+const dock=$('#dock'),items=[...dock.querySelectorAll('.di')];let mx=null;
+function mag(){items.forEach(it=>{const r=it.getBoundingClientRect();const c=r.left+r.width/2;const d=mx===null?999:Math.abs(mx-c);const s=64+60*Math.exp(-Math.pow(d/95,2));it.style.width=it.style.height=s+'px'})}
+dock.addEventListener('pointermove',e=>{if(matchMedia('(max-width:860px)').matches)return;mx=e.clientX;mag()});
+dock.addEventListener('pointerleave',()=>{mx=null;mag()});
+dock.addEventListener('click',e=>{const d=e.target.closest('.di');if(d)show(d.dataset.id,true)});
+dock.addEventListener('pointerover',e=>{const d=e.target.closest('.di');if(d&&e.pointerType==='mouse')show(d.dataset.id)});
+addEventListener('keydown',e=>{const ids=items.map(i=>i.dataset.id);let i=ids.indexOf(cur);if(e.key==='ArrowRight')show(ids[Math.min(ids.length-1,i+1)],true);if(e.key==='ArrowLeft')show(ids[Math.max(0,i-1)],true)});
+const t=()=>$('#clk').textContent=new Date().toLocaleString('pl',{weekday:'short',hour:'2-digit',minute:'2-digit'});t();setInterval(t,20000);
+show(projects[0].id);$('#info').innerHTML=views[projects[0].id].h;
+</script>
+</body>
+</html>

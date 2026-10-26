@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Pop (wariant 5)</title>
+<style>
+:root{--bg:#fff8e7;--ink:#111;--y:#ffd93d;--p:#ff6bb5;--b:#4d7cfe;--g:#3ddc97;--o:#ff7a3d}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:18px/1.5 "Avenir Next","Trebuchet MS","Helvetica Neue",Arial,sans-serif;font-weight:500;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.bx{border:3px solid var(--ink);border-radius:20px;box-shadow:6px 6px 0 var(--ink);background:#fff}
+header{border-bottom:3px solid var(--ink);background:var(--y);position:sticky;top:0;z-index:10}
+header .wrap{display:flex;justify-content:space-between;align-items:center;height:68px}
+.logo{font-weight:900;font-size:26px;letter-spacing:-.04em;display:flex;align-items:center;gap:10px}
+.logo i{width:34px;height:34px;background:var(--p);border:3px solid var(--ink);border-radius:50%;box-shadow:3px 3px 0 var(--ink)}
+header nav{display:flex;gap:10px}
+header nav a{font-weight:800;padding:8px 16px;border:3px solid transparent;border-radius:999px}
+header nav a:hover{border-color:var(--ink);background:#fff;box-shadow:3px 3px 0 var(--ink)}
+.btn{display:inline-block;font-weight:900;font-size:19px;padding:15px 28px;background:var(--b);color:#fff;border:3px solid var(--ink);border-radius:999px;box-shadow:5px 5px 0 var(--ink);transition:.12s}
+.btn:hover{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--ink)}
+.btn.w{background:#fff;color:var(--ink)}
+.hero{padding:70px 0 60px;display:grid;grid-template-columns:1.25fr 1fr;gap:40px;align-items:center}
+h1{font-size:clamp(46px,8vw,104px);line-height:.92;letter-spacing:-.055em;font-weight:900}
+h1 mark{background:var(--p);padding:0 .12em;border:3px solid var(--ink);border-radius:14px;display:inline-block;transform:rotate(-2deg);box-shadow:5px 5px 0 var(--ink)}
+h1 u{text-decoration:none;background:var(--g);padding:0 .1em;display:inline-block;transform:rotate(1.5deg);border-radius:12px;border:3px solid var(--ink)}
+.hero p{font-size:22px;margin:28px 0 30px;max-width:520px}
+.hero .btn+.btn{margin-left:14px}
+.stack{position:relative;height:440px}
+.stack .ph{position:absolute;width:190px;border:4px solid var(--ink);border-radius:30px;box-shadow:7px 7px 0 var(--ink);overflow:hidden;background:#fff}
+.stack .ph img{display:block;width:100%;aspect-ratio:9/19;object-fit:cover;object-position:top}
+.stack .ph:nth-child(1){left:0;top:50px;transform:rotate(-9deg)}
+.stack .ph:nth-child(2){left:120px;top:0;transform:rotate(3deg);z-index:2}
+.stack .ph:nth-child(3){left:250px;top:70px;transform:rotate(11deg)}
+.stack .st{position:absolute;right:0;bottom:0;z-index:3;transform:rotate(-6deg);padding:14px 20px;font-weight:900;background:var(--o);font-size:20px}
+.mq{border-block:3px solid var(--ink);background:var(--ink);color:var(--y);overflow:hidden;white-space:nowrap;padding:14px 0;font-weight:900;font-size:26px;letter-spacing:-.02em}
+.mq div{display:inline-block;animation:mq 28s linear infinite}
+@keyframes mq{to{transform:translateX(-50%)}}
+section{padding:90px 0}
+h2{font-size:clamp(38px,6vw,76px);letter-spacing:-.05em;line-height:.95;font-weight:900;margin-bottom:12px}
+h2 span{background:var(--y);padding:0 .12em;border:3px solid var(--ink);border-radius:12px;display:inline-block;transform:rotate(-1.5deg)}
+.sub{font-size:20px;max-width:560px;margin-bottom:44px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:26px}
+.pc{display:flex;flex-direction:column;overflow:hidden;transition:.15s;background:var(--c)}
+.pc:hover{transform:translate(-4px,-4px) rotate(-.6deg);box-shadow:10px 10px 0 var(--ink)}
+.pc .im{height:210px;border-bottom:3px solid var(--ink);display:grid;place-items:center;overflow:hidden;background:color-mix(in srgb,var(--c) 70%,#fff)}
+.pc .im img.shot{width:62%;border:3px solid var(--ink);border-radius:18px 18px 0 0;align-self:end;margin-top:30px;aspect-ratio:9/16;object-fit:cover;object-position:top}
+.pc .im .ico,.pc .im .ico-fallback{width:110px;height:110px;border:3px solid var(--ink);border-radius:26px;box-shadow:5px 5px 0 var(--ink);font-size:56px;font-weight:900;color:var(--ink);object-fit:cover;display:grid;place-items:center}
+.pc .in{padding:18px 20px 22px;background:#fff;flex:1;display:flex;flex-direction:column}
+.pc .cat{align-self:flex-start;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;padding:3px 10px;border:2px solid var(--ink);border-radius:999px;background:var(--c);margin-bottom:10px}
+.pc h3{font-size:26px;letter-spacing:-.03em;line-height:1}
+.pc p{font-size:15px;margin:10px 0 16px;flex:1}
+.pc .go{font-weight:900}
+.svc{display:grid;grid-template-columns:repeat(4,1fr);gap:26px}
+.svc div{padding:26px}
+.svc div:nth-child(1){background:var(--p)}.svc div:nth-child(2){background:var(--g)}.svc div:nth-child(3){background:var(--y)}.svc div:nth-child(4){background:#9ec1ff}
+.svc b{font-size:60px;font-weight:900;line-height:1;letter-spacing:-.05em}
+.svc h4{font-size:24px;letter-spacing:-.03em;margin:14px 0 8px;line-height:1.05}
+.svc p{font-size:15.5px}
+.me{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:stretch}
+.me .bx{padding:34px}
+.me .big{font-size:clamp(90px,14vw,190px);font-weight:900;line-height:.85;letter-spacing:-.07em}
+.me .y{background:var(--y)}
+.me p{margin-bottom:14px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.chips span{font-weight:800;font-size:15px;padding:6px 14px;border:3px solid var(--ink);border-radius:999px;background:#fff}
+.contact{background:var(--b);color:#fff;border-top:3px solid var(--ink);text-align:center;padding:100px 0}
+.contact h2{font-size:clamp(44px,8vw,110px);margin-bottom:30px}
+.contact .btn{background:var(--y);color:var(--ink);font-size:clamp(18px,2.6vw,30px)}
+footer{background:var(--ink);color:#fff;padding:22px 0;font-weight:700;font-size:14px}
+footer .wrap{display:flex;justify-content:space-between}
+@media(max-width:980px){.hero,.me{grid-template-columns:1fr}.stack{height:380px;max-width:480px}.grid,.svc{grid-template-columns:1fr 1fr}header nav{display:none}}
+@media(max-width:560px){.grid,.svc{grid-template-columns:1fr}.stack .ph{width:150px}.stack .ph:nth-child(2){left:90px}.stack .ph:nth-child(3){left:180px}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a class="logo" href="#"><i></i>ideaapps</a>
+<nav><a href="#projekty">Projekty</a><a href="#uslugi">Usługi</a><a href="#o-mnie">O mnie</a><a href="#kontakt">Kontakt</a></nav></div></header>
+
+<div class="wrap hero">
+<div><h1>Apki, które ludzie <mark>kochają</mark> i <u>używają</u>.</h1>
+<p>Marcin tu. iOS, tvOS i AI developer z 10+ latami doświadczenia. Robię całe aplikacje sam: pomysł, kod, App Store.</p>
+<a class="btn" href="#projekty">Zobacz apki →</a><a class="btn w" href="#kontakt">Pogadajmy</a></div>
+<div class="stack" id="stack"><div class="st bx">8 apek w App Store!</div></div>
+</div>
+
+<div class="mq"><div id="mq"></div></div>
+
+<section id="projekty"><div class="wrap">
+<h2>Moje <span>projekty</span></h2><p class="sub">Każda apka to osobny produkt, który sam wymyśliłem, zaprojektowałem, napisałem i wypuściłem.</p>
+<div class="grid" id="grid"></div></div></section>
+
+<section id="uslugi" style="background:#fff;border-block:3px solid var(--ink)"><div class="wrap">
+<h2>Zrobię dla <span>Ciebie</span></h2><p class="sub">Od małego MVP po pełną aplikację w App Store.</p>
+<div class="svc" id="svc"></div></div></section>
+
+<section id="o-mnie"><div class="wrap">
+<h2>Kto za tym <span>stoi</span></h2><div style="height:30px"></div>
+<div class="me"><div class="bx y"><div class="big">10+</div><p style="font-weight:900;font-size:24px;margin-top:10px">lat z iOS i tvOS</p></div>
+<div class="bx"><p>Zaczynałem jako developer Androida, a przez ostatnie 10 lat pracuję wyłącznie z ekosystemem Apple: iPhone, iPad, Mac i Apple TV.</p>
+<p>Teraz jestem też developerem AI: wbudowuję modele w aplikacje i używam agentów do przyspieszania własnej pracy.</p>
+<div class="chips"><span>Swift</span><span>SwiftUI</span><span>UIKit</span><span>tvOS</span><span>Core ML</span><span>Claude API</span><span>StoreKit</span></div></div></div>
+</div></section>
+
+<section class="contact" id="kontakt"><div class="wrap">
+<h2>Masz pomysł? Zróbmy to!</h2><a class="btn" id="mail" href="#"></a></div></section>
+<footer><div class="wrap"><span>© 2026 ideaapps</span><span>Zrobione z 💛 w Polsce</span></div></footer>
+
+<script src="data.js"></script>
+<script>
+const {projects,services,email}=IDEA;
+const m=document.getElementById('mail');m.href='mailto:'+email;m.textContent=email;
+const withShot=projects.filter(p=>p.shot&&p.id!=='boxes').slice(0,3);
+document.getElementById('stack').insertAdjacentHTML('afterbegin',withShot.map(p=>`<div class="ph"><img src="${p.shot}" alt="${p.name}"></div>`).join(''));
+const cols=['#ff6bb5','#3ddc97','#ffd93d','#9ec1ff','#ff7a3d','#c9a7ff','#3ddc97','#ffd93d'];
+const word=projects.map(p=>p.name+' ✦').join(' ');
+document.getElementById('mq').innerHTML=(word+' ').repeat(2);
+document.getElementById('grid').innerHTML=projects.map((p,i)=>`<a class="pc bx" style="--c:${cols[i]}" href="${p.url}" target="_blank" rel="noopener">
+<div class="im">${p.shot&&p.id!=='boxes'?`<img class="shot" src="${p.shot}" alt="">`:IDEA.iconHTML(p,'ico')}</div>
+<div class="in"><span class="cat">${p.cat}</span><h3>${p.name}</h3><p>${p.tag}. ${p.desc}</p><span class="go">App Store ↗</span></div></a>`).join('');
+document.getElementById('svc').innerHTML=services.map((s,i)=>`<div class="bx"><b>${i+1}</b><h4>${s.t}</h4><p>${s.d}</p></div>`).join('');
+</script>
+</body>
+</html>

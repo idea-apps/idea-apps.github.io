@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Naklejki (wariant 52)</title>
+<style>
+:root{--c:#c9a56b}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden}
+body{font:18px/1.5 -apple-system,"SF Pro Text",Helvetica,sans-serif;color:#20170c;-webkit-font-smoothing:antialiased;user-select:none;touch-action:none;
+ background:radial-gradient(70% 80% at 50% 40%,color-mix(in srgb,var(--c) 80%,#fff),var(--c) 55%,color-mix(in srgb,var(--c) 60%,#2a1a08));transition:background .9s}
+.top{position:fixed;left:4vw;top:22px;z-index:5;pointer-events:none}
+.top b{font-size:20px}.top span{display:block;font-size:14px;opacity:.75}
+.hook{position:fixed;left:4vw;top:84px;z-index:5;max-width:min(380px,28vw);pointer-events:none}
+.hook h1{font-size:clamp(30px,4.4vw,66px);line-height:.9;letter-spacing:-.06em;font-weight:800}
+.hook p{margin-top:10px;font-size:15.5px;opacity:.8}
+.desk{position:fixed;inset:0;display:grid;place-items:center;padding-bottom:50px}
+.lid{position:relative;width:min(66vw,980px);aspect-ratio:16/10.4;border-radius:26px 26px 12px 12px;background:linear-gradient(135deg,#d7d9de,#aeb1ba 45%,#cfd2d8);box-shadow:inset 0 0 0 2px rgba(255,255,255,.7),inset 0 -10px 30px rgba(0,0,0,.12),0 40px 80px -20px rgba(0,0,0,.55);margin-left:min(8vw,120px)}
+.lid::after{content:"ideaapps";position:absolute;left:50%;bottom:6%;transform:translateX(-50%);font:700 clamp(11px,1.3vw,16px) -apple-system,sans-serif;letter-spacing:.4em;color:rgba(0,0,0,.28);text-transform:uppercase}
+.base{position:absolute;left:-4%;right:-4%;bottom:-16px;height:18px;border-radius:0 0 40px 40px;background:linear-gradient(#b9bcc4,#8f929b);box-shadow:0 14px 30px rgba(0,0,0,.4)}
+.stk{position:absolute;left:0;top:0;cursor:grab;will-change:transform;touch-action:none}
+.stk .in{width:var(--s);height:var(--s);border-radius:var(--rd,26%);background:var(--bg,#fff);border:6px solid #fff;box-shadow:0 5px 12px rgba(0,0,0,.35),inset 0 0 0 1px rgba(0,0,0,.08);overflow:hidden;display:grid;place-items:center;font:800 40px sans-serif;color:#fff;transition:box-shadow .2s,transform .2s;text-align:center;line-height:1.05}
+.stk .in img{width:100%;height:100%;object-fit:cover;pointer-events:none}
+.stk.drag{cursor:grabbing;z-index:999}
+.stk.drag .in{box-shadow:0 22px 34px rgba(0,0,0,.45);transform:scale(1.12)}
+.stk .nm{position:absolute;left:50%;top:100%;transform:translateX(-50%);margin-top:6px;font-size:12px;font-weight:800;white-space:nowrap;background:#fff;color:#20170c;padding:2px 10px;border-radius:99px;opacity:0;transition:.2s;box-shadow:0 3px 8px rgba(0,0,0,.25)}
+.stk:hover .nm{opacity:1}
+.stk.sel .in{box-shadow:0 0 0 4px #ffcf3a,0 14px 30px rgba(0,0,0,.4)}
+.stk.txt .in{--rd:50%;font-size:13px;font-weight:800;background:#16161c;color:#fff;padding:10px}
+.tip{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);font-size:14px;opacity:.75;z-index:5;white-space:nowrap;pointer-events:none}
+@media(max-width:900px){.hook{display:none}.lid{width:94vw;margin-left:0}.tip{white-space:normal;text-align:center;width:90vw}}
+</style>
+</head>
+<body>
+<div class="top"><b>ideaapps</b><span>Marcin Polak · iOS · tvOS · AI</span></div>
+<div class="hook"><h1>Oklej nimi laptopa.</h1><p>Przeciągaj naklejki, kręć kółkiem, nakładaj jedna na drugą. Kliknij naklejkę, żeby poznać aplikację.</p></div>
+<div class="desk"><div class="lid" id="lid"><div class="base"></div></div></div>
+<div class="tip">przeciągnij · kółko: obrót · dwuklik: na wierzch · klik: otwórz</div>
+<script src="data.js"></script><script src="ui.js"></script>
+<script>
+const {projects}=IDEA;
+const lid=document.getElementById('lid');
+const items=[...projects.map(p=>({id:p.id,p})),{id:'process',t:'Jak\npracuję',bg:'#16161c'},{id:'services',t:'Usługi',bg:'#e8561a'},{id:'contact',t:'Napisz\ndo mnie',bg:'#1a8f5a'}];
+let z=1;
+const rect=()=>lid.getBoundingClientRect();
+items.forEach((it,i)=>{const e=document.createElement('div');e.className='stk'+(it.p?'':' txt');const s=it.p?Math.max(74,Math.min(118,innerWidth*.07)):Math.max(66,Math.min(96,innerWidth*.06));
+ e.style.setProperty('--s',s+'px');e.dataset.i=i;
+ e.innerHTML=`<div class="in" style="${it.p?'':'background:'+it.bg}">${it.p?(it.p.icon?`<img src="${it.p.icon}" alt="">`:`<span style="position:absolute;inset:0;display:grid;place-items:center;background:${it.p.color}">${it.p.name[0]}</span>`):it.t.replace('\n','<br>')}</div>${it.p?`<span class="nm">${it.p.name}</span>`:''}`;
+ lid.appendChild(e);
+ const r=rect();const cols=4,row=Math.floor(i/cols),col=i%cols;
+ it.s=s;it.x=r.width*(.12+col*.2)+(Math.random()-.5)*30;it.y=r.height*(.14+row*.26)+(Math.random()-.5)*26;it.rot=(Math.random()-.5)*34;it.e=e;it.z=++z;apply(it)});
+function apply(it){it.e.style.transform=`translate(${it.x}px,${it.y}px) rotate(${it.rot}deg)`;it.e.style.zIndex=it.z}
+let d=null;
+lid.addEventListener('pointerdown',e=>{const el=e.target.closest('.stk');if(!el)return;const it=items[+el.dataset.i];const r=rect();d={it,ox:e.clientX-r.left-it.x,oy:e.clientY-r.top-it.y,m:0,t:performance.now()};it.z=++z;el.classList.add('drag');apply(it);el.setPointerCapture(e.pointerId)});
+lid.addEventListener('pointermove',e=>{if(!d)return;const r=rect();const nx=e.clientX-r.left-d.ox,ny=e.clientY-r.top-d.oy;d.m+=Math.abs(nx-d.it.x)+Math.abs(ny-d.it.y);d.it.x=nx;d.it.y=ny;apply(d.it)});
+const end=()=>{if(!d)return;const it=d.it;it.e.classList.remove('drag');const tap=d.m<8&&performance.now()-d.t<400;d=null;if(tap)open(it)};
+lid.addEventListener('pointerup',end);lid.addEventListener('pointercancel',end);
+lid.addEventListener('wheel',e=>{const el=e.target.closest('.stk');if(!el)return;e.preventDefault();const it=items[+el.dataset.i];it.rot+=e.deltaY*.2;apply(it)},{passive:false});
+lid.addEventListener('dblclick',e=>{const el=e.target.closest('.stk');if(!el)return;const it=items[+el.dataset.i];it.z=++z;apply(it)});
+function open(it){if(!it.p){IDEA.ui.panel(it.id);return}
+ document.documentElement.style.setProperty('--c',it.p.color);document.body.style.setProperty('--c',it.p.color);items.forEach(x=>x.e.classList.toggle('sel',x===it));
+ IDEA.ui.app(it.p,{onOpen:q=>{document.body.style.setProperty('--c',q.color);items.forEach(x=>x.e.classList.toggle('sel',x.p&&x.p.id===q.id))},onClose:()=>{document.body.style.setProperty('--c','#c9a56b');items.forEach(x=>x.e.classList.remove('sel'))}})}
+IDEA.ui.bar();
+</script>
+</body>
+</html>

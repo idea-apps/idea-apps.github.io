@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — List (wariant 10)</title>
+<style>
+:root{--bg:#fbf8f1;--ink:#26231d;--soft:#7d766a;--link:#9a2f12;--rule:#e1dacb}
+@media(prefers-color-scheme:dark){:root{--bg:#1a1814;--ink:#e8e2d4;--soft:#9b9486;--link:#e8895f;--rule:#34312a}}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--ink);font:21px/1.62 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;-webkit-font-smoothing:antialiased}
+.page{max-width:680px;margin:0 auto;padding:56px 24px 90px}
+a{color:var(--link);text-underline-offset:3px;text-decoration-thickness:1px}
+a:hover{text-decoration-thickness:2px}
+.mast{font:600 15px/1 -apple-system,Helvetica,sans-serif;letter-spacing:.02em;display:flex;justify-content:space-between;color:var(--soft);padding-bottom:18px;border-bottom:1px solid var(--rule);margin-bottom:56px}
+.mast a{color:var(--soft);text-decoration:none;margin-left:18px}.mast a:hover{color:var(--link)}
+h1{font-size:44px;line-height:1.1;font-weight:600;letter-spacing:-.015em;margin-bottom:28px}
+p{margin-bottom:1.1em}
+h2{font:600 14px/1 -apple-system,Helvetica,sans-serif;text-transform:uppercase;letter-spacing:.12em;color:var(--soft);margin:70px 0 6px;padding-top:26px;border-top:1px solid var(--rule)}
+.pj{padding:28px 0;border-bottom:1px solid var(--rule)}
+.pj:last-of-type{border:0}
+.pj .hd{display:flex;gap:16px;align-items:center;margin-bottom:8px}
+.pj .hd img,.pj .hd .ico-fallback{width:52px;height:52px;border-radius:12px;object-fit:cover;display:grid;place-items:center;font:700 24px Arial;color:#fff;flex:none;box-shadow:0 0 0 1px rgba(0,0,0,.12)}
+.pj h3{font-size:25px;font-weight:600;line-height:1.1}
+.pj .cat{font:14px/1.2 -apple-system,Helvetica,sans-serif;color:var(--soft);margin-top:3px}
+.pj p{font-size:19px;margin-bottom:.5em}
+.pj .lk{font:15px -apple-system,Helvetica,sans-serif}
+.pj .th{display:flex;gap:10px;margin-top:12px}
+.pj .th img{height:150px;width:auto;border-radius:10px;box-shadow:0 0 0 1px rgba(0,0,0,.14)}
+.sv{list-style:none;margin-top:14px}
+.sv li{margin-bottom:.9em}
+.sv b{font-weight:600}
+.sig{font-family:"Bradley Hand","Snell Roundhand","Segoe Script",cursive;font-size:38px;margin:6px 0 0;transform:rotate(-3deg);display:inline-block}
+.ps{font-size:18px;color:var(--soft);margin-top:30px}
+footer{font:14px -apple-system,Helvetica,sans-serif;color:var(--soft);margin-top:70px;padding-top:20px;border-top:1px solid var(--rule)}
+@media(max-width:560px){body{font-size:19px}h1{font-size:34px}.pj .th img:nth-child(n+3){display:none}}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="mast"><span>ideaapps.io</span><span><a href="#apki">Aplikacje</a><a href="#uslugi">Usługi</a><a href="#kontakt">Kontakt</a></span></div>
+
+<h1>Cześć, jestem Marcin.</h1>
+<p>Piszę aplikacje na iPhone’a, iPada, Maca i Apple TV. Robię to od ponad dziesięciu lat, a wcześniej, przez kilka lat, na Androida. Pod nazwą <b>ideaapps</b> prowadzę jednoosobową firmę: sam projektuję, programuję i wypuszczam aplikacje do App Store.</p>
+<p>Ostatnio dużo pracuję ze sztuczną inteligencją, zarówno w samych aplikacjach, jak i przy pisaniu kodu. Nie traktuję tego jak magii, tylko jak kolejne narzędzie, które trzeba umieć dobrze trzymać w ręku.</p>
+<p>Poniżej to, co już zrobiłem. Jeśli masz pomysł na własną aplikację, <a href="#kontakt">napisz do mnie</a>.</p>
+
+<h2 id="apki">Moje aplikacje</h2>
+<div id="pj"></div>
+
+<h2 id="uslugi">Co mogę zrobić dla Ciebie</h2>
+<ul class="sv" id="sv"></ul>
+<p>Najlepiej sprawdza się to, gdy rozmawiasz bezpośrednio z osobą, która pisze kod. Nie ma wtedy głuchego telefonu i wszystko idzie szybciej.</p>
+
+<h2 id="kontakt">Napisz</h2>
+<p>Opisz w kilku zdaniach, co chcesz zbudować. Odpiszę i powiem, co o tym myślę, nawet jeśli to nie będzie projekt dla mnie.</p>
+<p><a id="mail" href="#"></a></p>
+<span class="sig">Marcin</span>
+<p class="ps">PS. Wszystkie aplikacje powyżej możesz pobrać za darmo i sprawdzić, jak pracuję.</p>
+<footer>© 2026 ideaapps. Ta strona ma jeden plik CSS i żadnych śledzących skryptów.</footer>
+</div>
+<script src="data.js"></script>
+<script>
+const {projects,services,email}=IDEA;
+const m=document.getElementById('mail');m.href='mailto:'+email;m.textContent=email;
+document.getElementById('pj').innerHTML=projects.map(p=>`<div class="pj"><div class="hd">${IDEA.iconHTML(p,'')}<div><h3>${p.name}</h3><div class="cat">${p.tag}</div></div></div>
+<p>${p.desc}</p><span class="lk"><a href="${p.url}" target="_blank" rel="noopener">App Store →</a> · ${p.platforms}</span>
+${p.shot&&p.id!=='boxes'?`<div class="th"><img src="${p.shot}" alt="">${p.shot2?`<img src="${p.shot2}" alt="">`:''}</div>`:''}</div>`).join('');
+document.getElementById('sv').innerHTML=services.map(s=>`<li><b>${s.t}.</b> ${s.d}</li>`).join('');
+</script>
+</body>
+</html>

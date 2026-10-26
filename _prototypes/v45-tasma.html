@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Taśma (wariant 45)</title>
+<style>
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden}
+body{font:18px/1.5 -apple-system,"SF Pro Text",Helvetica,sans-serif;color:#fff;-webkit-font-smoothing:antialiased;background:#0b0b0d;user-select:none}
+a{color:inherit;text-decoration:none}
+#bg{position:fixed;inset:0;z-index:0}
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.07;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>");mix-blend-mode:overlay}
+.nav{position:fixed;top:0;left:0;right:0;display:flex;justify-content:space-between;padding:20px 4vw;z-index:20;font-weight:700}
+.nav span{font-weight:500;font-size:15px;opacity:.75}
+.more{position:fixed;right:4vw;top:58px;z-index:20;display:flex;gap:8px}
+.more button{all:unset;cursor:pointer;font-size:14px;font-weight:600;padding:7px 16px;border-radius:99px;border:1.5px solid rgba(255,255,255,.5)}
+.more button:hover{background:#fff;color:#111}
+.head{position:fixed;left:5vw;top:15vh;z-index:6;max-width:min(560px,34vw);pointer-events:none}
+.head small{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;opacity:.75}
+.head h1{font-size:clamp(40px,6vw,96px);line-height:.88;letter-spacing:-.07em;font-weight:800;margin:10px 0 14px}
+.head p{opacity:.85;font-size:16px;max-width:22em}
+.film{position:fixed;left:0;right:0;top:50%;height:min(66vh,560px);margin-top:calc(min(66vh,560px)/-2 + 6vh);z-index:4;cursor:grab;touch-action:pan-y}
+.film:active{cursor:grabbing}
+.stripbg{position:absolute;left:0;right:0;top:0;bottom:0;background:#0a0a0c;box-shadow:0 0 0 2px #000,0 30px 60px rgba(0,0,0,.5);opacity:.88}
+.hole{position:absolute;left:0;right:0;height:22px;background-image:linear-gradient(90deg,transparent 0 6px,#1d1d22 6px 20px,transparent 20px 40px);background-size:40px 100%;background-position:var(--hx,0) 0;z-index:1;mask-image:none}
+.hole.t{top:8px}.hole.b{bottom:8px}
+.hole::before{content:"";position:absolute;inset:4px 0;background:repeating-linear-gradient(90deg,#d8d4c4 0 14px,transparent 14px 40px);background-position:var(--hx,0) 0;border-radius:3px;opacity:.9;-webkit-mask:repeating-linear-gradient(90deg,#000 0 14px,transparent 14px 40px);}
+.hole::before{background:none}
+.hole{background:repeating-linear-gradient(90deg,#d9d6c8 0 16px,transparent 16px 40px);background-position:var(--hx,0) 0;border-radius:4px;opacity:.85;height:16px}
+.hole.t{top:12px}.hole.b{bottom:12px}
+.frames{position:absolute;left:0;top:44px;bottom:44px;will-change:transform}
+.fr{position:absolute;top:0;bottom:0;width:var(--fw);border-radius:8px;overflow:hidden;background:var(--c);display:grid;place-items:center;box-shadow:inset 0 0 0 2px rgba(255,255,255,.15);transform-origin:50% 50%;will-change:transform,filter}
+.fr img.s{height:112%;aspect-ratio:9/19.5;object-fit:cover;object-position:top;margin-top:26px;border-radius:20px 20px 0 0;box-shadow:0 14px 34px rgba(0,0,0,.5)}
+.fr .ico,.fr .ico-fallback{width:44%;aspect-ratio:1;height:auto;border-radius:23%;object-fit:cover;display:grid;place-items:center;font:800 70px sans-serif;color:#fff;box-shadow:0 18px 36px rgba(0,0,0,.5)}
+.fr .no{position:absolute;left:10px;top:8px;font:600 12px "SF Mono",monospace;opacity:.85;text-shadow:0 1px 4px #0008}
+.fr .nm{position:absolute;left:10px;bottom:8px;font:700 13px "SF Mono",monospace;text-shadow:0 1px 4px #0008}
+.info{position:fixed;left:5vw;right:5vw;bottom:5vh;z-index:6;display:flex;justify-content:space-between;align-items:flex-end;gap:30px;pointer-events:none}
+.info .tx{pointer-events:auto;max-width:560px;transition:opacity .25s,transform .35s}
+.info .tx.sw{opacity:0;transform:translateY(10px)}
+.info small{font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.75}
+.info h2{font-size:clamp(34px,4.6vw,66px);line-height:.95;letter-spacing:-.06em;font-weight:800;margin:4px 0 6px}
+.info p{font-size:15.5px;opacity:.9;max-width:34em}
+.info .btn{pointer-events:auto;display:inline-block;background:#fff;color:#111;font-weight:700;padding:13px 24px;border-radius:99px;white-space:nowrap}
+.cnt{position:fixed;right:5vw;top:15vh;z-index:6;font:700 clamp(60px,9vw,150px)/.8 "SF Mono",ui-monospace,monospace;letter-spacing:-.08em;opacity:.18;pointer-events:none}
+.ov{position:fixed;inset:0;z-index:30;background:rgba(10,10,16,.9);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);padding:14vh 8vw;display:none;overflow:auto}
+.ov.on{display:block}
+.ov h2{font-size:clamp(44px,8vw,120px);line-height:.9;letter-spacing:-.07em;font-weight:800;margin-bottom:4vh}
+.ov .sv{display:grid;grid-template-columns:repeat(2,1fr);gap:0 40px;max-width:900px}
+.ov .sv div{padding:16px 0;border-top:1.5px solid rgba(255,255,255,.4)}.ov b{display:block;font-size:22px}.ov span{opacity:.8}
+.ov a.m{font-size:clamp(22px,4vw,60px);font-weight:700;letter-spacing:-.04em;border-bottom:3px solid #fff;overflow-wrap:anywhere}
+.ov .x{position:fixed;top:20px;right:4vw;font-size:34px;cursor:pointer;background:none;border:0;color:#fff}
+@media(max-width:860px){.head{max-width:90vw;top:11vh}.head p{display:none}.head h1{font-size:42px}.cnt{display:none}.info{flex-direction:column;align-items:flex-start;gap:12px}.ov .sv{grid-template-columns:1fr}.more{top:52px}}
+</style>
+</head>
+<body>
+<div id="bg"></div><div class="grain"></div>
+<div class="nav"><b>ideaapps</b><span>Marcin Polak · iOS · tvOS · AI</span></div>
+<div class="more"><button data-o="us">Usługi</button><button data-o="ko">Kontakt</button></div>
+<div class="head"><small>Kadr po kadrze</small><h1>Osiem aplikacji na jednej taśmie.</h1><p>Przeciągnij taśmę i puść. Zatrzymuje się na wybranym kadrze, a tło przyjmuje jego kolor.</p></div>
+<div class="cnt" id="cnt">01</div>
+<div class="film" id="film"><div class="stripbg"></div><div class="hole t" id="h1"></div><div class="hole b" id="h2"></div><div class="frames" id="frames"></div></div>
+<div class="info"><div class="tx" id="tx"></div><a class="btn" id="go" href="#" target="_blank" rel="noopener">Zobacz w App Store ↗</a></div>
+<div class="ov" id="us"><button class="x" data-c="1">×</button><h2>Co zbuduję.</h2><div class="sv" id="sv"></div></div>
+<div class="ov" id="ko"><button class="x" data-c="1">×</button><h2>Masz pomysł?</h2><p style="max-width:28em;margin-bottom:26px;font-size:20px;opacity:.9">Opisz w kilku zdaniach, co chcesz zbudować. Odpowiem i powiem szczerze, jak to widzę.</p><a class="m" id="mail" href="#"></a></div>
+<script src="data.js"></script>
+<script>
+const {projects,services,email}=IDEA;
+const $=s=>document.querySelector(s);
+$('#mail').href='mailto:'+email;$('#mail').textContent=email;
+$('#sv').innerHTML=services.map(s=>`<div><b>${s.t}</b><span>${s.d}</span></div>`).join('');
+const N=projects.length;
+const frames=$('#frames'),film=$('#film');
+frames.innerHTML=projects.map((p,i)=>`<div class="fr" data-i="${i}" style="--c:${p.color}"><span class="no">${String(i+1).padStart(2,'0')}</span>${p.shot&&p.id!=='boxes'?`<img class="s" src="${p.shot}" alt="" draggable="false">`:IDEA.iconHTML(p,'')}<span class="nm">${p.name}</span></div>`).join('');
+const fs=[...document.querySelectorAll('.fr')];
+let FW=0,GAP=26,STEP=0,x=0,vx=0,drag=false,lx=0,tgt=null,moved=0;
+function size(){const h=film.clientHeight-88;FW=Math.round(h*.62);document.documentElement.style.setProperty('--fw',FW+'px');STEP=FW+GAP;fs.forEach((f,i)=>f.style.left=i*STEP+'px');if(x===0)x=0}
+size();addEventListener('resize',size);
+// x = offset in px, 0 => first frame centered; frame i centered when x = i*STEP
+const clamp=v=>Math.max(0,Math.min((N-1)*STEP,v));
+const dark=c=>`color-mix(in srgb,${c} 62%,#0b0b0d)`;
+let lastI=-1;
+function render(){
+ const cw=film.clientWidth,t=x/STEP,i0=Math.max(0,Math.min(N-2,Math.floor(t))),k=Math.max(0,Math.min(1,t-i0));
+ frames.style.transform=`translateX(${cw/2-FW/2-x}px)`;
+ const hx=(cw/2-FW/2-x)%40+'px';film.style.setProperty('--hx',hx);
+ fs.forEach((f,i)=>{const d=Math.abs(i-t),s=1-Math.min(.22,d*.1),r=(i-t)*-3;f.style.transform=`scale(${s}) rotate(${r*.3}deg)`;f.style.filter=`brightness(${1-Math.min(.5,d*.28)}) saturate(${1-Math.min(.5,d*.25)})`;f.style.zIndex=10-Math.round(d)});
+ const a=dark(projects[i0].color),b=dark(projects[Math.min(N-1,i0+1)].color),base=`color-mix(in srgb,${a} ${Math.round((1-k)*100)}%,${b})`;
+ $('#bg').style.background=`radial-gradient(75% 90% at 50% 55%,color-mix(in srgb,${base} 100%,#fff 12%),${base} 55%,color-mix(in srgb,${base} 55%,#000))`;
+ const near=Math.round(t);if(near!==lastI){lastI=near;const p=projects[near];$('#cnt').textContent=String(near+1).padStart(2,'0');
+  const tx=$('#tx');tx.classList.add('sw');setTimeout(()=>{tx.innerHTML=`<small>${p.cat} · ${p.platforms}</small><h2>${p.name}</h2><p><b>${p.tag}.</b> ${p.desc}</p>`;tx.classList.remove('sw')},160);$('#go').href=p.url}}
+(function loop(){
+ if(!drag){if(tgt!==null){vx+=(tgt-x)*.09;vx*=.72}else{vx*=.95;if(Math.abs(vx)<.8){tgt=clamp(Math.round(x/STEP)*STEP)}}x+=vx;
+  if(x<0){x=0;vx=0}if(x>(N-1)*STEP){x=(N-1)*STEP;vx=0}}
+ render();requestAnimationFrame(loop)})();
+film.addEventListener('pointerdown',e=>{drag=true;tgt=null;vx=0;lx=e.clientX;moved=0;film.setPointerCapture(e.pointerId)});
+film.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-lx;lx=e.clientX;moved+=Math.abs(dx);x=Math.max(-FW*.3,Math.min((N-1)*STEP+FW*.3,x-dx));vx=-dx});
+const up=e=>{if(!drag)return;drag=false;if(moved<6){const f=e.target.closest&&e.target.closest('.fr');if(f)tgt=+f.dataset.i*STEP}else{tgt=null;vx=Math.max(-70,Math.min(70,vx*1.6))}};
+film.addEventListener('pointerup',up);film.addEventListener('pointercancel',up);
+addEventListener('wheel',e=>{if(document.querySelector('.ov.on'))return;tgt=null;vx+=(e.deltaY+e.deltaX)*.12},{passive:true});
+addEventListener('keydown',e=>{const i=Math.round(x/STEP);if(e.key==='ArrowRight')tgt=Math.min(N-1,i+1)*STEP;if(e.key==='ArrowLeft')tgt=Math.max(0,i-1)*STEP;if(e.key==='Escape')document.querySelectorAll('.ov').forEach(o=>o.classList.remove('on'))});
+document.querySelector('.more').onclick=e=>{const b=e.target.closest('button');if(b)$('#'+b.dataset.o).classList.add('on')};
+document.querySelectorAll('.ov').forEach(o=>o.onclick=e=>{if(e.target.dataset.c)o.classList.remove('on')});
+</script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Galaktyka (wariant 46)</title>
+<style>
+:root{--c:#2b3a8c}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden}
+body{font:18px/1.5 -apple-system,"SF Pro Text",Helvetica,sans-serif;color:#fff;background:#06060b;-webkit-font-smoothing:antialiased;user-select:none;touch-action:none}
+.bg{position:fixed;inset:0;background:radial-gradient(70% 70% at 50% 50%,color-mix(in srgb,var(--c) 75%,#06060b),#06060b 75%);transition:background .9s}
+.stars{position:fixed;inset:0;background-image:radial-gradient(1px 1px at 20% 30%,#fff9,transparent),radial-gradient(1px 1px at 70% 20%,#fff8,transparent),radial-gradient(1.4px 1.4px at 40% 80%,#fffa,transparent),radial-gradient(1px 1px at 85% 70%,#fff8,transparent),radial-gradient(1px 1px at 10% 60%,#fff7,transparent),radial-gradient(1.2px 1.2px at 55% 10%,#fff9,transparent);background-size:340px 340px}
+.top{position:fixed;left:4vw;top:22px;z-index:5;pointer-events:none}
+.top b{font-size:20px;letter-spacing:-.02em}.top span{display:block;font-size:14px;opacity:.7}
+.hook{position:fixed;left:4vw;top:80px;z-index:5;max-width:min(430px,40vw);pointer-events:none}
+.hook h1{font-size:clamp(34px,5vw,74px);line-height:.9;letter-spacing:-.06em;font-weight:800}
+.hook p{margin-top:12px;font-size:16px;opacity:.78}
+#world{position:fixed;left:0;top:0;transform-origin:0 0;will-change:transform}
+.sun{position:absolute;width:120px;height:120px;margin:-60px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#ffe08a 38%,#ff9f3d);box-shadow:0 0 90px 30px rgba(255,170,70,.5),0 0 220px 70px rgba(255,170,70,.22);display:grid;place-items:center;text-align:center;font:800 16px/1.05 sans-serif;color:#4a2a00;cursor:pointer;animation:pu 3s ease-in-out infinite}
+@keyframes pu{50%{transform:scale(1.07)}}
+.pl{position:absolute;left:0;top:0;cursor:pointer;will-change:transform}
+.pl .in{width:64px;height:64px;margin:-32px;border-radius:23%;overflow:hidden;display:grid;place-items:center;font:800 28px sans-serif;color:#fff;box-shadow:0 8px 26px rgba(0,0,0,.65);transition:transform .25s,box-shadow .25s}
+.pl .in img{width:100%;height:100%;object-fit:cover;pointer-events:none}
+.pl:hover .in{transform:scale(1.28)}
+.pl.sel .in{transform:scale(1.5);box-shadow:0 0 0 3px #fff,0 0 50px 8px rgba(255,255,255,.6)}
+.pl .lb{position:absolute;top:44px;left:0;transform:translateX(-50%);font-size:13.5px;font-weight:800;white-space:nowrap;text-shadow:0 2px 8px #000;letter-spacing:.01em}
+.comet{position:absolute;left:0;top:0;width:0;height:0;cursor:pointer}
+.comet i{position:absolute;left:-14px;top:-14px;width:28px;height:28px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#9fe7ff 50%,#35b6ff);box-shadow:0 0 30px 10px rgba(120,220,255,.7)}
+.comet::before{content:"";position:absolute;right:6px;top:-6px;width:260px;height:12px;border-radius:12px;background:linear-gradient(270deg,rgba(150,230,255,.8),transparent);transform-origin:100% 50%;transform:rotate(var(--ca,0deg))}
+.comet b{position:absolute;left:20px;top:-4px;white-space:nowrap;font-size:13px;background:#fff;color:#111;padding:3px 10px;border-radius:99px;opacity:0;transition:.3s}
+.comet:hover b{opacity:1}
+.tip{position:fixed;left:50%;top:76px;transform:translateX(-50%);z-index:5;font-size:14px;opacity:.7;pointer-events:none;white-space:nowrap}
+@media(max-width:800px){.hook{display:none}}
+</style>
+</head>
+<body>
+<div class="bg" id="bg"></div><div class="stars"></div>
+<div class="top"><b>ideaapps</b><span>Marcin Polak · iOS · tvOS · AI</span></div>
+<div class="hook"><h1>Złap planetę. Złap kometę.</h1><p>Każda planeta to aplikacja, którą zrobiłem. Kliknij, a przylecisz bliżej i dowiesz się wszystkiego.</p></div>
+<div class="tip">przeciągnij, żeby kręcić · kółko = zoom · kliknij planetę · uważaj na kometę</div>
+<div id="world"></div>
+<script src="data.js"></script><script src="ui.js"></script>
+<script>
+const {projects}=IDEA;
+const $=s=>document.querySelector(s);
+const world=$('#world');
+let W,H,cx,cy,base;
+const bodies=projects.map((p,i)=>({id:p.id,p,ph:Math.random()*6.28,i}));
+world.innerHTML='<svg id="orb" style="position:absolute;left:0;top:0;overflow:visible" width="1" height="1"></svg><div class="sun" id="sun">idea<br>apps</div>'
+ +bodies.map(b=>`<div class="pl" data-id="${b.id}"><div class="in" style="background:${b.p.color}">${b.p.icon?`<img src="${b.p.icon}" alt="">`:b.p.name[0]}</div><span class="lb">${b.p.name}</span></div>`).join('')
+ +'<div class="comet" id="comet" style="display:none"><i></i><b>Twój pomysł! Kliknij</b></div>';
+const els=Object.fromEntries([...world.querySelectorAll('.pl')].map(e=>[e.dataset.id,e]));
+const rot=(a,b)=>`ellipse cx="0" cy="0" rx="${a}" ry="${b}"`;
+function lay(){W=innerWidth;H=innerHeight;base=Math.min(W*.46,H*.62);cx=W<800?W/2:W*.5;cy=H*.52;
+ bodies.forEach((b,i)=>{b.R=base*(.3+i*.1);b.sp=.5/Math.sqrt(.3+i*.1)*.5});
+ $('#orb').innerHTML=bodies.map(b=>`<ellipse cx="0" cy="0" rx="${b.R}" ry="${b.R*.42}" fill="none" stroke="rgba(255,255,255,.13)" stroke-width="1.5"/>`).join('')}
+addEventListener('resize',lay);lay();
+let ox=cx,oy=cy,sc=1,tox=cx,toy=cy,tsc=1,spin=1,selId=null,drag=null,dragV=0,last=performance.now();
+const deep=c=>`color-mix(in srgb,${c} 80%,#06060b)`;
+const pos=b=>[Math.cos(b.ph)*b.R,Math.sin(b.ph)*b.R*.42];
+// comet
+const comet=$('#comet');let cm=null;
+function spawnComet(){const side=Math.random()<.5;const y0=-base*.9+Math.random()*base*.5;cm={x:side?-W:W,y:y0-200,vx:side?5.5:-5.5,vy:2.2};comet.style.display='block';comet.style.setProperty('--ca',(side?-18:162)+'deg')}
+setInterval(()=>{if(!cm&&!selId)spawnComet()},9000);setTimeout(spawnComet,2500);
+comet.addEventListener('click',()=>{IDEA.ui.panel('contact');cm=null;comet.style.display='none'});
+function frame(t){const dt=Math.min(.05,(t-last)/1000);last=t;
+ spin+=(1-spin)*.02+dragV;dragV*=.92;
+ const slow=selId?.12:1;
+ bodies.forEach(b=>{b.ph+=b.sp*dt*slow*spin*(drag?0:1);const [x,y]=pos(b);b.x=x;b.y=y;const dep=(Math.sin(b.ph)+1)/2;const e=els[b.id];e.style.transform=`translate(${x}px,${y}px) scale(${.8+dep*.4})`;e.style.zIndex=Math.round(dep*10)+3});
+ if(selId){const b=bodies.find(x=>x.id===selId);const sx=W>700?(W-560)/2:W/2,sy=W>700?H/2:H*.3;tsc=W>700?2.6:2.2;tox=sx-b.x*tsc;toy=sy-b.y*tsc}else{tsc=1;tox=cx;toy=cy}
+ ox+=(tox-ox)*.08;oy+=(toy-oy)*.08;sc+=(tsc-sc)*.08;
+ world.style.transform=`translate(${ox}px,${oy}px) scale(${sc})`;
+ if(cm){cm.x+=cm.vx;cm.y+=cm.vy;comet.style.transform=`translate(${cm.x}px,${cm.y}px)`;if(Math.abs(cm.x)>W*1.2)cm=null,comet.style.display='none'}
+ requestAnimationFrame(frame)}
+requestAnimationFrame(frame);
+document.addEventListener('pointerdown',e=>{if(e.target.closest('.ix'))return;drag={x:e.clientX,m:0}});
+addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-drag.x;drag.x=e.clientX;drag.m+=Math.abs(dx);dragV+=dx*.0008});
+addEventListener('pointerup',e=>{const was=drag;drag=null;if(was&&was.m>6)return;const pl=e.target.closest('.pl');if(pl)select(pl.dataset.id);else if(e.target.closest('#sun'))IDEA.ui.panel('about')});
+addEventListener('wheel',e=>{if(selId)return;spin+=e.deltaY*.004},{passive:true});
+function select(id){const p=projects.find(x=>x.id===id);selId=id;$('#bg').style.setProperty('--c',p.color);
+ document.querySelectorAll('.pl').forEach(e=>e.classList.toggle('sel',e.dataset.id===id));
+ IDEA.ui.app(p,{onOpen:q=>{selId=q.id;$('#bg').style.setProperty('--c',q.color);document.querySelectorAll('.pl').forEach(e=>e.classList.toggle('sel',e.dataset.id===q.id))},onClose:()=>{selId=null;$('#bg').style.setProperty('--c','#2b3a8c');document.querySelectorAll('.pl').forEach(e=>e.classList.remove('sel'))}})}
+IDEA.ui.bar();
+</script>
+</body>
+</html>

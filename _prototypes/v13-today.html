@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Dzisiaj (wariant 13)</title>
+<style>
+:root{--bg:#f2f2f7;--card:#fff;--ink:#111;--soft:#8a8a8e}
+@media(prefers-color-scheme:dark){:root{--bg:#000;--card:#1c1c1e;--ink:#fff;--soft:#98989f}}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--ink);font:17px/1.4 -apple-system,BlinkMacSystemFont,"SF Pro Text",Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.w{max-width:1040px;margin:0 auto;padding:0 24px}
+.hd{display:flex;justify-content:space-between;align-items:flex-end;padding:56px 0 20px;border-bottom:1px solid rgba(128,128,128,.25);margin-bottom:26px}
+.hd small{display:block;color:var(--soft);font-weight:600;text-transform:uppercase;font-size:14px;letter-spacing:.02em}
+.hd h1{font-size:clamp(40px,6vw,64px);letter-spacing:-.03em;line-height:1.05;font-weight:800}
+.me{display:flex;align-items:center;gap:12px;font-weight:600}
+.me i{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#ff9f0a,#ff375f);display:grid;place-items:center;color:#fff;font-style:normal;font-weight:800}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;padding-bottom:30px}
+.card{position:relative;border-radius:22px;overflow:hidden;height:min(560px,70vw);min-height:440px;cursor:pointer;background:var(--c);color:#fff;box-shadow:0 10px 30px -10px rgba(0,0,0,.3);transition:transform .25s}
+.card:hover{transform:scale(1.015)}
+.card:active{transform:scale(.985)}
+.card .tp{position:absolute;top:22px;left:24px;right:24px;z-index:2}
+.card .tp small{font-weight:700;text-transform:uppercase;font-size:13px;opacity:.85;letter-spacing:.03em}
+.card .tp h2{font-size:clamp(34px,4.6vw,48px);line-height:1.02;letter-spacing:-.03em;font-weight:800;margin-top:4px;text-shadow:0 2px 20px rgba(0,0,0,.18)}
+.card .art{position:absolute;left:50%;top:150px;width:62%;transform:translateX(-50%);border-radius:30px 30px 0 0;box-shadow:0 30px 60px rgba(0,0,0,.35)}
+.card .art img{display:block;width:100%;aspect-ratio:9/16;object-fit:cover;object-position:top}
+.card .big{position:absolute;inset:auto 0 60px 0;text-align:center;font-weight:900;font-size:300px;line-height:1;letter-spacing:-.07em;opacity:.28}
+.card .bt{position:absolute;left:0;right:0;bottom:0;height:78px;background:rgba(0,0,0,.28);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;align-items:center;gap:14px;padding:0 18px;z-index:2}
+.bt .ico,.bt .ico-fallback{width:48px;height:48px;border-radius:11px;object-fit:cover;display:grid;place-items:center;font-weight:800;font-size:22px;color:#fff;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.2)}
+.bt b{display:block;font-size:16px;line-height:1.2}.bt span{font-size:13px;opacity:.8}
+.bt .get{margin-left:auto;background:#fff;color:#0071e3;font-weight:700;font-size:14px;padding:6px 18px;border-radius:99px}
+.sec{margin:40px 0 14px;font-size:24px;font-weight:800;letter-spacing:-.02em}
+.list{background:var(--card);border-radius:22px;padding:6px 22px}
+.list div{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid rgba(128,128,128,.2)}
+.list div:last-child{border:0}
+.list b{min-width:190px}.list span{color:var(--soft)}
+.ct{background:var(--card);border-radius:22px;padding:34px;text-align:center;margin:26px 0 60px}
+.ct h2{font-size:34px;letter-spacing:-.03em;margin-bottom:8px}
+.ct a{display:inline-block;margin-top:16px;background:#0071e3;color:#fff;padding:12px 28px;border-radius:99px;font-weight:700}
+/* modal */
+#ov{position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);z-index:90;opacity:0;pointer-events:none;transition:opacity .35s}
+#ov.on{opacity:1;pointer-events:auto}
+#ex{position:fixed;z-index:100;background:var(--card);color:var(--ink);overflow:hidden;transition:all .45s cubic-bezier(.2,.8,.2,1);display:none;border-radius:22px}
+#ex .hero{position:relative;height:min(46vh,440px);background:var(--c);color:#fff;overflow:hidden}
+#ex .hero .tp{position:absolute;top:26px;left:30px;right:70px;z-index:2}
+#ex .hero small{font-weight:700;text-transform:uppercase;font-size:13px;opacity:.85}
+#ex .hero h2{font-size:clamp(38px,6vw,64px);letter-spacing:-.035em;line-height:1;font-weight:800}
+#ex .hero .art{position:absolute;right:6%;bottom:-40px;width:210px;border-radius:30px;box-shadow:0 30px 60px rgba(0,0,0,.4)}
+#ex .hero .art img{display:block;width:100%;aspect-ratio:9/16;object-fit:cover;object-position:top}
+#ex .hero .big{position:absolute;right:8%;bottom:-40px;font:900 340px/1 sans-serif;letter-spacing:-.07em;opacity:.3}
+#ex .body{padding:26px 30px 40px;overflow:auto;max-height:calc(100% - min(46vh,440px));max-width:640px}
+#ex .body p{font-size:19px;margin-bottom:14px}
+#ex .meta{display:flex;gap:28px;color:var(--soft);font-size:14px;margin:6px 0 22px}
+#ex .meta b{display:block;color:var(--ink);font-size:16px}
+#ex .cta{display:inline-block;background:#0071e3;color:#fff;font-weight:700;padding:12px 28px;border-radius:99px}
+#x{position:absolute;top:18px;right:18px;z-index:5;width:36px;height:36px;border-radius:50%;border:0;background:rgba(0,0,0,.45);color:#fff;font-size:20px;cursor:pointer;backdrop-filter:blur(10px)}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.list div{flex-direction:column;gap:2px}#ex .hero .art{width:150px}}
+</style>
+</head>
+<body>
+<div class="w">
+<div class="hd"><div><small id="date"></small><h1>Dzisiaj w ideaapps</h1></div><div class="me"><span>Marcin Polak</span><i>M</i></div></div>
+<div class="grid" id="grid"></div>
+<div class="sec">Czym się zajmuję</div>
+<div class="list" id="svc"></div>
+<div class="sec">O mnie</div>
+<div class="list"><div><b>Doświadczenie</b><span>Ponad 10 lat iOS i tvOS, wcześniej Android.</span></div><div><b>Teraz</b><span>Aplikacje natywne i funkcje oparte o AI.</span></div><div><b>Jak pracuję</b><span>Sam, od pomysłu do App Store. Bez pośredników.</span></div></div>
+<div class="ct"><h2>Masz pomysł na aplikację?</h2><span style="color:var(--soft)">Napisz kilka zdań, odpowiem i powiem, jak to widzę.</span><br><a id="mail" href="#">Napisz do mnie</a></div>
+</div>
+<div id="ov"></div><div id="ex"></div>
+<script src="data.js"></script>
+<script>
+const {projects,services,email}=IDEA;
+document.getElementById('mail').href='mailto:'+email;
+document.getElementById('date').textContent=new Date().toLocaleDateString('pl',{weekday:'long',day:'numeric',month:'long'});
+const col=p=>`color-mix(in srgb,${p.color} 82%,#000)`;
+const art=(p,big)=>p.shot&&p.id!=='boxes'?`<div class="art"><img src="${p.shot}" alt=""></div>`:`<div class="big">${p.name[0]}</div>`;
+document.getElementById('grid').innerHTML=projects.map((p,i)=>`<div class="card" data-i="${i}" style="--c:${col(p)}"><div class="tp"><small>${p.cat}</small><h2>${p.tag}</h2></div>${art(p)}
+<div class="bt">${IDEA.iconHTML(p,'ico')}<div><b>${p.name}</b><span>${p.platforms}</span></div><span class="get">POBIERZ</span></div></div>`).join('');
+document.getElementById('svc').innerHTML=services.map(s=>`<div><b>${s.t}</b><span>${s.d}</span></div>`).join('');
+const ov=document.getElementById('ov'),ex=document.getElementById('ex');let from=null;
+const open=card=>{const p=projects[card.dataset.i];const r=card.getBoundingClientRect();from=card;
+ ex.innerHTML=`<button id="x">×</button><div class="hero" style="--c:${col(p)}"><div class="tp"><small>${p.cat}</small><h2>${p.name}</h2></div>${art(p)}</div>
+ <div class="body"><p><b>${p.tag}.</b></p><p>${p.desc}</p><div class="meta"><div><b>${p.platforms}</b>Platformy</div><div><b>${p.cat}</b>Kategoria</div></div><a class="cta" href="${p.url}" target="_blank" rel="noopener">Otwórz w App Store</a></div>`;
+ Object.assign(ex.style,{display:'block',transition:'none',left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px'});
+ ex.getBoundingClientRect();
+ const w=Math.min(760,innerWidth-24),h=Math.min(innerHeight-40,860);
+ ex.style.transition='';Object.assign(ex.style,{left:(innerWidth-w)/2+'px',top:(innerHeight-h)/2+'px',width:w+'px',height:h+'px'});
+ ov.classList.add('on');card.style.visibility='hidden';document.body.style.overflow='hidden'};
+const close=()=>{if(!from)return;const r=from.getBoundingClientRect();Object.assign(ex.style,{left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px'});ov.classList.remove('on');
+ const c=from;from=null;setTimeout(()=>{ex.style.display='none';c.style.visibility='';document.body.style.overflow=''},430)};
+document.getElementById('grid').onclick=e=>{const c=e.target.closest('.card');if(c)open(c)};
+ov.onclick=close;ex.onclick=e=>{if(e.target.id==='x')close()};addEventListener('keydown',e=>e.key==='Escape'&&close());
+</script>
+</body>
+</html>

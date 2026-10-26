@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Brief (wariant 29)</title>
+<style>
+:root{--bg:#faf8f4;--ink:#17161a;--soft:#6f6c78;--line:#e6e1d8;--a:#ff5a36;--card:#fff}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:17px/1.5 -apple-system,"SF Pro Text",Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.w{max-width:1200px;margin:0 auto;padding:0 24px}
+.top{display:flex;justify-content:space-between;align-items:center;padding:22px 0;font-weight:700}
+.top nav{font-weight:500;font-size:15px;color:var(--soft);display:flex;gap:22px}.top nav a:hover{color:var(--ink)}
+.hero{padding:50px 0 34px;max-width:880px}
+.hero small{font-weight:700;color:var(--a);font-size:14px;letter-spacing:.06em;text-transform:uppercase}
+.hero h1{font-size:clamp(40px,6.6vw,92px);line-height:.96;letter-spacing:-.055em;font-weight:800;margin:12px 0 18px}
+.hero p{font-size:20px;color:#47454f;max-width:34em}
+.cfg{display:grid;grid-template-columns:1.2fr 1fr;gap:34px;margin:26px 0 90px;align-items:start}
+.steps{display:grid;gap:22px}
+.st{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px}
+.st h3{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);display:flex;gap:12px;align-items:center;margin-bottom:16px}
+.st h3 i{font-style:normal;background:var(--ink);color:#fff;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:12px}
+.chips{display:flex;flex-wrap:wrap;gap:9px}
+.chip{all:unset;cursor:pointer;border:1.5px solid var(--line);border-radius:99px;padding:9px 17px;font-size:15.5px;font-weight:550;transition:.15s;user-select:none}
+.chip:hover{border-color:#bbb5a8}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.chip.on::before{content:"✓ ";font-size:13px}
+.chip small{opacity:.6;font-weight:400;margin-left:4px}
+.note{margin-top:14px;font-size:14.5px;color:var(--soft)}
+.prev{position:sticky;top:20px}
+.stage{background:radial-gradient(70% 70% at 50% 30%,#fff,#efebe3);border:1px solid var(--line);border-radius:28px;padding:30px;display:grid;place-items:center;min-height:560px;position:relative;overflow:hidden}
+.dev{background:#0b0b0d;box-shadow:0 30px 60px -20px rgba(0,0,0,.45);transition:all .6s cubic-bezier(.3,.9,.3,1);position:relative;padding:9px;width:250px;height:520px;border-radius:40px}
+.dev.ipad{width:340px;height:440px;border-radius:26px}
+.dev.tv{width:420px;height:250px;border-radius:12px;padding:6px;margin-bottom:24px}
+.dev.tv::after{content:"";position:absolute;bottom:-26px;left:50%;width:90px;height:22px;margin-left:-45px;background:#25252a;clip-path:polygon(18% 0,82% 0,100% 100%,0 100%)}
+.dev.mac{width:420px;height:270px;border-radius:12px 12px 0 0;padding:8px 8px 6px;margin-bottom:20px}
+.dev.mac::after{content:"";position:absolute;bottom:-14px;left:-5%;width:110%;height:14px;background:linear-gradient(#cfcfd4,#9b9ba2);border-radius:0 0 14px 14px}
+.dev.ipad.tv,.dev.ipad.mac{}
+.dscr{background:#fff;width:100%;height:100%;border-radius:32px;overflow:hidden;position:relative;display:flex;flex-direction:column;transition:.6s}
+.dev.ipad .dscr{border-radius:18px}.dev.tv .dscr,.dev.mac .dscr{border-radius:6px}
+.dh{padding:20px 14px 10px;font-weight:800;font-size:18px;letter-spacing:-.03em;display:flex;justify-content:space-between;align-items:center}
+.dh em{font-style:normal;width:24px;height:24px;border-radius:50%;background:var(--a)}
+.rows{padding:0 12px;display:grid;gap:7px;flex:1;align-content:start}
+.rw{height:34px;border-radius:10px;background:#f1eee8;display:flex;align-items:center;gap:8px;padding:0 10px;font-size:11.5px;font-weight:600;color:#6f6c78}
+.rw i{width:16px;height:16px;border-radius:5px;background:#d9d4c8}
+.mod{display:none;font-size:11.5px;font-weight:700;border-radius:12px;padding:8px 10px;margin:0 12px 7px;animation:pop .4s cubic-bezier(.3,1.5,.5,1)}
+@keyframes pop{from{opacity:0;transform:scale(.7)}}
+.mod.on{display:flex;align-items:center;gap:8px}
+.m-ai{background:linear-gradient(90deg,#ffe2d9,#ffd1e8);color:#9b1b4f}
+.m-w{background:#e3efff;color:#1657b8}
+.m-pay{background:#fff3c4;color:#7a5a00}
+.m-notif{background:#e0f7e4;color:#136b27}
+.m-siri{background:#ece4ff;color:#4d2aa3}
+.m-off{background:#eee;color:#444}
+.m-cloud{background:#dff3ff;color:#0b6a99}
+.m-cam{background:#ffe5e0;color:#a32a14}
+.m-acc{background:#f1ede4;color:#47454f}
+.m-watch{background:#e8e8ec;color:#111}
+.tabbar{display:flex;justify-content:space-around;padding:10px 0 14px;border-top:1px solid #eee}
+.tabbar i{width:20px;height:20px;border-radius:6px;background:#ddd}.tabbar i:first-child{background:var(--a)}
+.badge{position:absolute;top:14px;left:14px;background:var(--ink);color:#fff;font-size:12px;font-weight:700;padding:5px 12px;border-radius:99px}
+.sum{margin-top:18px;background:var(--ink);color:#fff;border-radius:22px;padding:24px}
+.sum h4{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#a9a6b3;margin-bottom:10px}
+.sum p{font-size:16px;line-height:1.5;color:#e9e7ef;min-height:70px}
+.sum p b{color:#fff}
+.sum .row{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.btn{display:inline-block;background:var(--a);color:#fff;font-weight:700;padding:13px 22px;border-radius:99px;border:0;font:700 15.5px inherit;cursor:pointer}
+.btn.g{background:#2a2930;color:#fff}.btn:hover{filter:brightness(1.1)}
+.sec{margin-bottom:90px}
+.sec h2{font-size:clamp(32px,4.6vw,56px);letter-spacing:-.05em;font-weight:800;line-height:1;margin-bottom:8px}
+.sec .sub{color:var(--soft);margin-bottom:28px;max-width:34em}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.ap{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px;transition:.2s;display:block}
+.ap:hover{transform:translateY(-4px);box-shadow:0 20px 40px -20px rgba(0,0,0,.3)}
+.ap .ico,.ap .ico-fallback{width:52px;height:52px;border-radius:13px;object-fit:cover;display:grid;place-items:center;font:700 24px sans-serif;color:#fff;margin-bottom:12px}
+.ap b{display:block;font-size:18px;letter-spacing:-.02em}.ap span{display:block;font-size:14px;color:var(--soft);line-height:1.35;margin:2px 0 10px}
+.ap em{font-style:normal;font-size:12px;font-weight:700;color:var(--a)}
+footer{padding:20px 0 50px;color:var(--soft);font-size:14px;display:flex;justify-content:space-between}
+@media(max-width:940px){.cfg{grid-template-columns:1fr}.prev{position:relative;top:0;order:-1}.stage{min-height:480px}.grid{grid-template-columns:1fr 1fr}.top nav{display:none}}
+</style>
+</head>
+<body>
+<div class="w">
+<div class="top"><span>ideaapps</span><nav><a href="#kreator">Brief</a><a href="#apki">Moje aplikacje</a><a href="#kontakt">Kontakt</a></nav></div>
+<header class="hero"><small>Marcin Polak · iOS · tvOS · AI</small><h1>Złóż swoją aplikację z klocków.</h1><p>Zaznacz platformę i funkcje, a po prawej zobaczysz szkic. Gotowy brief wyślesz mi jednym kliknięciem. To najszybszy sposób, żeby zacząć rozmowę.</p></header>
+
+<section class="cfg" id="kreator">
+<div class="steps">
+<div class="st"><h3><i>1</i>Na jakie urządzenia?</h3><div class="chips" id="plat"></div></div>
+<div class="st"><h3><i>2</i>Co ma umieć?</h3><div class="chips" id="feat"></div><div class="note">Nie wiesz jeszcze wszystkiego? Zaznacz, co przychodzi do głowy. Resztę ustalimy w rozmowie.</div></div>
+<div class="st"><h3><i>3</i>Na jakim jesteś etapie?</h3><div class="chips" id="type"></div></div>
+</div>
+<div class="prev"><div class="stage"><span class="badge" id="badge">iPhone</span>
+<div class="dev" id="dev"><div class="dscr"><div class="dh"><span>Twoja aplikacja</span><em></em></div><div id="mods"></div><div class="rows"><div class="rw"><i></i>Pierwszy ekran</div><div class="rw"><i></i>Lista elementów</div><div class="rw"><i></i>Szczegóły</div><div class="rw"><i></i>Ustawienia</div></div><div class="tabbar"><i></i><i></i><i></i><i></i></div></div></div></div>
+<div class="sum"><h4>Twój brief</h4><p id="sumt"></p><div class="row"><a class="btn" id="send" href="#">Wyślij brief do Marcina →</a><button class="btn g" id="copy">Kopiuj tekst</button></div></div></div>
+</section>
+
+<section class="sec" id="apki"><h2>Zobacz, co już zbudowałem</h2><p class="sub">Osiem aplikacji w App Store. Każda przeszła całą drogę z klocków do sklepu.</p><div class="grid" id="grid"></div></section>
+<footer id="kontakt"><span>© 2026 ideaapps · <a id="mail" href="#" style="border-bottom:1px solid"></a></span><span>10+ lat iOS i tvOS</span></footer>
+</div>
+<script src="data.js"></script>
+<script>
+const {projects,services,email}=IDEA;
+const $=s=>document.querySelector(s);
+$('#mail').href='mailto:'+email;$('#mail').textContent=email;
+const plat=[['iphone','iPhone'],['ipad','iPad'],['tv','Apple TV'],['mac','Mac']];
+const feat=[['ai','Funkcje AI','✨ Asystent AI w aplikacji'],['w','Widżety','▦ Widżet na ekranie głównym'],['siri','Siri i Skróty','◉ Skróty Siri'],['notif','Powiadomienia','● Przypomnienia i powiadomienia'],['off','Tryb offline','⇵ Działa bez internetu'],['cloud','Synchronizacja iCloud','☁ Synchronizacja między urządzeniami'],['cam','Kamera / skanowanie','◎ Skan i zdjęcia'],['pay','Płatności i subskrypcje','★ Subskrypcja / zakup w aplikacji'],['acc','Konta użytkowników','☺ Logowanie i konta'],['watch','Apple Watch','⌚ Wersja na zegarek']];
+const types=[['mvp','Mam pomysł, chcę szybki prototyp (MVP)'],['full','Potrzebuję pełnej aplikacji w App Store'],['redo','Mam aplikację, chcę ją poprawić lub przepisać']];
+const S={plat:new Set(['iphone']),feat:new Set(['ai']),type:'full'};
+$('#plat').innerHTML=plat.map(([k,n])=>`<button class="chip" data-g="plat" data-k="${k}">${n}</button>`).join('');
+$('#feat').innerHTML=feat.map(([k,n])=>`<button class="chip" data-g="feat" data-k="${k}">${n}</button>`).join('');
+$('#type').innerHTML=types.map(([k,n])=>`<button class="chip" data-g="type" data-k="${k}">${n}</button>`).join('');
+$('#mods').innerHTML=feat.map(([k,,l])=>`<div class="mod m-${k}" data-m="${k}">${l}</div>`).join('');
+function render(){
+ document.querySelectorAll('.chip').forEach(c=>{const g=c.dataset.g,k=c.dataset.k;c.classList.toggle('on',g==='type'?S.type===k:S[g].has(k))});
+ document.querySelectorAll('.mod').forEach(m=>m.classList.toggle('on',S.feat.has(m.dataset.m)));
+ const dev=$('#dev');dev.className='dev';
+ const pr=['tv','mac','ipad','iphone'].find(p=>S.plat.has(p))||'iphone';
+ if(pr!=='iphone')dev.classList.add(pr);
+ $('#badge').textContent=[...S.plat].map(k=>plat.find(p=>p[0]===k)[1]).join(' + ')||'wybierz platformę';
+ const P=[...S.plat].map(k=>plat.find(p=>p[0]===k)[1]);const F=[...S.feat].map(k=>feat.find(f=>f[0]===k)[1].toLowerCase());
+ const T=types.find(t=>t[0]===S.type)[1].toLowerCase();
+ S.text=`Cześć Marcin! Chcę zbudować aplikację na: ${P.join(', ')||'(jeszcze nie wiem)'}.\nFunkcje: ${F.join(', ')||'do ustalenia'}.\nEtap: ${T}.\n\nKilka zdań o pomyśle:\n`;
+ $('#sumt').innerHTML=`Aplikacja na <b>${P.join(', ')||'…'}</b>, z funkcjami: <b>${F.join(', ')||'do ustalenia'}</b>. Etap: <b>${T}</b>.`;
+ $('#send').href='mailto:'+email+'?subject='+encodeURIComponent('Brief aplikacji')+'&body='+encodeURIComponent(S.text)}
+document.addEventListener('click',e=>{const c=e.target.closest('.chip');if(!c)return;const g=c.dataset.g,k=c.dataset.k;
+ if(g==='type')S.type=k;else if(S[g].has(k)){if(!(g==='plat'&&S.plat.size===1))S[g].delete(k)}else S[g].add(k);render()});
+$('#copy').onclick=e=>{navigator.clipboard&&navigator.clipboard.writeText(S.text).catch(()=>{});e.target.textContent='Skopiowano ✓';setTimeout(()=>e.target.textContent='Kopiuj tekst',1500)};
+$('#grid').innerHTML=projects.map(p=>`<a class="ap" href="${p.url}" target="_blank" rel="noopener">${IDEA.iconHTML(p,'')}<b>${p.name}</b><span>${p.tag}</span><em>${p.platforms.split(' · ')[0]} · App Store ↗</em></a>`).join('');
+render();
+</script>
+</body>
+</html>

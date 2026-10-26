@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Tarcza (wariant 54)</title>
+<style>
+:root{--c:#2d2a26}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden}
+body{font:18px/1.5 -apple-system,"SF Pro Text",Helvetica,sans-serif;color:#fff;-webkit-font-smoothing:antialiased;user-select:none;touch-action:none;
+ background:radial-gradient(70% 80% at 50% 45%,color-mix(in srgb,var(--c) 70%,#fff 6%),var(--c) 55%,color-mix(in srgb,var(--c) 50%,#000));transition:background .8s}
+.top{position:fixed;left:4vw;top:22px;z-index:5;pointer-events:none}
+.top b{font-size:20px}.top span{display:block;font-size:14px;opacity:.7}
+.hook{position:fixed;left:4vw;top:90px;z-index:5;max-width:min(400px,30vw);pointer-events:none}
+.hook h1{font-size:clamp(32px,4.8vw,72px);line-height:.9;letter-spacing:-.06em;font-weight:800}
+.hook p{margin-top:12px;font-size:16px;opacity:.82}
+.hook .st{margin-top:18px;font:700 15px "SF Mono",monospace;background:rgba(0,0,0,.28);padding:10px 16px;border-radius:12px;min-height:44px;display:inline-block}
+.stage{position:fixed;inset:0;display:grid;place-items:center;padding-bottom:60px}
+.dialw{position:relative;width:min(620px,92vw,calc(100vh - 150px));aspect-ratio:1}
+.plate{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 50% 40%,#f4f0e6,#d9d3c3 70%,#b9b3a2);box-shadow:0 40px 80px -20px rgba(0,0,0,.6),inset 0 0 0 6px #fff7,inset 0 0 40px rgba(0,0,0,.18)}
+.plate .ring{position:absolute;inset:6%;border-radius:50%;border:2px dashed rgba(0,0,0,.18)}
+.stop{position:absolute;left:50%;top:50%;width:10px;height:10px;transform:rotate(20deg) translateY(calc(var(--R)*-1)) rotate(-20deg);margin:-5px}
+.stop::before{content:"";position:absolute;left:-14px;top:-6px;width:56px;height:14px;border-radius:7px;background:linear-gradient(#e8e8ee,#8f8f9a);box-shadow:0 4px 8px rgba(0,0,0,.4);transform:rotate(-40deg);transform-origin:14px 7px}
+.disc{position:absolute;inset:7%;border-radius:50%;background:radial-gradient(circle at 50% 50%,#1b1a1f 0 26%,#2b2a31 27%,#17161b);box-shadow:0 0 0 4px #0d0d10,0 10px 26px rgba(0,0,0,.5);transform:rotate(var(--rot,0deg));touch-action:none;cursor:grab}
+.disc:active{cursor:grabbing}
+.hole{position:absolute;left:50%;top:50%;width:var(--hs);height:var(--hs);margin:calc(var(--hs)/-2);transform:rotate(var(--a)) translateY(calc(var(--R)*-1)) rotate(calc(var(--a)*-1 - var(--rot,0deg)));border-radius:50%;display:grid;place-items:center;overflow:hidden;box-shadow:inset 0 0 0 4px #d9d3c3,0 0 0 2px #000;background:#0b0b0e;color:#fff;font:800 20px sans-serif;text-align:center;line-height:1.05;transition:box-shadow .2s}
+.hole img{width:100%;height:100%;object-fit:cover;pointer-events:none}
+.hole.txt{font-size:calc(var(--hs)*.19);padding:6px}
+.hole.on{box-shadow:inset 0 0 0 4px #ffcf3a,0 0 0 2px #000,0 0 24px 4px rgba(255,207,58,.7)}
+.cap{position:absolute;left:50%;top:50%;width:26%;height:26%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#d8d2c2 60%,#a8a190);box-shadow:0 4px 12px rgba(0,0,0,.4);display:grid;place-items:center;text-align:center;font:800 clamp(10px,1.8vw,16px)/1.05 sans-serif;color:#3a3426;z-index:4;pointer-events:none}
+.tip{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);font-size:14px;opacity:.75;z-index:5;white-space:nowrap;pointer-events:none}
+@media(max-width:860px){.hook{display:none}.tip{white-space:normal;text-align:center;width:90vw}}
+</style>
+</head>
+<body>
+<div class="top"><b>ideaapps</b><span>Marcin Polak · iOS · tvOS · AI</span></div>
+<div class="hook"><h1>Wykręć numer do aplikacji.</h1><p>Chwyć palcem otwór, przeciągnij tarczę zgodnie z ruchem wskazówek aż do ogranicznika i puść. Tarcza wróci i „wybierze numer”.</p><div class="st" id="st">wybierz numer…</div></div>
+<div class="stage"><div class="dialw" id="dw"><div class="plate"><div class="ring"></div></div><div class="stop" id="stop"></div><div class="disc" id="disc"></div><div class="cap">idea<br>apps</div></div></div>
+<div class="tip">przeciągnij otwór po okręgu w prawo do metalowego ogranicznika</div>
+<script src="data.js"></script><script src="ui.js"></script>
+<script>
+const {projects}=IDEA;
+const dw=document.getElementById('dw'),disc=document.getElementById('disc'),st=document.getElementById('st');
+const items=[...projects.map(p=>({p,id:p.id,n:p.name})),{id:'process',n:'Jak pracuję',k:'process'},{id:'contact',n:'Kontakt',k:'contact'}];
+const T=items.length;const STOP=20;
+let R=0,hs=0;
+function size(){const w=dw.clientWidth;R=w*.31;hs=w*.115;dw.style.setProperty('--R',w*.43+'px');disc.style.setProperty('--R',R+'px');disc.style.setProperty('--hs',hs+'px');document.getElementById('stop').style.setProperty('--R',w*.46+'px')}
+const ang=i=>60+i*(250/(T-1));
+disc.innerHTML=items.map((it,i)=>`<div class="hole ${it.p?'':'txt'}" data-i="${i}" style="--a:${ang(i)}deg">${it.p?(it.p.icon?`<img src="${it.p.icon}" alt="">`:it.p.name[0]):it.n.replace(' ','<br>')}</div>`).join('');
+size();addEventListener('resize',size);
+let rot=0,drag=null,back=null;
+function setRot(v){rot=v;disc.style.setProperty('--rot',v+'deg');disc.querySelectorAll('.hole').forEach(h=>h.style.setProperty('--rot',v+'deg'))}
+function center(){const r=dw.getBoundingClientRect();return [r.left+r.width/2,r.top+r.height/2]}
+const pa=(x,y)=>{const [cx,cy]=center();return Math.atan2(x-cx,-(y-cy))*180/Math.PI};
+disc.addEventListener('pointerdown',e=>{const h=e.target.closest('.hole');if(!h||back)return;const i=+h.dataset.i;const need=((STOP+360)-ang(i));
+ drag={i,need,start:pa(e.clientX,e.clientY),base:rot,last:pa(e.clientX,e.clientY),acc:0};h.classList.add('on');disc.setPointerCapture(e.pointerId);st.textContent='wybieram: '+items[i].n+'…'});
+disc.addEventListener('pointermove',e=>{if(!drag)return;const a=pa(e.clientX,e.clientY);let d=a-drag.last;if(d>180)d-=360;if(d<-180)d+=360;drag.last=a;drag.acc=Math.max(0,Math.min(drag.need,drag.acc+d));setRot(drag.acc)});
+function release(){if(!drag)return;const d=drag;drag=null;disc.querySelectorAll('.hole').forEach(h=>h.classList.remove('on'));
+ const ok=d.acc>=d.need-6;back={from:rot,ok,i:d.i,t:performance.now()};
+ if(ok)st.textContent='numer wybrany: '+items[d.i].n;else st.textContent='nie dokręcone do końca, spróbuj jeszcze raz'}
+disc.addEventListener('pointerup',release);disc.addEventListener('pointercancel',release);
+(function loop(now){if(back){const dur=Math.max(500,back.from*7);const k=Math.min(1,(now-back.t)/dur);setRot(back.from*(1-k));if(k>=1){const b=back;back=null;setRot(0);if(b.ok)dial(b.i)}}requestAnimationFrame(loop)})(performance.now());
+function dial(i){const it=items[i];if(it.k){IDEA.ui.panel(it.k);return}
+ document.body.style.setProperty('--c',`color-mix(in srgb,${it.p.color} 55%,#1a1816)`);
+ IDEA.ui.app(it.p,{onOpen:q=>document.body.style.setProperty('--c',`color-mix(in srgb,${q.color} 55%,#1a1816)`),onClose:()=>{document.body.style.setProperty('--c','#2d2a26');st.textContent='wybierz numer…'}})}
+IDEA.ui.bar();
+</script>
+</body>
+</html>

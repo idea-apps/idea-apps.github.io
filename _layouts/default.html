@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
   {% include head.html %}
   <body>
-      {% include header.html %}
-<!--      <section id="about">
-        {% include about.html %}
-      </section>
-      <section id="projects">
-        {% include projects.html %}
-      </section>
-        {{ content }} -->
-      {% include footer.html %}
+    <div id="ld"><span class="wm">ideaapps</span><span class="d"></span></div>
+    {% include header.html %}
+    {{ content }}
+    {% include footer.html %}
+    {% include overlay.html %}
+    {% include google-analytics.html %}
+    <script>window.APPS = {{ site.data.site.projects | jsonify }};</script>
+    <script src="{{ '/assets/js/app.js' | relative_url }}"></script>
   </body>
 </html>

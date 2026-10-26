@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Katapulta (wariant 37)</title>
+<style>
+:root{--bgc:#f1efe9;--ink:#141414;--on:#111}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bgc);color:var(--ink);font:18px/1.5 -apple-system,"SF Pro Text",Helvetica,sans-serif;-webkit-font-smoothing:antialiased;transition:background .8s cubic-bezier(.3,.7,.2,1),color .5s}
+body.dk{--ink:#fff}
+a{color:inherit;text-decoration:none}
+.nav{position:fixed;top:0;left:0;right:0;display:flex;justify-content:space-between;padding:20px 4vw;z-index:30;font-weight:700}
+.nav span a{margin-left:24px;font-weight:500;opacity:.65}.nav span a:hover{opacity:1}
+.play{position:relative;height:100vh;min-height:640px;overflow:hidden;touch-action:none;user-select:none}
+.play::after{content:"";position:absolute;left:0;right:0;bottom:0;height:6px;background:rgba(0,0,0,.18)}
+.txt{position:absolute;left:4vw;top:15vh;max-width:min(520px,42vw);pointer-events:none;z-index:2}
+.txt small{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;opacity:.6}
+.txt h1{font-size:clamp(38px,5.6vw,92px);line-height:.9;letter-spacing:-.065em;font-weight:800;margin:14px 0 16px}
+.txt p{font-size:clamp(16px,1.4vw,20px);opacity:.78;max-width:24em}
+.ball{position:absolute;left:0;top:0;border-radius:23%;display:grid;place-items:center;cursor:grab;will-change:transform;box-shadow:0 10px 24px -6px rgba(0,0,0,.45);overflow:hidden;font:800 40px sans-serif;color:#fff;user-select:none;touch-action:none;transition:box-shadow .3s,filter .3s}
+.ball img{width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none}
+.ball.sel{box-shadow:0 0 0 4px #fff,0 0 50px 10px rgba(255,255,255,.6)}
+.idea{border-radius:50%;background:radial-gradient(circle at 32% 28%,#fff6c4,#ffcf3a 55%,#e69a00);color:#5a3a00;font-size:26px;cursor:grab;box-shadow:0 0 0 3px #fff6,0 10px 24px -4px rgba(120,70,0,.6)}
+svg.band{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:visible}
+.post{position:absolute;width:14px;background:#5b4430;border-radius:7px;z-index:1}
+.card{position:absolute;left:4vw;bottom:5vh;width:min(420px,calc(92vw));display:flex;gap:16px;align-items:stretch;background:rgba(255,255,255,.18);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,.35);border-radius:28px;padding:16px;opacity:0;transform:translateY(24px);pointer-events:none;transition:.5s cubic-bezier(.2,.9,.2,1);z-index:6;color:#fff}
+.card.on{opacity:1;transform:none;pointer-events:auto}
+.card .sh{width:110px;flex:none;border-radius:18px;background:rgba(0,0,0,.25);display:grid;place-items:center;overflow:hidden}
+.card .sh img.s{width:100%;height:100%;object-fit:cover;object-position:top}
+.card .sh .ico,.card .sh .ico-fallback{width:70px;height:70px;border-radius:23%;object-fit:cover;display:grid;place-items:center;font:800 32px sans-serif;color:#fff}
+.card small{opacity:.8;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.card h3{font-size:26px;letter-spacing:-.04em;line-height:1;margin:2px 0 4px}
+.card p{font-size:14.5px;opacity:.92;line-height:1.35;margin-bottom:10px}
+.card .b{display:inline-block;background:#fff;color:#111;font-weight:700;font-size:14px;padding:8px 16px;border-radius:99px}
+.hint{position:absolute;left:calc(var(--ax) - 90px);top:calc(var(--ay) + 70px);font-size:14px;opacity:.65;pointer-events:none;width:200px;text-align:center}
+.reset{position:absolute;right:4vw;bottom:5vh;z-index:7;all:unset;cursor:pointer;background:var(--ink);color:var(--bgc);font-weight:700;font-size:15px;padding:11px 20px;border-radius:99px}
+body.dk .reset{background:#fff;color:#111}
+.sec{padding:14vh 5vw 4vh}
+.sec h2{font-size:clamp(40px,7vw,110px);line-height:.9;letter-spacing:-.065em;font-weight:800;margin-bottom:5vh}
+.sv{display:grid;grid-template-columns:repeat(4,1fr);border-top:2px solid currentColor}
+.sv div{padding:20px 20px 40px 0}.sv b{display:block;font-size:24px;letter-spacing:-.03em;line-height:1.1;margin-bottom:8px}.sv span{opacity:.75;font-size:16px}
+.end{padding:12vh 5vw 5vh}
+.end h2{font-size:clamp(44px,9vw,150px);line-height:.88;letter-spacing:-.07em;font-weight:800}
+.end a{display:inline-block;margin-top:5vh;font-size:clamp(20px,4.2vw,64px);letter-spacing:-.05em;font-weight:700;border-bottom:3px solid currentColor;overflow-wrap:anywhere}
+.end .f{display:flex;justify-content:space-between;margin-top:9vh;font-size:14px;opacity:.6}
+@media(max-width:860px){.txt{max-width:90vw;top:11vh}.sv{grid-template-columns:1fr 1fr}.card{flex-direction:row}}
+</style>
+</head>
+<body>
+<div class="nav"><b>ideaapps</b><span><a href="#uslugi">Usługi</a><a href="#kontakt">Kontakt</a></span></div>
+<section class="play" id="play">
+<div class="txt"><small>Marcin Polak · iOS · tvOS · AI</small><h1>Wystrzel pomysł w aplikację.</h1><p>Naciągnij żółtą kulę procy i puść. W którą aplikację trafisz, taki kolor przyjmie strona.</p></div>
+<svg class="band" id="band"></svg><div class="post" id="p1"></div><div class="post" id="p2"></div>
+<div class="hint" id="hint">↙ przeciągnij kulę i puść</div>
+<div class="card" id="card"></div>
+<button class="reset" id="reset">↻ Jeszcze raz</button>
+</section>
+<section class="sec" id="uslugi"><h2>Co mogę<br>zbudować.</h2><div class="sv" id="sv"></div></section>
+<footer class="end" id="kontakt"><h2>Masz pomysł?<br>Już go masz. Napisz.</h2><a id="mail" href="#"></a><div class="f"><span>© 2026 ideaapps</span><span>Swift · SwiftUI · tvOS · AI</span></div></footer>
+<script src="data.js"></script><script src="phys.js"></script>
+<script>
+const {projects,services,email}=IDEA;
+const $=s=>document.querySelector(s);
+$('#mail').href='mailto:'+email;$('#mail').textContent=email;
+$('#sv').innerHTML=services.map(s=>`<div><b>${s.t}</b><span>${s.d}</span></div>`).join('');
+const play=$('#play');
+const deep=c=>`color-mix(in srgb,${c} 80%,#0b0b10)`;
+const R=()=>Math.max(30,Math.min(50,play.clientWidth/19));
+let sel=null,hit=true,launchT=0;
+const ph=Phys(play,{g:.5,onTap:b=>b.p&&select(b),onCollide:(a,c)=>{if(hit)return;const ball=a.idea?a:c.idea?c:null;const other=ball===a?c:a;if(ball&&other.p){hit=true;select(other)}}});
+// icons pile (right side)
+projects.forEach((p,i)=>{const r=R();const el=document.createElement('div');el.className='ball';el.style.cssText=`width:${r*2}px;height:${r*2}px;background:${p.color}`;
+ el.innerHTML=p.icon?`<img src="${p.icon}" alt="${p.name}" draggable="false">`:p.name[0];play.appendChild(el);
+ ph.add({el,p,r,x:play.clientWidth*(.62+(i%4)*.07),y:-60-i*70})});
+// idea ball
+const ir=Math.max(24,R()*.62);const iel=document.createElement('div');iel.className='ball idea';iel.style.cssText=`width:${ir*2}px;height:${ir*2}px`;iel.textContent='💡';play.appendChild(iel);
+const idea=ph.add({el:iel,r:ir,x:0,y:0,m:ir*ir*3,nodrag:true,fixed:true,idea:true});
+let ax,ay;
+function anchor(){ax=play.clientWidth*.2;ay=play.clientHeight*.66;play.style.setProperty('--ax',ax+'px');play.style.setProperty('--ay',ay+'px');
+ [['p1',-26],['p2',26]].forEach(([id,o])=>{const e=$('#'+id);e.style.left=(ax+o*1.6-7)+'px';e.style.top=ay-10+'px';e.style.height=(play.clientHeight-ay+10)+'px'});
+ if(idea.fixed){idea.x=ax;idea.y=ay}}
+function band(){const x=idea.x,y=idea.y;const l=[ax-42,ay-2],r=[ax+42,ay-2];
+ $('#band').innerHTML=idea.fixed?`<path d="M${l[0]} ${l[1]} L${x} ${y} L${r[0]} ${r[1]}" stroke="#2b1d12" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`:`<path d="M${l[0]} ${l[1]} Q${ax} ${ay+16} ${r[0]} ${r[1]}" stroke="#2b1d12" stroke-width="7" fill="none" stroke-linecap="round"/>`;
+ requestAnimationFrame(band)}
+anchor();band();
+addEventListener('resize',()=>{ph.resize();anchor();const r=R();ph.B.forEach(b=>{if(b.p){b.r=r;b.el.style.width=b.el.style.height=r*2+'px'}})});
+let held=false;
+play.addEventListener('pointerdown',e=>{if(!idea.fixed)return;const rc=play.getBoundingClientRect(),x=e.clientX-rc.left,y=e.clientY-rc.top;if(Math.hypot(x-idea.x,y-idea.y)<idea.r+24){held=true;$('#hint').style.opacity=0}});
+play.addEventListener('pointermove',e=>{if(!held)return;const rc=play.getBoundingClientRect();let x=e.clientX-rc.left,y=e.clientY-rc.top;const dx=x-ax,dy=y-ay,d=Math.hypot(dx,dy),max=Math.min(150,play.clientWidth*.22);if(d>max){x=ax+dx/d*max;y=ay+dy/d*max}idea.x=x;idea.y=Math.min(y,play.clientHeight-idea.r);});
+function release(){if(!held)return;held=false;const dx=ax-idea.x,dy=ay-idea.y,d=Math.hypot(dx,dy);
+ if(d<24){idea.x=ax;idea.y=ay;return}
+ idea.fixed=false;idea.vx=dx*.2;idea.vy=dy*.2;hit=false;launchT=setTimeout(reset,6500)}
+play.addEventListener('pointerup',release);play.addEventListener('pointercancel',release);
+function reset(){clearTimeout(launchT);idea.fixed=true;idea.vx=idea.vy=0;idea.x=ax;idea.y=ay;hit=true;$('#hint').style.opacity=.65}
+$('#reset').onclick=()=>{reset();clearSel()};
+function select(b){const p=b.p;sel=b;document.documentElement.style.setProperty('--bgc',deep(p.color));document.body.classList.add('dk');
+ ph.B.forEach(x=>x.p&&x.el.classList.toggle('sel',x===b));
+ $('#card').innerHTML=`<div class="sh">${p.shot&&p.id!=='boxes'?`<img class="s" src="${p.shot}" alt="">`:IDEA.iconHTML(p,'')}</div><div><small>${p.cat} · ${p.platforms.split(' · ')[0]}</small><h3>${p.name}</h3><p>${p.tag}. ${p.desc.slice(0,90)}…</p><a class="b" href="${p.url}" target="_blank" rel="noopener">App Store ↗</a></div>`;
+ $('#card').classList.add('on')}
+function clearSel(){sel=null;document.documentElement.style.setProperty('--bgc','#f1efe9');document.body.classList.remove('dk');ph.B.forEach(x=>x.p&&x.el.classList.remove('sel'));$('#card').classList.remove('on')}
+</script>
+</body>
+</html>

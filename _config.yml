@@ -13,4 +13,4 @@ github_username: polok
 google-analytics:
   id: "UA-96457755-1"
 
-exclude: ['package.json', 'src' , 'node_modules']
+exclude: ['package.json', 'yarn.lock', 'gulpfile.js', 'src', 'node_modules', '_prototypes', '.taste-skill']

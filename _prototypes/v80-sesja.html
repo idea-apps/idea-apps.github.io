@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ideaapps — Sesja z agentem (koncept 80)</title>
+<link rel="stylesheet" href="c.css">
+<style>
+body{background:radial-gradient(80% 60% at 70% 0,#1d1a3a,#09090f);min-height:100vh;padding:84px 4vw 60px}
+.w{max-width:1260px;margin:0 auto;display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:3vw;align-items:start}
+h1{font-size:clamp(36px,5.4vw,80px);line-height:.92;letter-spacing:-.06em;font-weight:900;margin:8px 0 14px}
+.lead{font-size:18px;opacity:.88;margin-bottom:18px;max-width:26em}
+.tag{color:#a78bfa;opacity:1}
+.leg div{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+.leg i{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:800;color:#10142a;flex:none}
+.leg b{display:block}.leg span{font-size:14.5px;opacity:.8}
+.note{margin-top:16px;font-size:13.5px;opacity:.65}
+.ctl{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.term{background:#11121a;border:1px solid rgba(255,255,255,.14);border-radius:22px;overflow:hidden;box-shadow:0 40px 80px -30px rgba(0,0,0,.7)}
+.th{display:flex;gap:8px;align-items:center;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.1);font:600 13px "SF Mono",monospace;color:#9aa0b8}
+.th i{width:11px;height:11px;border-radius:50%;background:#ff5f57}.th i:nth-child(2){background:#febc2e}.th i:nth-child(3){background:#28c840}
+.th span{margin-left:8px}
+.log{padding:18px;height:min(66vh,640px);overflow:auto;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}
+.m{max-width:88%;animation:in .4s cubic-bezier(.2,.9,.2,1)}
+@keyframes in{from{opacity:0;transform:translateY(12px)}}
+.m .who{font:700 11.5px "SF Mono",monospace;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;color:var(--c)}
+.m .b{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:11px 15px;font-size:15.5px;line-height:1.45}
+.m.me{align-self:flex-end}.m.me .b{background:rgba(77,163,255,.18);border-color:rgba(77,163,255,.4)}
+.m.sys{align-self:center;max-width:100%}.m.sys .b{background:transparent;border:1px dashed rgba(255,255,255,.25);font:600 13.5px "SF Mono",monospace;color:#9fe8be}
+.m.sys.bad .b{color:#ffb4a0}
+pre{margin:8px 0 0;background:#0a0b12;border-radius:10px;padding:12px 14px;font:13px/1.55 "SF Mono",monospace;color:#d9dcef;overflow:auto;white-space:pre}
+.k{color:#ff7ab2}.s{color:#ff8170}.t{color:#6bdfff}.c{color:#7f8c98}
+.dots{display:flex;gap:5px;padding:12px 15px}.dots i{width:8px;height:8px;border-radius:50%;background:#9aa0b8;animation:d 1s infinite}.dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
+@keyframes d{40%{transform:translateY(-4px);opacity:.5}}
+.prog{height:4px;background:rgba(255,255,255,.1)}.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,#4da3ff,#a78bfa);transition:width .5s}
+@media(max-width:960px){.w{grid-template-columns:1fr}}
+</style></head><body>
+<div class="brand">ideaapps<small>Marcin Polak · iOS · tvOS · AI</small></div>
+<div class="w"><div><span class="tag">Kodowanie z agentami</span><h1>Tak wygląda jedna funkcja.</h1><p class="lead">Agent pisze, ja kieruję i sprawdzam. Poniżej przykładowa sesja (ilustracja): od polecenia do wersji w TestFlight. Ty widzisz efekt, ale warto wiedzieć, kto za co odpowiada.</p>
+<div class="leg"><div><i style="background:#4da3ff">M</i><div><b>Marcin</b><span>Daje kierunek, czyta każdą zmianę i decyduje, co wchodzi do produktu.</span></div></div><div><i style="background:#a78bfa">AI</i><div><b>Agent AI</b><span>Pisze kod, testy i warianty według instrukcji. Szybko, ale pod nadzorem.</span></div></div><div><i style="background:#9fe8be">✓</i><div><b>Testy i TestFlight</b><span>Automatyczne sprawdzenie i wersja, którą możesz wziąć do ręki.</span></div></div></div>
+<div class="ctl"><button class="btn" id="play">▶ Odtwórz sesję</button><button class="btn g" id="step">Następny krok →</button></div><div class="note">Ilustracja przykładowej funkcji (przypomnienie o końcu gwarancji), nie zapis konkretnej sesji.</div></div>
+<div class="term"><div class="th"><i></i><i></i><i></i><span>sesja · „Przypomnienie o końcu gwarancji”</span></div><div class="prog"><i id="pr"></i></div><div class="log" id="log"></div></div></div>
+<script src="data.js"></script><script src="flow.js"></script><script src="ui.js"></script>
+<script>
+const $=s=>document.querySelector(s);
+const code=`<span class="k">func</span> scheduleWarrantyReminder(<span class="k">for</span> r: <span class="t">Receipt</span>) <span class="k">async throws</span> {
+  <span class="k">let</span> end = <span class="t">Calendar</span>.current.startOfDay(for: r.warrantyEnd)
+  <span class="k">let</span> when = <span class="t">Calendar</span>.current.date(byAdding: .day, value: -<span class="s">7</span>, to: end)!
+  <span class="k">try await</span> <span class="t">Notifier</span>.schedule(id: r.id, at: when,
+    title: <span class="s">"Gwarancja kończy się za tydzień"</span>)
+}`;
+const S=[
+ {w:'me',t:'Dodaj przypomnienie na 7 dni przed końcem gwarancji. Ekran szczegółów paragonu, powiadomienie lokalne i test.'},
+ {w:'ai',t:'Plan: 1) pole warrantyEnd w modelu, 2) planowanie powiadomienia, 3) przełącznik w szczegółach, 4) testy. Zaczynam?'},
+ {w:'me',t:'Tak. Bez nowych zależności i zgodnie z naszą strukturą folderów.'},
+ {w:'ai',t:'Gotowe. Dodałem funkcję planującą powiadomienie:',code:1},
+ {w:'sys',t:'Testy: 12 zielonych, 1 czerwony (zmiana czasu)',bad:1},
+ {w:'me',t:'Błąd przy zmianie czasu letniego. Licz od początku dnia i dodaj test na przełączenie czasu.'},
+ {w:'ai',t:'Poprawione na startOfDay, dodałem test przełączenia czasu.'},
+ {w:'sys',t:'Testy: wszystkie zielone'},
+ {w:'me',t:'Czytam różnicę. Zatwierdzam i wysyłam do TestFlight.'},
+ {w:'sys',t:'Nowa wersja dostępna w TestFlight. Możesz sprawdzić na swoim telefonie.'}];
+const who={me:['MARCIN','#4da3ff'],ai:['AGENT AI','#a78bfa'],sys:['','#9fe8be']};
+let i=0,timer=null;
+function add(){if(i>=S.length)return false;const m=S[i++];const el=document.createElement('div');el.className='m '+m.w+(m.bad?' bad':'');el.style.setProperty('--c',who[m.w][1]);
+ el.innerHTML=(who[m.w][0]?`<div class="who">${who[m.w][0]}</div>`:'')+`<div class="b">${m.t}${m.code?`<pre>${code}</pre>`:''}</div>`;
+ $('#log').appendChild(el);$('#log').scrollTop=1e5;$('#pr').style.width=(i/S.length*100)+'%';return i<S.length}
+function play(){clearInterval(timer);if(i>=S.length){i=0;$('#log').innerHTML=''}$('#play').textContent='❚❚ Pauza';
+ add();timer=setInterval(()=>{if(!add()){clearInterval(timer);timer=null;$('#play').textContent='↻ Jeszcze raz'}},2300)}
+$('#play').onclick=()=>{if(timer){clearInterval(timer);timer=null;$('#play').textContent='▶ Wznów';return}play()};
+$('#step').onclick=()=>{clearInterval(timer);timer=null;$('#play').textContent='▶ Wznów';if(i>=S.length){i=0;$('#log').innerHTML=''}add()};
+IDEA.ui.bar(null,'top');play();
+</script></body></html>
